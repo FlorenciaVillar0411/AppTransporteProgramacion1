@@ -1,0 +1,487 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <!-- Font -->
+         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+         <!-- Font Awesome -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+         <link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+        <header class="logo-nav-container">
+            <div class="logo">
+                <img src="img" alt="">
+            </div>
+            <div class="nav-menu">
+                <ul>
+                    <li><a id="btnIngresoAdmin" href="#perfilAdministrador" f>Perfil Administrador</a></li>
+                    <li><a href="#persona">Perfil Persona</a></li>
+                    <li><a id="btnIngresoEmpresa" href="#perfilEmpresa">Perfil Empresa</a></li>
+                </ul>
+            </div>
+        </header>
+        <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+        <main role="main">
+            <section class="intro">
+                <article>
+                    <div class="flex-center">
+                        <div class="banner y-flex-center flex-center">
+                            <div>
+                                <h1 class="titulo">Transportes  FES</h1>
+                                <h2 class="lema">LLegamos a donde estes</h2>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        <div> 
+            <br><hr><br>
+            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+            <h3>REGISTRARSE - PERFIL PERSONA</h3>
+            <P>Llene el formulario para registrarse</P><br>
+            <label>Ingrese C.I. sin espacios, puntos ni guiones:</label><br>
+            <input type="text" id="txtCedula" placeholder="Ej: 12345678"><br><br>
+            <label>Ingrese Nombre:</label><br>
+            <input type="text" id="txtNombre" placeholder="Nombre"><br><br>
+            <label>Ingrese Apellido:</label><br>
+            <input type="text" id="txtApellido" placeholder="Apellido"><br><br>
+            <label>Ingrese Nombre de Usuario:</label><br>
+            <input type="text" id="txtNombreUsuarioP" placeholder="NombreDeUsuario"><br><br>
+            <label>Ingrese Contraseña:</label><br>
+            <input type="password" id="txtContraseña" placeholder="Contraseña"><br><br>
+            <label>Ingrese Contraseña nuevamente:</label><br>
+            <input type="password" id="txtContraseña2" placeholder="Contraseña"><br><br><br>
+            <input type="button" value="REGISTRARSE" id="btnRegistrarseP">
+            <input type="button" value="YA ESTOY REGISTRADO" id="btnLoginP">
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+
+
+            <br><br><br>
+        </div>
+        <div> 
+            <br><hr><br>
+            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+            <h3>REGISTRARSE - PERFIL EMPRESA</h3>
+            <P>Llene el formulario para registrarse:</P><br>
+            <label>Ingrese Número RUT</label><br>
+            <input type="text" id="txtRut" placeholder="Ej: 123456789123"><br><br>
+            <label>Ingrese Razón Social:</label><br>
+            <input type="text" id="txtRazon" placeholder="Razón Social"><br><br>
+            <label>Ingrese Nombre Fantasía:</label><br>
+            <input type="text" id="txtFantasía" placeholder="Nombre Fantasía"><br><br>
+            <label>Ingrese Nombre de Usuario:</label><br>
+            <input type="text" id="txtNombreUsuarioE" placeholder="NombreDeUsuario"><br><br>
+            <label>Ingrese Contraseña:</label><br>
+            <input type="password" id="txtContraseña" placeholder="Contraseña"><br><br>
+            <label>Ingrese Contraseña nuevamente:</label><br>
+            <input type="password" id="txtContraseña2" placeholder="Contraseña"><br><br>
+            <select>
+                <option>Seleccione vehículo</option>
+                <option>Moto</option>
+                <option>Auto</option>
+                <option>Camión</option>
+            </select><br><br><br>
+            <input type="button" value="REGISTRARSE" id="btnRegistrarseP">
+            <input type="button" value="YA ESTOY REGISTRADO" id="btnLoginP">
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+
+
+            <br><br><br>
+        </div>
+        <div> 
+            <br><hr><br>
+            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+            <h3>INGRESAR</h3>
+            <label>Ingrese Nombre de Usuario:</label><br>
+            <input type="text" id="txtNombreUsuarioP" placeholder="NombreDeUsuario"><br><br>
+            <label>Ingrese Contraseña:</label><br>
+            <input type="password" id="txtContraseña" placeholder="Contraseña"><br><br>
+            <input type="button" value="INGRESAR" id="btnIngresarP">
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+            <br><br><br>
+        </div>
+        
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL ADMINISTRADOR</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminempresas">
+                <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
+            </center>
+            <br><br><br>
+            <h3>LISTADO DE EMPRESAS</h3>
+            <input type="text" placeholder="BUSCAR EMPRESA...">
+            <input type="button" value="BUSCAR">
+
+            <table border="1">
+				<tr> 
+					<th>RUT</th>
+					<th>RAZÓN SOCIAL</th>
+					<th>NOMBRE FANTASÍA</th>
+                    <th>USUARIO</th>
+					<th>VEHICULO</th>
+					<th>HABILITADO</th>
+				</tr>
+				<tr> 
+					<td>123456789012</td>
+					<td>Empresa 1</td>
+					<td>Vehiculos fantásticos</td>
+                    <td>VehiFan</td>
+					<td>Moto</td>
+					<td>
+                        <input type="button" value="HABILITAR" id="btnHabilitarEmpresa">
+                    </td>
+				</tr>
+                <td>09876543212</td>
+					<td>Empresa 2</td>
+					<td>Vehiculos Geniales</td>
+                    <td>VehiGen</td>
+					<td>Auto</td>
+					<td>                        
+                    <input type="button" value="DESHABILITAR" id="btnHabilitarEmpresa">
+                    </td>
+				<tr> 
+				</tr>
+            </table>
+
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+        </div>
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL ADMINISTRADOR</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminEmpresas">
+                <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
+            </center>
+            <br><br><br>
+            <h3>LISTADO DE TIPOS DE TRANSPORTE</h3>
+
+            <table border="1">
+				<tr> 
+					<th>TIPOS DE TRANSPORTE</th>
+				</tr>
+				<tr> 
+					<td>Moto</td>
+				</tr>
+				<tr> 
+                    <td>Auto</td>
+				</tr>
+                <tr> 
+                    <td>Camión</td>
+				</tr>
+            </table>
+
+            <input type="text" placeholder="INGRESAR TIPO DE TRANSPORTE">
+            <input type="button" value="AGREGAR AL LISTADO">
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+        </div>
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL ADMINISTRADOR</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminEmpresas">
+                <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
+            </center>
+            <br><br><br>
+            <h3>INFORMACIÓN ESTADÍSTICA</h3>
+
+            <table border="1">
+				<tr> 
+					<th>EMPRESAS</th>
+					<th>KM</th>
+
+				</tr>
+				<tr> 
+					<td>Vehículos fantásticos</td>
+					<td>34</td>
+				</tr>
+                <tr> 
+					<td>Vehículos geniales</td>
+					<td>342</td>
+
+				</tr>
+            </table>
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+        </div>
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL PERSONA</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="SOLICITAR ENVÍOS" id="btnSolicitarEnvio">
+                <input type="button" value="LISTADO DE PEDIDOS" id="btnListadoPedidosP">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+            </center>
+            <P>Llene el formulario para realizar un envío:</P><br>
+            <label>Ingrese Descripción del Producto</label><br>
+            <input type="text" id="txtProducto" placeholder="Producto"><br><br>
+            <label>Ingrese distancia en km:</label><br>
+            <input type="number" id="txtDistancia" placeholder="Producto"><br><br>
+            <label>Ingrese imagen:</label><br>
+            <input type="file" id="imagenProducto" placeholder="imagen Producto"><br><br>
+            <select>
+                <option>Seleccione vehículo</option>
+                <option>Moto</option>
+                <option>Auto</option>
+                <option>Camión</option>
+            </select><br><br><br>
+            <input type="button" value="SOLICITAR" id="btnSolicitarEnvio">
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+            <br><br><br>
+        </div>
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL PERSONA</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="SOLICITAR ENVÍOS" id="btnSolicitarEnvio">
+                <input type="button" value="LISTADO DE PEDIDOS" id="btnListadoPedidosP">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+            </center>
+            <br><br><br>
+            <h3>LISTADO DE SOLICITUDES</h3>
+
+            <table border="1">
+				<tr> 
+					<th>PRODUCTO</th>
+					<th>IMAGEN</th>
+					<th>KM</th>
+                    <th>VEHICULO</th>
+					<th>ESTADO</th>
+					<th>EMPRESA</th>
+				</tr>
+				<tr> 
+					<td>Caja</td>
+					<td>IMG</td>
+					<td>56</td>
+                    <td>MOTO</td>
+					<td>PENDIENTE</td>
+					<td>-</td>
+				</tr>
+                <tr> 
+					<td>BOLSA</td>
+					<td>IMG</td>
+					<td>4</td>
+                    <td>CAMION</td>
+					<td>EN TRÁNSITO</td>
+					<td>VEHÍCULOS GENIALES</td>
+				</tr>
+            </table>
+
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+        </div>
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL PERSONA</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="SOLICITAR ENVÍOS" id="btnSolicitarEnvio">
+                <input type="button" value="LISTADO DE PEDIDOS" id="btnListadoPedidosP">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+            </center>
+            <br><br><br>
+            <h3>INFORMACIÓN ESTADÍSTICA</h3>
+
+            <table border="1">
+				<tr> 
+					<th>PENDIENTES</th>
+					<th>TOMADAS</th>
+					<th>FINALIZAAS</th>
+
+				</tr>
+				<tr> 
+					<td>15</td>
+					<td>10</td>
+					<td>25</td>
+				</tr>
+                <tr> 
+					<td>30%</td>
+					<td>20%</td>
+					<td>50%</td>
+
+				</tr>
+            </table>
+
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+        </div>
+        
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL EMPRESA</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitarEnvio">
+                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosP">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+            </center>
+            <br><br><br>
+            <h3>LISTADO DE SOLICITUDES PENDIENTES</h3>
+
+            <table border="1">
+				<tr> 
+					<th>PRODUCTO</th>
+					<th>IMAGEN</th>
+					<th>KM</th>
+                    <th>VEHICULO</th>
+					<th>ESTADO</th>
+				</tr>
+				<tr> 
+					<td>Caja</td>
+					<td>IMG</td>
+					<td>56</td>
+                    <td>MOTO</td>
+                    <td>
+                        <input type="button" value="TOMAR" id="btnHabilitarEmpresa">
+                    </td>
+				</tr>
+                <tr> 
+					<td>MOCHILA</td>
+					<td>IMG</td>
+					<td>67</td>
+                    <td>MOTO</td>
+                    <td>
+					<input type="button" value="TOMAR" id="btnHabilitarEmpresa">
+                    </td>
+				</tr>
+  
+            </table>
+
+
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+        </div>
+
+        <div> 
+            <br><hr><br>
+            <<center>
+                <h3>PERFIL EMPRESA</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitarEnvio">
+                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosP">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+            </center>
+            <br><br><br>
+            <h3>LISTADO DE SOLICITUDES TOMADAS</h3>
+
+            <table border="1">
+                <tr> 
+                    <th>PRODUCTO</th>
+                    <th>IMAGEN</th>
+                    <th>KM</th>
+                    <th>VEHICULO</th>
+                    <th>ESTADO</th>
+                </tr>
+                <tr> 
+                    <td>Caja</td>
+                    <td>IMG</td>
+                    <td>56</td>
+                    <td>MOTO</td>
+                    <td>
+                        <input type="button" value="FINALIZAR" id="btnFINALIZARENVIO">
+                    </td>
+                </tr>
+                <tr> 
+                    <td>BOLSA</td>
+                    <td>IMG</td>
+                    <td>4</td>
+                    <td>MOTO</td>
+                    <td>
+                    <input type="button" value="FINALIZAR" id="btnFINALIZARENVIO">
+                    </td>
+                    
+                </tr>
+            </table>
+            <br>
+
+
+
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+
+        </div>
+        <div> 
+            <br><hr><br>
+            <center>
+                <h3>PERFIL EMPRESA</h3>
+                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+
+                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitarEnvio">
+                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosP">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+            </center>
+            <br><br><br>
+            <h3>INFORMACIÓN ESTADÍSTICA</h3>
+            <p><strong>USUARIO QUE REALIZÓ MÁS TRASLADOS:</strong><br>Agustín Pereira 15 <br>Agustina Pereyra 15 <br></p>
+
+
+            <table border="1">
+				<tr> 
+					<th><select>
+                        <option>EN TRÁNSITO</option>
+                        <option>FINALIZADO</option>
+                    </select></th>
+				</tr>
+				<tr> 
+					<td>15</td>
+				</tr>
+
+            </table>
+
+
+
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+        </div>
+        
+
+
+
+        <script type="text/javascript" src="codigo.js"></script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
