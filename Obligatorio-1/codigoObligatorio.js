@@ -41,7 +41,9 @@ function FormularioPersona(){
     let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
     
 
-    mensaje += Validarcontrasenia(contrasenia, contrasenia2);    
+    mensaje += Validarcontrasenia(contrasenia, contrasenia2);   
+    mensaje += ValidarNombreApellido(nombre, apellido); 
+    mensaje += validarDocumentoDeIdentidad(cedula); 
     //Aquí falta agregar TODAS las validaciones del registro de Usuario.
 
     document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
@@ -88,4 +90,12 @@ function VerificarSiNumeros(texto){//esta funcion no funciona
     }
 
     return tieneNum;
+}
+function ValidarNombreApellido(nombre,apellido){
+    let mensaje ='';
+    if (nombre.trim() = ""){
+        mensaje+="<br>El nombre está vacío"
+    } else if (apellido.trim() = ""){
+        mensaje+="<br>El apellido está vacío" 
+    }
 }
