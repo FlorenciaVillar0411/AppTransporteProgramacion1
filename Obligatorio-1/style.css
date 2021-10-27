@@ -128,11 +128,28 @@ a:focus {
 .nav-menu a:hover {
   color: #df5a5a;
 }
-.formRegistroPersona {
+.formRegistroPersona,
+.formRegistroEmpresa {
+  top: 30px;
+  background-color: rgb(235, 234, 219);
   width: 50%;
   margin: 0 auto;
   text-align: center;
   display: block;
   font-size: 1rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.boton {
+  float: left;
+  margin-left: 50px;
+}
+h3,
+p,
+input,
+label,
+select {
+  background-color: rgb(235, 234, 219);
+}
+p {
+  font-weight: bold;
 }

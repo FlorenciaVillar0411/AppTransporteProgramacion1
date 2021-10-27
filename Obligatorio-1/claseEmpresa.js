@@ -1,17 +1,24 @@
 class empresa {
-    constructor(pCedula, pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia) {
-        this.rut = pCedula;
-        this.razonSocial = pRazonSocial;
-        this.nombreFantasia = pNombreFantasia;
-        this.nombreUsuario = pNombreUsuario;
-        this.contrasenia = pContrasenia;
-        this.vehiculo = pVehiculo;
-        this.habilitado = false
-    }
+  constructor(
+    pRut,
+    pRazonSocial,
+    pNombreFantasia,
+    pNombreUsuario,
+    pContrasenia,
+    pVehiculo
+  ) {
+    this.rut = pRut;
+    this.razonSocial = pRazonSocial;
+    this.nombreFantasia = pNombreFantasia;
+    this.nombreUsuario = pNombreUsuario;
+    this.contrasenia = pContrasenia;
+    this.vehiculo = pVehiculo;
+    this.habilitado = false;
+  }
 }
 
 class tiposDeVehiculo {
-    constructor(pTipoVehiculo) {
-        this.vehiculo = pTipoVehiculo;
-    }
+  constructor(pTipoVehiculo) {
+    this.vehiculo = pTipoVehiculo;
+  }
 }
