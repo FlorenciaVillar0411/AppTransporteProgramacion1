@@ -1,6 +1,6 @@
 let Personas = [];
 let Empresas = [];
-let Admin = [];
+let Administrador = [];
 
 inicializar ();
 
@@ -17,8 +17,8 @@ function precargarDatos() {
     
 }
 function registrarPersona(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia) {
-    let nuevaPersona = new persona(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia);
-    persona.push(nuevaPersona);
+    // let nuevaPersona = new persona(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia);
+    // persona.push(nuevaPersona);
 }
 
 function FormularioPersona(){
@@ -31,10 +31,12 @@ function FormularioPersona(){
     let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
     
 
-mensaje += Validarcontrasenia(contrasenia, contrasenia2);    
-        //Aquí falta agregar TODAS las validaciones del registro de Usuario.
+    mensaje += Validarcontrasenia(contrasenia, contrasenia2);    
+    //Aquí falta agregar TODAS las validaciones del registro de Usuario.
 
-divRegistropersona    document.querySelector("#divRegistroprsona").innerHTML=mensaje;
+    document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
+
+
     if (mensaje=""){
         registrarPersona(cedula,nombre,apellido,nombreUsuario,contrasenia)
     }
@@ -43,15 +45,38 @@ divRegistropersona    document.querySelector("#divRegistroprsona").innerHTML=men
 
 
 function Validarcontrasenia(contra1, contra2){
+    let mensaje = '';
     if (contra1!=contra2){
-        mensaje += "<br>Las contraseñas no son iguales"
-    } else if (contra1.trim() = ""){
-        mensaje+="<br>La contraseña está vacía"
-    } else if (contra1.lenght >=6){
-        mensaje+="<br>toLowerCase()=contra1||contra1.toUpperCase()=contra1eña debe tener un mínimo de 6 caracteres"
-    }else if (contra1.lenght >=6){
-Mayúsculas y minúsculas        mensaje+="<br>La contraseña debe tener un mínimo de 6 caracteres"
+        mensaje += "<br>Las contraseñas no son iguales."
+    }else{
+        if (contra1.trim() == ''){
+            mensaje+="<br>La contraseña está vacía."
+        }
+        if (contra1.length<=6){
+            mensaje+="<br>La contraseña debe tener un mínimo de 6 caracteres."
+        }
+        if (contra1.toLowerCase()==contra1||contra1.toUpperCase()==contra1){
+        mensaje+="<br>La contraseña debe tener mayúsculas y minúsculas."
+        }
+        if (!VerificarSiNumeros(contra1)){
+            mensaje+="<br>La contraseña debe tener números."
+        }
     }
+
+
     return mensaje;
 
+}
+
+function VerificarSiNumeros(texto){//esta funcion no funciona
+    let tieneNum = false;
+    let i=1;
+    while (tieneNum= false && i < texto.length) {
+        if (i >=9 ) {
+            tieneNum = true;
+           
+        }
+        i++;
+    }
+    return tieneNum;
 }
