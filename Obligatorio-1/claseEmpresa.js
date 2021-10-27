@@ -9,3 +9,9 @@ class empresa {
         this.habilitado = false
     }
 }
+
+class tiposDeVehiculo {
+    constructor(pTipoVehiculo) {
+        this.vehiculo = pTipoVehiculo;
+    }
+}

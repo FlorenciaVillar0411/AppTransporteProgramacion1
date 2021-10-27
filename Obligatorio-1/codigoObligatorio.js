@@ -1,6 +1,8 @@
 let Personas = [];
 let Empresas = [];
 let Administrador = [];
+let Vehiculos = [];
+
 
 inicializar ();
 
@@ -14,11 +16,19 @@ function botones(){
 function precargarDatos() {
     registrarPersona("51301233", "Florencia", "Villar", "Flopi_Villar","123");
     registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi","HolaMundo");
-    
+    registrarVehiculo("Moto");
+    registrarVehiculo("Auto");
+    registrarVehiculo("Camion");
+
+
 }
 function registrarPersona(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia) {
-    // let nuevaPersona = new persona(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia);
-    // persona.push(nuevaPersona);
+//     let nuevaPersona = new persona(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia);
+//     persona.push(nuevaPersona);
+}
+function registrarVehiculo(pVehiculo){
+    // let nuevoVehiculo = new tiposDeVehiculo(pVehiculo)
+    // tiposDeVehiculo.push(nuevoVehiculo);
 }
 
 function FormularioPersona(){
@@ -58,9 +68,7 @@ function Validarcontrasenia(contra1, contra2){
         if (contra1.toLowerCase()==contra1||contra1.toUpperCase()==contra1){
         mensaje+="<br>La contraseña debe tener mayúsculas y minúsculas."
         }
-        if (!VerificarSiNumeros(contra1)){
-            mensaje+="<br>La contraseña debe tener números."
-        }
+        
     }
 
 
@@ -69,14 +77,15 @@ function Validarcontrasenia(contra1, contra2){
 }
 
 function VerificarSiNumeros(texto){//esta funcion no funciona
-    let tieneNum = false;
+    let tieneNum = true;
     let i=1;
-    while (tieneNum= false && i < texto.length) {
-        if (i >=9 ) {
-            tieneNum = true;
+    while (i < texto.length && tieneNum == false) {
+        if (!isNaN(texto[i])) {
+            tieneNum = false;
            
         }
         i++;
     }
+
     return tieneNum;
 }
