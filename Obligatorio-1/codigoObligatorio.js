@@ -29,24 +29,29 @@ function FormularioPersona(){
     let nombreUsuario = document.querySelector("#txtNombreUsuarioP").value;
     let contrasenia = document.querySelector("#txtContraseñaP").value;
     let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
+    
 
-    if (contrasenia!=contrasenia2){
-        mensaje += "<br>Las contraseñas no son iguales"
-    } else if (trim(contrasenia) = ""){
-        mensaje+="<br>La contraseña está vacía"
-    } else if (contrasenia.lenght >=6){
-        mensaje+="<br>La contraseña debe tener un mínimo de 6 caracteres"
-    }else if (contrasenia.lenght >=6){
-        mensaje+="<br>La contraseña debe tener un mínimo de 6 caracteres"
-    }
+mensaje += Validarcontrasenia(contrasenia, contrasenia2);    
+        //Aquí falta agregar TODAS las validaciones del registro de Usuario.
 
-    //Aquí falta agregar TODAS las validaciones del registro de Usuario.
-
-    document.querySelector("#divRegistroprsona").innerHTML=mensaje;
+divRegistropersona    document.querySelector("#divRegistroprsona").innerHTML=mensaje;
     if (mensaje=""){
         registrarPersona(cedula,nombre,apellido,nombreUsuario,contrasenia)
     }
 
 }
-//jkfehakjbd
 
+
+function Validarcontrasenia(contra1, contra2){
+    if (contra1!=contra2){
+        mensaje += "<br>Las contraseñas no son iguales"
+    } else if (contra1.trim() = ""){
+        mensaje+="<br>La contraseña está vacía"
+    } else if (contra1.lenght >=6){
+        mensaje+="<br>toLowerCase()=contra1||contra1.toUpperCase()=contra1eña debe tener un mínimo de 6 caracteres"
+    }else if (contra1.lenght >=6){
+Mayúsculas y minúsculas        mensaje+="<br>La contraseña debe tener un mínimo de 6 caracteres"
+    }
+    return mensaje;
+
+}
