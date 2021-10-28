@@ -46,3 +46,14 @@ function ValidarNombreApellido(nombre, apellido) {
   
       return mensaje;
   }
+  function validarCiNoEsVacioYTieneOchoDigitos(cedula) {
+    let mensaje = "";
+    let i = 1;
+    if (cedula.length == 0) {
+      mensaje += "<br> El campo de la cedula no puede estar vacío";
+    }
+    if(cedula.length < 8){
+        mensaje += "<br> El campo de la cedula, debe contener al menos 8 digitos"
+    }
+    return mensaje;
+  }

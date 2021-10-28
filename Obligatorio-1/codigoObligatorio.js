@@ -12,6 +12,7 @@ function inicializar() {
 }
 function botones() {
   document.querySelector("#btnRegistrarseP").addEventListener("click", formularioPersona);
+  document.querySelector("#btnRegistrarseE").addEventListener("click", formularioEmpresa);
 }
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "Flopi_Villar", "123");
@@ -61,9 +62,9 @@ function formularioPersona() {
 
   document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
 
-  if ((mensaje = "")) {
+  // if ((mensaje = "")) {
     registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
-  }
+  // }
 }
 
 // function VerificarSiNumeros(texto){//esta funcion no funciona
@@ -81,17 +82,7 @@ function formularioPersona() {
 // }
 
 
-function validarCiNoEsVacioYTieneOchoDigitos(cedula) {
-  let mensaje = "";
-  let i = 1;
-  if (cedula.length == 0) {
-    mensaje += "<br> El campo de la cedula no puede estar vacío";
-  }
-  if(cedula.length < 8){
-      mensaje += "<br> El campo de la cedula, debe contener al menos 8 digitos"
-  }
-  return mensaje;
-}
+
 
 
 
@@ -108,4 +99,34 @@ function encontrarUsuario(usuario) {
         i++;
     }
     return existe;
+}
+
+function formularioEmpresa() {
+  let mensaje = "";
+  let Rut = document.querySelector("#txtRut").value;
+  let RazonSocial = document.querySelector("#txtRazon").value.trim();
+  let Fantasia = document.querySelector("#txtFantasia").value.trim();
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaE").value;
+  let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
+
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+  mensaje += ValidarNombreApellido(RazonSocial, Fantasia);
+  mensaje += validarRut(Rut);
+  mensaje += validarNombreUsuario(nombreUsuario);
+
+  document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
+
+  // if ((mensaje = "")) {
+    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia);
+  // }
+  }
+
+  function iniciarSesion() {
+    let mensaje = '';
+    let usuarioIngresado = document.querySelector("#txtNombreUsuarioP").value;
+    let passwordIngresado = document.querySelector("#txtContraseñaIngresoP").value;
+    usuarioIngresado = usuarioIngresado.trim();
+
+    document.querySelector("#divLoginMensajes").innerHTML = mensaje;
 }
