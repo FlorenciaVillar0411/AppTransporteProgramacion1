@@ -1,5 +1,5 @@
 let persona = [];
-let empresa = [];
+let Empresa = [];
 let Administrador = [];
 let vehiculo = [];
 let usuarioEstaLogueado = false;
@@ -30,7 +30,7 @@ function registrarVehiculo(pVehiculo) {
 }
 function registrarEmpresa(pRut,pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia,pVehiculo) {
     let nuevaEmpresa = new Empresa (pRut, pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia,pVehiculo)
-    empresa.push(nuevaEmpresa);
+    Empresa.push(nuevaEmpresa);
 }
 // function ocultarPantallas(){
 //     ocultarPantallaLogin();
@@ -66,25 +66,6 @@ function formularioPersona() {
   }
 }
 
-function Validarcontrasenia(contra1, contra2) {
-  let mensaje = "";
-  if (contra1 != contra2) {
-    mensaje += "<br>Las contraseñas no son iguales.";
-  } else {
-    if (contra1.trim() == "") {
-      mensaje += "<br>La contraseña está vacía.";
-    }
-    if (contra1.length <= 6) {
-      mensaje += "<br>La contraseña debe tener un mínimo de 6 caracteres.";
-    }
-    if (contra1.toLowerCase() == contra1 || contra1.toUpperCase() == contra1) {
-      mensaje += "<br>La contraseña debe tener mayúsculas y minúsculas.";
-    }
-  }
-
-  return mensaje;
-}
-
 // function VerificarSiNumeros(texto){//esta funcion no funciona
 //     let tieneNum = true;
 //     let i=1;
@@ -98,20 +79,12 @@ function Validarcontrasenia(contra1, contra2) {
 
 //     return tieneNum;
 // }
-function validarCiSeaNum(cedula){
-    let mensaje = "";
-    let i = 1;
-    while (i < cedula.length) {
-        if (!isNaN(cedula)){
-            mensaje += "<br>La cedula debe contener digitos"
-        }
-    }
-}
+
 
 function validarCiNoEsVacioYTieneOchoDigitos(cedula) {
   let mensaje = "";
   let i = 1;
-  if (cedula.trim() == 0) {
+  if (cedula.length == 0) {
     mensaje += "<br> El campo de la cedula no puede estar vacío";
   }
   if(cedula.length < 8){
@@ -120,25 +93,7 @@ function validarCiNoEsVacioYTieneOchoDigitos(cedula) {
   return mensaje;
 }
 
-function ValidarNombreApellido(nombre, apellido) {
-  let mensaje = "";
-  if (nombre = "") {
-    mensaje += "<br>El nombre está vacío";
-  } else if ((apellido = "")) {
-    mensaje += "<br>El apellido está vacío";
-  }
-  return mensaje;
-}
-function validarNombreUsuario(usuario) {
-    let mensaje = "";
-      if (encontrarUsuario(usuario)=true) {
-      mensaje += "<br>El nombre de usuario ya existe"
-    } else if (usuario = "") {
-        mensaje += "<br>El apellido está vacío";
-    };
 
-    return mensaje;
-  }
 
 
 function encontrarUsuario(usuario) {

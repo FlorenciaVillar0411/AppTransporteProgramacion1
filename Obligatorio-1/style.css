@@ -10,7 +10,7 @@
 body {
   font-family: "Oswald", sans-serif;
   background-color: #000000;
-  background-image: url("img/fondo.jpg");
+  /* background-image: url("img/fondo.jpg"); */
   color: #1e272e;
   color: #fff;
   font-size: 16px;
