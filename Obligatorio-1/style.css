@@ -129,7 +129,18 @@ a:focus {
   color: #df5a5a;
 }
 .formRegistroPersona,
-.formRegistroEmpresa {
+.formRegistroEmpresa,
+.ingresar,
+.administradorIngresar,
+.administradorTransporte,
+.administradorListado,
+.administradorEstadistica,
+.personaLogin,
+.personaSolicitudes,
+.personaEstadistica,
+.empresaPendientes,
+.empresaTomadas,
+.empresaEstadistica {
   top: 30px;
   background-color: rgb(235, 234, 219);
   width: 50%;
@@ -147,9 +158,16 @@ h3,
 p,
 input,
 label,
-select {
+select,
+table,
+tr,
+th,
+td {
   background-color: rgb(235, 234, 219);
 }
 p {
   font-weight: bold;
+}
+table {
+  margin: 0 auto;
 }
