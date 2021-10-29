@@ -89,3 +89,41 @@ function ValidarRazonFantasia(nombre, apellido) {
   }
   return mensaje;
 }
+
+/////////////////////////////////////////////////////////////
+//            VALIDACIONES LOGIN USUARIO
+
+function validarNombreUsuarioLogin(usuario) {
+  let mensaje = "<hr>";
+  if (!encontrarUsuario(usuario)) {
+    mensaje += "<br>El nombre de usuario no existe";
+  }
+
+  if ((usuario = "")) {
+    mensaje += "<br>El usuario está vacío";
+  }
+  // else {
+  //   if (!encontrarUsuario(usuario)) {
+  //     mensaje += "<br>El nombre de usuario no existe";
+  //   }
+  // }
+  return mensaje;
+}
+
+function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) {
+  let existe = false;
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < persona.length) {
+    let usuarioGuardado = persona[i];
+    if (usuario === usuarioGuardado.nombreUsuario) {
+      nombreUsuarioEncontrado = true;
+      let contraseniaGuardada = usuarioGuardado.contrasenia;
+      if (contrasenia === contraseniaGuardada) {
+        existe = true;
+      }
+    }
+    i++;
+  }
+  return existe;
+}

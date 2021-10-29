@@ -17,6 +17,9 @@ function botones() {
   document
     .querySelector("#btnRegistrarseE")
     .addEventListener("click", formularioEmpresa);
+  document
+    .querySelector("#btnIngresarP")
+    .addEventListener("click", loginPersona);
 }
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
@@ -107,19 +110,21 @@ function formularioPersona() {
   }
 }
 
-// function VerificarSiNumeros(texto){//esta funcion no funciona
-//     let tieneNum = true;
-//     let i=1;
-//     while (i < texto.length && tieneNum == false) {
-//         if (!isNaN(texto[i])) {
-//             tieneNum = false;
+function loginPersona() {
+  let mensaje1 = "";
+  let nombreUsuario = document
+    .querySelector("#txtNombreUsuarioPLogin")
+    .value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaIngresoP").value;
 
-//         }
-//         i++;
-//     }
+  mensaje1 += validarNombreUsuarioLogin(nombreUsuario);
+  // mensaje1 += existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia);
+  if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
+    mensaje1 = "El usuario es válido";
+  }
 
-//     return tieneNum;
-// }
+  document.querySelector("#mensajeLoginPersona").innerHTML = mensaje1;
+}
 
 function encontrarUsuario(usuario) {
   // let existe = false;
