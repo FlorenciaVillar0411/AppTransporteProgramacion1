@@ -15,7 +15,7 @@ function botones() {
   document.querySelector("#btnRegistrarseE").addEventListener("click", formularioEmpresa);
 }
 function precargarDatos() {
-  registrarPersona("51301233", "Florencia", "Villar", "Flopi_Villar", "123");
+  registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
@@ -31,7 +31,7 @@ function registrarVehiculo(pVehiculo) {
 }
 function registrarEmpresa(pRut,pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia,pVehiculo) {
     let nuevaEmpresa = new Empresa (pRut, pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia,pVehiculo)
-    Empresa.push(nuevaEmpresa);
+    empresa.push(nuevaEmpresa);
 }
 // function ocultarPantallas(){
 //     ocultarPantallaLogin();
@@ -53,18 +53,22 @@ function formularioPersona() {
   let nombreUsuario = document.querySelector("#txtNombreUsuarioP").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaP").value;
   let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
-
-  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+  
+  mensaje += validarCi(cedula);
   mensaje += ValidarNombreApellido(nombre, apellido);
-  mensaje += validarCiNoEsVacioYTieneOchoDigitos(cedula);
-  mensaje += validarCiSeaNum(cedula);
   mensaje += validarNombreUsuario(nombreUsuario);
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+
+
 
   document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
 
-  // if ((mensaje = "")) {
+  if (mensaje == "<hr><hr><hr><hr>") {
     registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
-  // }
+    document.querySelector("#divRegistroUsuarioMensajes").innerHTML = "El usuario se ingresó correctamente";
+    
+  }
+
 }
 
 // function VerificarSiNumeros(texto){//esta funcion no funciona
@@ -88,7 +92,7 @@ function formularioPersona() {
 
 
 function encontrarUsuario(usuario) {
-    let existe = false;
+    // let existe = false;
     let i = 0;
     let nombreUsuarioEncontrado = false;
     while (!nombreUsuarioEncontrado && i < persona.length) {
@@ -98,7 +102,7 @@ function encontrarUsuario(usuario) {
         }
         i++;
     }
-    return existe;
+    return nombreUsuarioEncontrado;
 }
 
 function formularioEmpresa() {
@@ -110,15 +114,15 @@ function formularioEmpresa() {
   let contrasenia = document.querySelector("#txtContraseñaE").value;
   let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
 
-  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-  mensaje += ValidarNombreApellido(RazonSocial, Fantasia);
-  mensaje += validarRut(Rut);
-  mensaje += validarNombreUsuario(nombreUsuario);
+  // mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+  // mensaje += ValidarNombreApellido(RazonSocial, Fantasia);
+  // mensaje += validarRut(Rut);
+  // mensaje += validarNombreUsuario(nombreUsuario);
 
   document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
 
   // if ((mensaje = "")) {
-    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia);
+    // registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia);
   // }
   }
 
