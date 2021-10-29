@@ -1,4 +1,4 @@
-class empresa {
+class Empresa {
   constructor(
     pRut,
     pRazonSocial,

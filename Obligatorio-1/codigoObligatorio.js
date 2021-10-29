@@ -1,6 +1,6 @@
 let persona = [];
-let Empresa = [];
-let Administrador = [];
+let empresa = [];
+let administrador = [];
 let vehiculo = [];
 let usuarioEstaLogueado = false;
 
