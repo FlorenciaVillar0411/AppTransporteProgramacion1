@@ -11,8 +11,12 @@ function inicializar() {
   botones();
 }
 function botones() {
-  document.querySelector("#btnRegistrarseP").addEventListener("click", formularioPersona);
-  document.querySelector("#btnRegistrarseE").addEventListener("click", formularioEmpresa);
+  document
+    .querySelector("#btnRegistrarseP")
+    .addEventListener("click", formularioPersona);
+  document
+    .querySelector("#btnRegistrarseE")
+    .addEventListener("click", formularioEmpresa);
 }
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
@@ -20,20 +24,53 @@ function precargarDatos() {
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camion");
-  registrarEmpresa("123456789012","Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen","2");
-  }
+  registrarEmpresa(
+    "123456789012",
+    "Vehiculos",
+    "Vehiculos Geniales",
+    "VehiGen",
+    "VehiGen",
+    "2"
+  );
+}
 
-function registrarPersona(pCedula,pNombre,pApellido,pNombreUsuario,pContrasenia) {
-  let nuevaPersona = new Persona(pCedula,pNombre,pApellido,pNombreUsuario,pContrasenia);
+function registrarPersona(
+  pCedula,
+  pNombre,
+  pApellido,
+  pNombreUsuario,
+  pContrasenia
+) {
+  let nuevaPersona = new Persona(
+    pCedula,
+    pNombre,
+    pApellido,
+    pNombreUsuario,
+    pContrasenia
+  );
   persona.push(nuevaPersona);
 }
 function registrarVehiculo(pVehiculo) {
   let nuevoVehiculo = new tiposDeVehiculo(pVehiculo);
   vehiculo.push(nuevoVehiculo);
 }
-function registrarEmpresa(pRut,pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia,pVehiculo) {
-    let nuevaEmpresa = new Empresa (pRut, pRazonSocial, pNombreFantasia, pNombreUsuario, pContrasenia,pVehiculo)
-    empresa.push(nuevaEmpresa);
+function registrarEmpresa(
+  pRut,
+  pRazonSocial,
+  pNombreFantasia,
+  pNombreUsuario,
+  pContrasenia,
+  pVehiculo
+) {
+  let nuevaEmpresa = new Empresa(
+    pRut,
+    pRazonSocial,
+    pNombreFantasia,
+    pNombreUsuario,
+    pContrasenia,
+    pVehiculo
+  );
+  empresa.push(nuevaEmpresa);
 }
 // function ocultarPantallas(){
 //     ocultarPantallaLogin();
@@ -55,22 +92,19 @@ function formularioPersona() {
   let nombreUsuario = document.querySelector("#txtNombreUsuarioP").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaP").value;
   let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
-  
+
   mensaje += validarCi(cedula);
   mensaje += ValidarNombreApellido(nombre, apellido);
   mensaje += validarNombreUsuario(nombreUsuario);
   mensaje += Validarcontrasenia(contrasenia, contrasenia2);
 
-
-
   document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
 
   if (mensaje == "<hr><hr><hr><hr>") {
     registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
-    document.querySelector("#divRegistroUsuarioMensajes").innerHTML = "El usuario se ingresó correctamente";
-    
+    document.querySelector("#divRegistroUsuarioMensajes").innerHTML =
+      "El usuario se ingresó correctamente";
   }
-
 }
 
 // function VerificarSiNumeros(texto){//esta funcion no funciona
@@ -87,29 +121,28 @@ function formularioPersona() {
 //     return tieneNum;
 // }
 
-
 function encontrarUsuario(usuario) {
-    // let existe = false;
-    let i = 0;
-    let nombreUsuarioEncontrado = false;
-    while (!nombreUsuarioEncontrado && i < persona.length) {
-        let usuarioGuardado = persona[i];
-        if (usuario === usuarioGuardado.nombreUsuario) {
-            nombreUsuarioEncontrado = true;
-        }
-        i++;
+  // let existe = false;
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < persona.length) {
+    let usuarioGuardado = persona[i];
+    if (usuario === usuarioGuardado.nombreUsuario) {
+      nombreUsuarioEncontrado = true;
     }
-    return nombreUsuarioEncontrado;
+    i++;
+  }
+  return nombreUsuarioEncontrado;
 }
 function encontrarUsuarioEmpresa(usuario) {
   let i = 0;
   let nombreUsuarioEncontrado = false;
   while (!nombreUsuarioEncontrado && i < empresa.length) {
-      let usuarioGuardado = empresa[i];
-      if (usuario === usuarioGuardado.nombreUsuario) {
-          nombreUsuarioEncontrado = true;
-      }
-      i++;
+    let usuarioGuardado = empresa[i];
+    if (usuario === usuarioGuardado.nombreUsuario) {
+      nombreUsuarioEncontrado = true;
+    }
+    i++;
   }
   return nombreUsuarioEncontrado;
 }
@@ -124,24 +157,26 @@ function formularioEmpresa() {
   let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
 
   mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-  mensaje += ValidarNombreApellido(RazonSocial, Fantasia);
+  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
   mensaje += validarRut(Rut);
   mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
 
   document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
 
   if (mensaje == "<hr><hr><hr><hr>") {
-    registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
-    document.querySelector("#divRegistroEmpresaMensajes").innerHTML = "El empresa se ingresó correctamente";
-    
+    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia);
+    document.querySelector("#divRegistroEmpresaMensajes").innerHTML =
+      "El empresa se ingresó correctamente";
   }
-  }
+}
 
-  function iniciarSesion() {
-    let mensaje = '';
-    let usuarioIngresado = document.querySelector("#txtNombreUsuarioP").value;
-    let passwordIngresado = document.querySelector("#txtContraseñaIngresoP").value;
-    usuarioIngresado = usuarioIngresado.trim();
+function iniciarSesion() {
+  let mensaje = "";
+  let usuarioIngresado = document.querySelector("#txtNombreUsuarioP").value;
+  let passwordIngresado = document.querySelector(
+    "#txtContraseñaIngresoP"
+  ).value;
+  usuarioIngresado = usuarioIngresado.trim();
 
-    document.querySelector("#divLoginMensajes").innerHTML = mensaje;
+  document.querySelector("#divLoginMensajes").innerHTML = mensaje;
 }
