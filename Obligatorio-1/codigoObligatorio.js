@@ -20,7 +20,9 @@ function precargarDatos() {
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camion");
-}
+  registrarEmpresa("123456789012","Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen","2");
+  }
+
 function registrarPersona(pCedula,pNombre,pApellido,pNombreUsuario,pContrasenia) {
   let nuevaPersona = new Persona(pCedula,pNombre,pApellido,pNombreUsuario,pContrasenia);
   persona.push(nuevaPersona);
@@ -86,11 +88,6 @@ function formularioPersona() {
 // }
 
 
-
-
-
-
-
 function encontrarUsuario(usuario) {
     // let existe = false;
     let i = 0;
@@ -104,6 +101,18 @@ function encontrarUsuario(usuario) {
     }
     return nombreUsuarioEncontrado;
 }
+function encontrarUsuarioEmpresa(usuario) {
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < empresa.length) {
+      let usuarioGuardado = empresa[i];
+      if (usuario === usuarioGuardado.nombreUsuario) {
+          nombreUsuarioEncontrado = true;
+      }
+      i++;
+  }
+  return nombreUsuarioEncontrado;
+}
 
 function formularioEmpresa() {
   let mensaje = "";
@@ -114,16 +123,18 @@ function formularioEmpresa() {
   let contrasenia = document.querySelector("#txtContraseñaE").value;
   let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
 
-  // mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-  // mensaje += ValidarNombreApellido(RazonSocial, Fantasia);
-  // mensaje += validarRut(Rut);
-  // mensaje += validarNombreUsuario(nombreUsuario);
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+  mensaje += ValidarNombreApellido(RazonSocial, Fantasia);
+  mensaje += validarRut(Rut);
+  mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
 
-  document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
+  document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
 
-  // if ((mensaje = "")) {
-    // registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia);
-  // }
+  if (mensaje == "<hr><hr><hr><hr>") {
+    registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
+    document.querySelector("#divRegistroEmpresaMensajes").innerHTML = "El empresa se ingresó correctamente";
+    
+  }
   }
 
   function iniciarSesion() {
