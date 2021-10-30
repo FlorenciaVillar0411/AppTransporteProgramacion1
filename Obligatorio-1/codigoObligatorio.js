@@ -3,6 +3,7 @@ let empresa = [];
 let administrador = [];
 let vehiculo = [];
 let usuarioEstaLogueado = false;
+let IdVehiculo = 1;
 
 inicializar();
 
@@ -57,8 +58,9 @@ function registrarPersona(
   persona.push(nuevaPersona);
 }
 function registrarVehiculo(pVehiculo) {
-  let nuevoVehiculo = new tiposDeVehiculo(pVehiculo);
-  vehiculo.push(nuevoVehiculo);
+  let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
+  vehiculo.push(nuevoVehiculo,IdVehiculo);
+  IdVehiculo+=1
 }
 function registrarEmpresa(
   pRut,

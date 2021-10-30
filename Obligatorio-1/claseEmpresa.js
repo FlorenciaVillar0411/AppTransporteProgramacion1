@@ -17,8 +17,9 @@ class Empresa {
   }
 }
 
-class tiposDeVehiculo {
-  constructor(pTipoVehiculo) {
+class Vehiculo {
+  constructor(pTipoVehiculo, pIdVehiculo) {
     this.vehiculo = pTipoVehiculo;
+    this.idVehiculo = pIdVehiculo;
   }
 }
