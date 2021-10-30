@@ -127,3 +127,21 @@ function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) {
   }
   return existe;
 }
+
+function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) {
+  let existe = false;
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < empresa.length) {
+    let usuarioGuardado = empresa[i];
+    if (usuario === usuarioGuardado.nombreUsuario) {
+      nombreUsuarioEncontrado = true;
+      let contraseniaGuardada = usuarioGuardado.contrasenia;
+      if (contrasenia === contraseniaGuardada) {
+        existe = true;
+      }
+    }
+    i++;
+  }
+  return existe;
+}

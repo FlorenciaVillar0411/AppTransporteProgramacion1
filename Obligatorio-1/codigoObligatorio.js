@@ -20,6 +20,9 @@ function botones() {
   document
     .querySelector("#btnIngresarP")
     .addEventListener("click", loginPersona);
+    document
+    .querySelector("#btnIngresarE")
+    .addEventListener("click", loginEmpresa);
 }
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
@@ -117,15 +120,16 @@ function loginPersona() {
     .value.trim();
   let contrasenia = document.querySelector("#txtContraseñaIngresoP").value;
 
-  mensaje1 += validarNombreUsuarioLogin(nombreUsuario);
+  // mensaje1 += validarNombreUsuarioLogin(nombreUsuario);
   // mensaje1 += existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia);
   if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
     mensaje1 = "El usuario es válido";
+  }else {
+    mensaje1 = "Usuario o contraseña no válido";
   }
 
   document.querySelector("#mensajeLoginPersona").innerHTML = mensaje1;
 }
-
 function encontrarUsuario(usuario) {
   // let existe = false;
   let i = 0;
@@ -175,13 +179,17 @@ function formularioEmpresa() {
   }
 }
 
-function iniciarSesion() {
-  let mensaje = "";
-  let usuarioIngresado = document.querySelector("#txtNombreUsuarioP").value;
-  let passwordIngresado = document.querySelector(
-    "#txtContraseñaIngresoP"
-  ).value;
-  usuarioIngresado = usuarioIngresado.trim();
+function loginEmpresa() {
+  let mensaje2 = "";
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
 
-  document.querySelector("#divLoginMensajes").innerHTML = mensaje;
+  // mensaje2 += validarNombreUsuarioLogin(nombreUsuario);
+  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
+    mensaje2 = "El usuario es válido";
+  } else {
+    mensaje2 = "Usuario o contraseña no válido";
+  }
+
+  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje2;
 }
