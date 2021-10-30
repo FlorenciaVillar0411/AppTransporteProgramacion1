@@ -2,7 +2,8 @@ let persona = [];
 let empresa = [];
 let administrador = [];
 let vehiculo = [];
-let usuarioEstaLogueado = false;
+let usuarioEstaLogueado = [];
+let AdminEstaLogeado = false;
 let IdVehiculo = 1;
 
 inicializar();
@@ -11,7 +12,10 @@ function inicializar() {
   precargarDatos();
   botones();
   selectVehiculos();
+  registrarAdmin();
+  mostrarVehiculos();
 }
+
 function botones() {
   document
     .querySelector("#btnRegistrarseP")
@@ -25,7 +29,15 @@ function botones() {
   document
     .querySelector("#btnIngresarE")
     .addEventListener("click", loginEmpresa);
+    document
+    .querySelector("#btnIngresarA")
+    .addEventListener("click", loginAdmin);
+    document
+    .querySelector("#btnAgregarVehiculo")
+    .addEventListener("click", AgregarVehiculoAdmin);
+
 }
+
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
@@ -51,10 +63,16 @@ function registrarPersona(
   );
   persona.push(nuevaPersona);
 }
+
 function registrarVehiculo(pVehiculo) {
   let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
   vehiculo.push(nuevoVehiculo, IdVehiculo);
   IdVehiculo += 1;
+}
+
+function registrarAdmin() {
+  let nuevoAdmin = new Admin("Admin", "Admin01");
+  administrador.push(nuevoAdmin);
 }
 
 function registrarEmpresa(
@@ -92,7 +110,7 @@ function formularioPersona() {
   let cedula = parseInt(document.querySelector("#txtCedula").value);
   let nombre = document.querySelector("#txtNombre").value.trim();
   let apellido = document.querySelector("#txtApellido").value.trim();
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioP").value.trim();
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioPRegistro").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaP").value;
   let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
 
@@ -117,8 +135,7 @@ function loginPersona() {
     .value.trim();
   let contrasenia = document.querySelector("#txtContraseñaIngresoP").value;
 
-  // mensaje1 += validarNombreUsuarioLogin(nombreUsuario);
-  // mensaje1 += existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia);
+
   if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
     mensaje1 = "El usuario es válido";
   } else {
@@ -127,37 +144,12 @@ function loginPersona() {
 
   document.querySelector("#mensajeLoginPersona").innerHTML = mensaje1;
 }
-function encontrarUsuario(usuario) {
-  // let existe = false;
-  let i = 0;
-  let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < persona.length) {
-    let usuarioGuardado = persona[i];
-    if (usuario === usuarioGuardado.nombreUsuario) {
-      nombreUsuarioEncontrado = true;
-    }
-    i++;
-  }
-  return nombreUsuarioEncontrado;
-}
-function encontrarUsuarioEmpresa(usuario) {
-  let i = 0;
-  let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < empresa.length) {
-    let usuarioGuardado = empresa[i];
-    if (usuario === usuarioGuardado.nombreUsuario) {
-      nombreUsuarioEncontrado = true;
-    }
-    i++;
-  }
-  return nombreUsuarioEncontrado;
-}
+
 function loginEmpresa() {
   let mensaje2 = "";
   let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
 
-  // mensaje2 += validarNombreUsuarioLogin(nombreUsuario);
   if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
     mensaje2 = "El usuario es válido";
   } else {
@@ -177,13 +169,11 @@ function formularioEmpresa() {
   let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
   let tipoVehiculo = document.querySelector("#txtselectRegistroEmpresa").value;
 
-  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
   mensaje += validarRut(Rut);
+  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
   mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
   mensaje += validarSelect(tipoVehiculo);
-
-
 
   document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
 
@@ -222,4 +212,68 @@ function selectVehiculos() {
     vehiculosParaMostrarEnHTML = "No existen vehiculos";
   }
   document.querySelector("#selectRegistroEmpresa").innerHTML = vehiculosParaMostrarEnHTML;
+}
+
+function loginAdmin(){
+  let mensaje1 = "";
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioALogin").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaIngresoA").value;
+
+  if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
+    mensaje1 = "El usuario es válido";
+    AdminEstaLogeado = true;
+  } else {
+    mensaje1 = "Usuario o contraseña no válido";
+  }
+
+  document.querySelector("#mensajeLoginAdmin").innerHTML = mensaje1;
+}
+
+function mostrarVehiculos() {
+  let vehiculosParaMostrarEnHTML = "";
+
+  if (vehiculo.length > 0) {
+    vehiculosParaMostrarEnHTML = `
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Vehiculo</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    for (let i = 0; i < vehiculo.length; i++) {
+        let vehiculoActual = vehiculo[i];
+        if (i % 2 == 0){        //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
+
+        vehiculosParaMostrarEnHTML += `
+                <tr>
+                    <td>${vehiculoActual.vehiculo}</td>
+                </tr>
+        `;
+        }
+    }
+
+    vehiculosParaMostrarEnHTML += `
+            </tbody>
+        </table>
+    `;
+}
+  document.querySelector("#tablaVehiculosAdmin").innerHTML = vehiculosParaMostrarEnHTML;
+}
+
+function AgregarVehiculoAdmin(){
+  let vehiculo = document.querySelector("#ingresarVehiculo").value.trim();
+  if (existeVehiculo(vehiculo)){
+    AltaVehiculo="El vehiculo ingresado ya existe."
+  } else{
+    AltaVehiculo="El vehiculo ha sido ingresado."
+    registrarVehiculo(vehiculo);
+    mostrarVehiculos();
+    selectVehiculos();
+
+  }
+  document.querySelector("#mensajeAltaVehiculo").innerHTML=AltaVehiculo;
+  
 }

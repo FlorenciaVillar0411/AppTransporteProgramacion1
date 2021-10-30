@@ -3,8 +3,10 @@ function Validarcontrasenia(contra1, contra2) {
   if (contra1 != contra2) {
     mensaje += "<br>Las contraseñas no son iguales.";
   } else {
-    if (contra1.trim() == "") {
+    if (contra1 == "") {
       mensaje += "<br>La contraseña está vacía.";
+    } else if (contra1.trim() == "") {
+      mensaje += "<br>La contraseña no puede tener únicamente espacios.";
     }
     if (contra1.length < 6) {
       mensaje += "<br>La contraseña debe tener un mínimo de 6 caracteres.";
@@ -13,7 +15,6 @@ function Validarcontrasenia(contra1, contra2) {
       mensaje += "<br>La contraseña debe tener mayúsculas y minúsculas.";
     }
   }
-
   return mensaje;
 }
 
@@ -47,10 +48,9 @@ function validarNombreUsuario(usuario) {
   if (encontrarUsuario(usuario)) {
     mensaje += "<br>El nombre de usuario ya existe";
   }
-  if ((usuario = "")) {
+  if (usuario == "") {
     mensaje += "<br>El usuario está vacío";
   }
-
   return mensaje;
 }
 ///////////////////////////////////////////////////////
@@ -63,9 +63,6 @@ function validarRut(Rut) {
   if (Rut == "") {
     mensaje += "<br> El campo del RUT está vacío";
   }
-  // if(cedula.length != 8){
-  //     mensaje += "<br> El campo de la cedula, debe contener 8 digitos"
-  // }
   return mensaje;
 }
 function validarNombreUsuarioEmpresa(usuario) {
@@ -73,7 +70,7 @@ function validarNombreUsuarioEmpresa(usuario) {
   if (encontrarUsuarioEmpresa(usuario)) {
     mensaje += "<br>El nombre de usuario ya existe";
   }
-  if ((usuario = "")) {
+  if (usuario == "") {
     mensaje += "<br>El usuario está vacío";
   }
 
@@ -110,11 +107,6 @@ function validarNombreUsuarioLogin(usuario) {
   if ((usuario = "")) {
     mensaje += "<br>El usuario está vacío";
   }
-  // else {
-  //   if (!encontrarUsuario(usuario)) {
-  //     mensaje += "<br>El nombre de usuario no existe";
-  //   }
-  // }
   return mensaje;
 }
 
@@ -152,4 +144,63 @@ function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) {
     i++;
   }
   return existe;
+}
+
+
+function encontrarUsuario(usuario) {
+  // let existe = false;
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < persona.length) {
+    let usuarioGuardado = persona[i];
+    if (usuario === usuarioGuardado.nombreUsuario) {
+      nombreUsuarioEncontrado = true;
+    }
+    i++;
+  }
+  return nombreUsuarioEncontrado;
+}
+function encontrarUsuarioEmpresa(usuario) {
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < empresa.length) {
+    let usuarioGuardado = empresa[i];
+    if (usuario === usuarioGuardado.nombreUsuario) {
+      nombreUsuarioEncontrado = true;
+    }
+    i++;
+  }
+  return nombreUsuarioEncontrado;
+}
+
+function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
+  let existe = false;
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < administrador.length) {
+    let usuarioGuardado = administrador[i];
+    if (usuario === usuarioGuardado.nombre){
+      nombreUsuarioEncontrado = true;
+      let contraseniaGuardada = usuarioGuardado.contrasenia;
+      if (contrasenia === contraseniaGuardada) {
+        existe = true;
+      }
+    }
+    i++;
+  }
+  return existe;
+}
+
+function existeVehiculo(palabra) {
+  // let existe = false;
+  let i = 0;
+  let palabraEncontrado = false;
+  while (!palabraEncontrado && i < vehiculo.length) {
+    let vehiculoActual = vehiculo[i];
+    if (palabra == vehiculoActual.vehiculo) {
+      palabraEncontrado = true;
+    }
+    i++;
+  }
+  return palabraEncontrado;
 }

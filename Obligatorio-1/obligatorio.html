@@ -110,7 +110,7 @@
             <br><hr><br>
             <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
             <br><br><br>
-            <h3>INGRESAR</h3>
+            <h3>INGRESAR PERSONA</h3>
             <br><br><br>
             <label>Ingrese Nombre de Usuario:</label><br>
             <input type="text" id="txtNombreUsuarioPLogin" placeholder="NombreDeUsuario"><br><br>
@@ -127,7 +127,7 @@
             <br><hr><br>
             <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
             <br><br><br>
-            <h3>INGRESAR</h3>
+            <h3>INGRESAR EMPRESA</h3>
             <br><br><br>
             <label>Ingrese Nombre de Usuario:</label><br>
             <input type="text" id="txtNombreUsuarioELogin" placeholder="NombreDeUsuario"><br><br>
@@ -135,6 +135,23 @@
             <input type="password" id="txtContraseñaIngresoE" placeholder="Contraseña"><br><br>
             <div id = "mensajeLoginEmpresa"></div>
             <input type="button" value="INGRESAR" id="btnIngresarE">
+            <br><br><br>
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+            <br><br><br>
+        </div>
+
+        <div class="ingresar"> <!--ADMIN-->
+            <br><hr><br>
+            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+            <br><br><br>
+            <h3>INGRESAR ADMIN</h3>
+            <br><br><br>
+            <label>Ingrese Nombre de Usuario:</label><br>
+            <input type="text" id="txtNombreUsuarioALogin" placeholder="NombreDeUsuario"><br><br>
+            <label>Ingrese Contraseña:</label><br>
+            <input type="password" id="txtContraseñaIngresoA" placeholder="Contraseña"><br><br>
+            <div id = "mensajeLoginAdmin"></div>
+            <input type="button" value="INGRESAR" id="btnIngresarA">
             <br><br><br>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
             <br><br><br>
@@ -206,24 +223,12 @@
             </center>
             <br><br><br>
             <h3>LISTADO DE TIPOS DE TRANSPORTE</h3>
-
-            <table border="1">
-				<tr> 
-					<th>TIPOS DE TRANSPORTE</th>
-				</tr>
-				<tr> 
-					<td>Moto</td>
-				</tr>
-				<tr> 
-                    <td>Auto</td>
-				</tr>
-                <tr> 
-                    <td>Camión</td>
-				</tr>
-            </table>
             <br><br><br>
-            <input type="text" placeholder="INGRESAR TIPO DE TRANSPORTE">
-            <input type="button" value="AGREGAR AL LISTADO">
+            <div id = "tablaVehiculosAdmin"></div>
+            <br><br><br>
+            <input type="text" id="ingresarVehiculo" placeholder="INGRESAR TIPO DE TRANSPORTE">
+            <input type="button" value="AGREGAR AL LISTADO" id ="btnAgregarVehiculo">
+            <div id = "mensajeAltaVehiculo"></div>
             <br><br><br>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
