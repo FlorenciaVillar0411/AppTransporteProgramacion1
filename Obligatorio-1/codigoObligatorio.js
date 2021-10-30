@@ -10,6 +10,7 @@ inicializar();
 function inicializar() {
   precargarDatos();
   botones();
+  selectVehiculos();
 }
 function botones() {
   document
@@ -21,7 +22,7 @@ function botones() {
   document
     .querySelector("#btnIngresarP")
     .addEventListener("click", loginPersona);
-    document
+  document
     .querySelector("#btnIngresarE")
     .addEventListener("click", loginEmpresa);
 }
@@ -30,15 +31,8 @@ function precargarDatos() {
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
-  registrarVehiculo("Camion");
-  registrarEmpresa(
-    "123456789012",
-    "Vehiculos",
-    "Vehiculos Geniales",
-    "VehiGen",
-    "VehiGen",
-    "2"
-  );
+  registrarVehiculo("Camión");
+  registrarEmpresa("123456789012","Vehiculos","Vehiculos Geniales","VehiGen","VehiGen","2");
 }
 
 function registrarPersona(
@@ -59,9 +53,10 @@ function registrarPersona(
 }
 function registrarVehiculo(pVehiculo) {
   let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
-  vehiculo.push(nuevoVehiculo,IdVehiculo);
-  IdVehiculo+=1
+  vehiculo.push(nuevoVehiculo, IdVehiculo);
+  IdVehiculo += 1;
 }
+
 function registrarEmpresa(
   pRut,
   pRazonSocial,
@@ -126,7 +121,7 @@ function loginPersona() {
   // mensaje1 += existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia);
   if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
     mensaje1 = "El usuario es válido";
-  }else {
+  } else {
     mensaje1 = "Usuario o contraseña no válido";
   }
 
@@ -157,30 +152,6 @@ function encontrarUsuarioEmpresa(usuario) {
   }
   return nombreUsuarioEncontrado;
 }
-
-function formularioEmpresa() {
-  let mensaje = "";
-  let Rut = document.querySelector("#txtRut").value;
-  let RazonSocial = document.querySelector("#txtRazon").value.trim();
-  let Fantasia = document.querySelector("#txtFantasia").value.trim();
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaE").value;
-  let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
-
-  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
-  mensaje += validarRut(Rut);
-  mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
-
-  document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
-
-  if (mensaje == "<hr><hr><hr><hr>") {
-    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia);
-    document.querySelector("#divRegistroEmpresaMensajes").innerHTML =
-      "El empresa se ingresó correctamente";
-  }
-}
-
 function loginEmpresa() {
   let mensaje2 = "";
   let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
@@ -194,4 +165,61 @@ function loginEmpresa() {
   }
 
   document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje2;
+}
+
+function formularioEmpresa() {
+  let mensaje = "";
+  let Rut = document.querySelector("#txtRut").value;
+  let RazonSocial = document.querySelector("#txtRazon").value.trim();
+  let Fantasia = document.querySelector("#txtFantasia").value.trim();
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaE").value;
+  let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
+  let tipoVehiculo = document.querySelector("#txtselectRegistroEmpresa").value;
+
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
+  mensaje += validarRut(Rut);
+  mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
+  mensaje += validarSelect(tipoVehiculo);
+
+
+
+  document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
+
+  if (mensaje == "<hr><hr><hr><hr>") {
+    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia, tipoVehiculo);
+    document.querySelector("#divRegistroEmpresaMensajes").innerHTML =
+      "El empresa se ingresó correctamente";
+  }
+}
+
+function selectVehiculos() {
+  let vehiculosParaMostrarEnHTML = "";
+
+  if (vehiculo.length > 0) {
+    vehiculosParaMostrarEnHTML = `
+    <select id="txtselectRegistroEmpresa">
+      <option value ="0">
+        Seleccione un vehiculo...
+      </option>
+    `;
+
+      for (let i = 0; i < vehiculo.length; i++) {
+          let vehiculoActual = vehiculo[i];
+           if (i % 2 == 0){        //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
+            vehiculosParaMostrarEnHTML += `
+            <option value = "${vehiculoActual.idVehiculo}">
+            ${vehiculoActual.vehiculo}
+            </option>
+    `;
+           }
+      }
+      vehiculosParaMostrarEnHTML += `
+              </select>
+      `;
+  } else {
+    vehiculosParaMostrarEnHTML = "No existen vehiculos";
+  }
+  document.querySelector("#selectRegistroEmpresa").innerHTML = vehiculosParaMostrarEnHTML;
 }

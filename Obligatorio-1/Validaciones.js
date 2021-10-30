@@ -90,6 +90,14 @@ function ValidarRazonFantasia(nombre, apellido) {
   return mensaje;
 }
 
+function validarSelect (tipoVehiculo){
+  let mensaje = "";
+  if(tipoVehiculo == 0){
+    mensaje += "<br> Debe seleccionar un vehiculo"
+  }
+  return mensaje;
+}
+
 /////////////////////////////////////////////////////////////
 //            VALIDACIONES LOGIN USUARIO
 
