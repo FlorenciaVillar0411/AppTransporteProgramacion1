@@ -14,28 +14,36 @@ function inicializar() {
   selectVehiculos();
   registrarAdmin();
   mostrarVehiculos();
+  ocultarPantallas();
+}
+
+function ocultarPantallas(){
+  // document.querySelector("#cuerpo").style.display = "none";
+
 }
 
 function botones() {
-  document
-    .querySelector("#btnRegistrarseP")
-    .addEventListener("click", formularioPersona);
-  document
-    .querySelector("#btnRegistrarseE")
-    .addEventListener("click", formularioEmpresa);
-  document
-    .querySelector("#btnIngresarP")
-    .addEventListener("click", loginPersona);
-  document
-    .querySelector("#btnIngresarE")
-    .addEventListener("click", loginEmpresa);
-    document
-    .querySelector("#btnIngresarA")
-    .addEventListener("click", loginAdmin);
-    document
-    .querySelector("#btnAgregarVehiculo")
-    .addEventListener("click", AgregarVehiculoAdmin);
+  document.querySelector("#btnRegistrarseP").addEventListener("click", formularioPersona);
+  document.querySelector("#btnRegistrarseE").addEventListener("click", formularioEmpresa);
+  document.querySelector("#btnIngresarP").addEventListener("click", loginPersona);
+  document.querySelector("#btnIngresarE").addEventListener("click", loginEmpresa);
+  document.querySelector("#btnIngresarA").addEventListener("click", loginAdmin);
+  document .querySelector("#btnAgregarVehiculo").addEventListener("click", AgregarVehiculoAdmin);
+  document.querySelector("#btnRegistroEmpresa").addEventListener("click", mostrarRegistroEmpresa);
+  document.querySelector("#btnRegistroPersona").addEventListener("click", mostrarRegistroPresona);
+  document.querySelector("#btnLogin").addEventListener("click", mostrarLogin);
+}
 
+function mostrarRegistroEmpresa(){
+  document.querySelector("#formRegistroEmpresa").style.display = "block";
+}
+
+function mostrarRegistroPresona(){
+  document.querySelector("#formRegistroPersona").style.display = "block";
+}
+
+function mostrarLogin(){
+  document.querySelector("#divLogin").style.display = "block";
 }
 
 function precargarDatos() {
@@ -66,7 +74,7 @@ function registrarPersona(
 
 function registrarVehiculo(pVehiculo) {
   let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
-  vehiculo.push(nuevoVehiculo, IdVehiculo);
+  vehiculo.push(nuevoVehiculo);
   IdVehiculo += 1;
 }
 
@@ -93,17 +101,6 @@ function registrarEmpresa(
   );
   empresa.push(nuevaEmpresa);
 }
-// function ocultarPantallas(){
-//     ocultarPantallaLogin();
-
-// }
-// function  ocultarPantallaLogin(){
-//     document.querySelector("f#ormularioPersona").style.display = "none";
-// }
-// function mostrarPantallaLogin(){
-//     ocultarPantallaLogin();
-//     document.querySelector("#formularioPersona").style.display = "block"
-// }
 
 function formularioPersona() {
   let mensaje = "";
