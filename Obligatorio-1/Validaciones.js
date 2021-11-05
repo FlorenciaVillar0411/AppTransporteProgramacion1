@@ -173,6 +173,33 @@ function encontrarUsuarioEmpresa(usuario) {
   return nombreUsuarioEncontrado;
 }
 
+function encontrarEmpresapPorUsuario(usuario) {
+  let empresaEncontrada = null;
+  let i = 0;
+  while (!empresaEncontrada && i < empresa.length) {
+      let empresaActual = empresa[i];
+      if (usuario == empresaActual.id) {
+        empresaEncontrada = empresaActual;
+      }
+      i++;
+  }
+  return empresaEncontrada;
+}
+
+function encontrarPersonaPorUsuario(usuario) {
+  let personaEncontrada = null;
+  let i = 0;
+  while (!personaEncontrada && i < persona.length) {
+      let personaActual = persona[i];
+      if (usuario == personaActual.id) {
+        personaEncontrada = personaActual;
+      }
+      i++;
+  }
+  return personaEncontrada;
+}
+
+
 function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
   let existe = false;
   let i = 0;

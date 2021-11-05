@@ -22,9 +22,11 @@
                 </ul>
             </div>
         </header>
-        <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+        <div id="btnCerrarSesion">
+            <input type="button" value="CERRAR SESIÓN" id="btnCerrarSesion">
+        </div>
         <main role="main">
-            <section class="intro">
+            <section id ="LemaYFoto"class="intro">
                 <article>
                     <div class="flex-center">
                         <div class="banner y-flex-center flex-center">
@@ -38,12 +40,17 @@
                 </article>
             </section>
             <br><br>
+        </main>
+
+        <div id="RegistroYLogin" class="cuerpo">
+            <br><br><br>
+            <input class="boton" type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+            <br><br><br>
+        </div>
 
 
             
         <div id="formRegistroPersona" class="cuerpo"> 
-            <br><br><br>
-            <input class="boton" type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
             <br><br><br>
             <h3>REGISTRARSE - PERFIL PERSONA</h3>
             <br><br>
@@ -75,8 +82,7 @@
 
         <div id="formRegistroEmpresa" class="cuerpo"> 
             <br><hr><br>
-            <input class="" type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-            <br><br><br>
+         
             <h3>REGISTRARSE - PERFIL EMPRESA</h3>
             <br><br><br>
             <P>Llene el formulario para registrarse:</P><br>
@@ -97,7 +103,7 @@
             <div id="divRegistroEmpresaMensajes"></div>
             <br><br><br>
             <input type="button" value="Registrarse" id="btnRegistrarseE">
-            <input type="button" value="Ya estoy registrado" id="btnLoginP">
+            <input type="button" value="Ya estoy registrado" id="btnLoginE">
             <br><br><br>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
             <br><br><br>
@@ -105,28 +111,11 @@
 
 
 
-        <div class="cuerpo"> <!--PERSONA-->
-            <br><hr><br>
-            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-            <br><br><br>
-            <h3>INGRESAR PERSONA</h3>
-            <br><br><br>
-            <label>Ingrese Nombre de Usuario:</label><br>
-            <input type="text" id="txtNombreUsuarioPLogin" placeholder="NombreDeUsuario"><br><br>
-            <label>Ingrese Contraseña:</label><br>
-            <input type="password" id="txtContraseñaIngresoP" placeholder="Contraseña"><br><br>
-            <div id = "mensajeLoginPersona"></div>
-            <input type="button" value="INGRESAR" id="btnIngresarP">
-            <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
-            <br><br><br>
-        </div>
 
         <div id="divLogin" class="cuerpo"> <!--EMPRESA-->
             <br><hr><br>
-            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-            <br><br><br>
-            <h3>INGRESAR EMPRESA</h3>
+    
+            <h3>INGRESAR USUARIO</h3>
             <br><br><br>
             <label>Ingrese Nombre de Usuario:</label><br>
             <input type="text" id="txtNombreUsuarioELogin" placeholder="NombreDeUsuario"><br><br>
@@ -139,36 +128,23 @@
             <br><br><br>
         </div>
 
-        <div class="cuerpo"> <!--ADMIN-->
-            <br><hr><br>
-            <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-            <br><br><br>
-            <h3>INGRESAR ADMIN</h3>
-            <br><br><br>
-            <label>Ingrese Nombre de Usuario:</label><br>
-            <input type="text" id="txtNombreUsuarioALogin" placeholder="NombreDeUsuario"><br><br>
-            <label>Ingrese Contraseña:</label><br>
-            <input type="password" id="txtContraseñaIngresoA" placeholder="Contraseña"><br><br>
-            <div id = "mensajeLoginAdmin"></div>
-            <input type="button" value="INGRESAR" id="btnIngresarA">
-            <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
-            <br><br><br>
-        </div>
+ 
 
 
-        
-        <div class="cuerpo"> 
+        <div id="pantallaAdmin" class="cuerpo"> 
             <br><hr><br>
             <center>
                 <h3>PERFIL ADMINISTRADOR</h3>
                 <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
 
                 <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminempresas">
                 <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
                 <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
             </center>
+        </div>
+
+        <div id = "adminlistadoempresas" class="cuerpo"> 
+            
             <br><br><br>
             <h3>LISTADO DE EMPRESAS</h3>
             <br><br><br>
@@ -209,17 +185,8 @@
         </div>
 
 
-        <div class="cuerpo"> 
-            <br><hr><br>
-            <center>
-                <h3>PERFIL ADMINISTRADOR</h3>
-                <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-
-                <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminEmpresas">
-                <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
-            </center>
+        <div id ="adminlistadotransporte"class="cuerpo"> 
+        
             <br><br><br>
             <h3>LISTADO DE TIPOS DE TRANSPORTE</h3>
             <br><br><br>
@@ -234,17 +201,8 @@
 
 
 
-        <div class="cuerpo"> 
-            <br><hr><br>
-            <center>
-                <h3>PERFIL ADMINISTRADOR</h3>
-                <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-                <br><br><br>
-                <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminEmpresas">
-                <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
-            </center>
+        <div id = "adminInformacionEstadistica"class="cuerpo"> 
+      
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
 
@@ -267,18 +225,21 @@
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
-
-        <div class="cuerpo"> 
+        <div id="pantallaPersona" class="cuerpo"> 
             <br><hr><br>
             <center>
                 <h3>PERFIL PERSONA</h3>
                 <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
 
                 <input type="button" value="SOLICITAR ENVÍOS" id="btnSolicitarEnvio">
                 <input type="button" value="LISTADO DE PEDIDOS" id="btnListadoPedidosP">
                 <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
             </center>
+        </div>
+
+
+        <div id ="PersonaSolicitarEnvios" class="cuerpo"> 
+           
             <P>Llene el formulario para realizar un envío:</P><br>
             <br><br><br>
             <label>Ingrese Descripción del Producto</label><br>
@@ -300,17 +261,8 @@
         </div>
 
 
-        <div class="cuerpo"> 
-            <br><hr><br>
-            <center>
-                <h3>PERFIL PERSONA</h3>
-                <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-                <br><br><br>
-                <input type="button" value="SOLICITAR ENVÍOS" id="btnSolicitarEnvio">
-                <input type="button" value="LISTADO DE PEDIDOS" id="btnListadoPedidosP">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
-            </center>
+        <div id ="PersonaListadoSolicitudes" class="cuerpo"> 
+            
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES</h3>
 
@@ -345,17 +297,8 @@
         </div>
 
 
-        <div class="cuerpo"> 
-            <br><hr><br>
-            <center>
-                <h3>PERFIL PERSONA</h3>
-                <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-                <br><br><br>
-                <input type="button" value="SOLICITAR ENVÍOS" id="btnSolicitarEnvio">
-                <input type="button" value="LISTADO DE PEDIDOS" id="btnListadoPedidosP">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
-            </center>
+        <div id ="PersonaInformacionEstadistica" class="cuerpo"> 
+            
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
 
@@ -382,18 +325,20 @@
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
-        
-        <div class="cuerpo"> 
+        <div id="pantallaEmpresa" class="cuerpo"> 
             <br><hr><br>
-            <center>
+            <<center>
                 <h3>PERFIL EMPRESA</h3>
                 <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-                <br><br><br>
-                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitarEnvio">
-                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosP">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
+
+                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitudesE">
+                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosE">
+                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasEmpresa">
             </center>
+        </div>
+
+        <div id ="EmpresaslistadoSolicitudes" class="cuerpo"> 
+           
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES PENDIENTES</h3>
 
@@ -405,41 +350,15 @@
                     <th>VEHICULO</th>
 					<th>ESTADO</th>
 				</tr>
-				<tr> 
-					<td>Caja</td>
-					<td>IMG</td>
-					<td>56</td>
-                    <td>MOTO</td>
-                    <td>
-                        <input type="button" value="TOMAR" id="btnHabilitarEmpresa">
-                    </td>
-				</tr>
-                <tr> 
-					<td>MOCHILA</td>
-					<td>IMG</td>
-					<td>67</td>
-                    <td>MOTO</td>
-                    <td>
-					<input type="button" value="TOMAR" id="btnHabilitarEmpresa">
-                    </td>
-				</tr>
+				
             </table>
             <br><br><br>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
 
-        <div class="cuerpo">
-            <br><hr><br>
-            <<center>
-                <h3>PERFIL EMPRESA</h3>
-                <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-
-                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitarEnvio">
-                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosP">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
-            </center>
+        <div id ="EmpresaslistadoSolicitudesTomadas" class="cuerpo">
+            
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES TOMADAS</h3>
 
@@ -477,17 +396,8 @@
         </div>
 
 
-        <div class="cuerpo"> 
-            <br><hr><br>
-            <center>
-                <h3>PERFIL EMPRESA</h3>
-                <br><br><br>
-                <input type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
-                <br><br><br>
-                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitarEnvio">
-                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosP">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasPersona">
-            </center>
+        <div id ="EmpresasInformacionEstadistica" class="cuerpo"> 
+           
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <p><strong>USUARIO QUE REALIZÓ MÁS TRASLADOS:</strong><br>Agustín Pereira 15 <br>Agustina Pereyra 15 <br></p>

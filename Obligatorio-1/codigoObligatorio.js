@@ -2,8 +2,9 @@ let persona = [];
 let empresa = [];
 let administrador = [];
 let vehiculo = [];
-let usuarioEstaLogueado = [];
 let AdminEstaLogeado = false;
+let personaLogeada =[]
+let empresaLogeada =[]
 let IdVehiculo = 1;
 
 inicializar();
@@ -18,34 +19,137 @@ function inicializar() {
 }
 
 function ocultarPantallas(){
-  // document.querySelector("#cuerpo").style.display = "none";
+  document.querySelector("#RegistroYLogin").style.display = "none";
+  document.querySelector("#formRegistroPersona").style.display = "none";
+  document.querySelector("#formRegistroEmpresa").style.display = "none";
+  document.querySelector("#divLogin").style.display = "none";
+  document.querySelector("#pantallaAdmin").style.display = "none";
+  document.querySelector("#pantallaEmpresa").style.display = "none";
+  document.querySelector("#pantallaPersona").style.display = "none";
+  document.querySelector("#adminlistadoempresas").style.display = "none";
+  document.querySelector("#adminlistadotransporte").style.display = "none";
+  document.querySelector("#adminInformacionEstadistica").style.display = "none";
+  document.querySelector("#PersonaSolicitarEnvios").style.display = "none";
+  document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
+  document.querySelector("#PersonaInformacionEstadistica").style.display = "none";
+  document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
+  document.querySelector("#EmpresaslistadoSolicitudes").style.display = "none";
+  document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "none";
+  document.querySelector("#EmpresasInformacionEstadistica").style.display = "none";
+  document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
+  if (!AdminEstaLogeado||!personaLogeada||!empresaLogeada){
+    document.querySelector("#btnCerrarSesion").style.display = "none";
+  }
 
 }
 
 function botones() {
+  // REGISTRARSE
   document.querySelector("#btnRegistrarseP").addEventListener("click", formularioPersona);
   document.querySelector("#btnRegistrarseE").addEventListener("click", formularioEmpresa);
-  document.querySelector("#btnIngresarP").addEventListener("click", loginPersona);
-  document.querySelector("#btnIngresarE").addEventListener("click", loginEmpresa);
-  document.querySelector("#btnIngresarA").addEventListener("click", loginAdmin);
-  document .querySelector("#btnAgregarVehiculo").addEventListener("click", AgregarVehiculoAdmin);
   document.querySelector("#btnRegistroEmpresa").addEventListener("click", mostrarRegistroEmpresa);
   document.querySelector("#btnRegistroPersona").addEventListener("click", mostrarRegistroPresona);
+  //Login
   document.querySelector("#btnLogin").addEventListener("click", mostrarLogin);
+  document.querySelector("#btnLoginP").addEventListener("click", mostrarLogin);
+  document.querySelector("#btnLoginE").addEventListener("click", mostrarLogin);
+  document.querySelector("#btnIngresarE").addEventListener("click", login);
+
+  // Pantallas Admin
+  document.querySelector("#btnAdminempresas").addEventListener("click", pantallaAdminHabilitarEmpresas);
+  document.querySelector("#btnAniadirTransporte").addEventListener("click", pantallaAdminAniadirTransporte);
+  document.querySelector("#btnVerEstadísticasAdmin").addEventListener("click", pantallaAdminEstadistica);
+  document .querySelector("#btnAgregarVehiculo").addEventListener("click", AgregarVehiculoAdmin);
+
+  //Pantallas persona
+  document.querySelector("#btnSolicitarEnvio").addEventListener("click", pantallaPersonaSolicitar);
+  document.querySelector("#btnListadoPedidosP").addEventListener("click", pantallaPersonaListado);
+  document.querySelector("#btnVerEstadísticasPersona").addEventListener("click", pantallaPersonaEstadisticas);
+ 
+  //Pantallas EMPRESA
+ document.querySelector("#btnSolicitudesE").addEventListener("click", pantallaEmpresaSolicitudes);
+ document.querySelector("#btnListadoPedidosE").addEventListener("click", pantallaEmpresaPedidosTomados);
+ document.querySelector("#btnVerEstadísticasEmpresa").addEventListener("click", pantallaEmpresaEstadisticas);
+
+ //CERRAR SESION
+ document.querySelector("#btnCerrarSesion").addEventListener("click", cerrarSesion);
+
+}
+function cerrarSesion(){
+  AdminEstaLogeado = false;
+  personaLogeada =[]
+  empresaLogeada =[]
+  ocultarPantallas()
+
 }
 
+
+//MOSTRAR PANTALLAS DE EMPRESAS
+function pantallaEmpresaSolicitudes(){
+  ocultarPantallas()
+  document.querySelector("#pantallaEmpresa").style.display = "block";
+  document.querySelector("#EmpresaslistadoSolicitudes").style.display = "block";
+}
+function pantallaEmpresaPedidosTomados(){
+  ocultarPantallas()
+  document.querySelector("#pantallaEmpresa").style.display = "block";
+  document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "block";
+}
+function pantallaEmpresaEstadisticas(){
+  ocultarPantallas()
+  document.querySelector("#pantallaEmpresa").style.display = "block";
+  document.querySelector("#EmpresasInformacionEstadistica").style.display = "block";
+}
+
+//MOSTRAR PANTALLAS DE PERSONA
+
+function pantallaPersonaSolicitar(){
+  ocultarPantallas()
+  document.querySelector("#pantallaPersona").style.display = "block";
+  document.querySelector("#PersonaSolicitarEnvios").style.display = "block";
+}
+function pantallaPersonaListado(){
+  ocultarPantallas()
+  document.querySelector("#pantallaPersona").style.display = "block";
+  document.querySelector("#PersonaListadoSolicitudes").style.display = "block";
+}
+function pantallaPersonaEstadisticas(){
+  ocultarPantallas()
+  document.querySelector("#pantallaPersona").style.display = "block";
+  document.querySelector("#PersonaInformacionEstadistica").style.display = "block";
+}
+//MOSTRAR PANTALLAS DE ADMIN
+
+function pantallaAdminHabilitarEmpresas(){
+  ocultarPantallas()
+  document.querySelector("#pantallaAdmin").style.display = "block";
+  document.querySelector("#adminlistadoempresas").style.display = "block";
+}
+function pantallaAdminAniadirTransporte(){
+  ocultarPantallas()
+  document.querySelector("#pantallaAdmin").style.display = "block";
+  document.querySelector("#adminlistadotransporte").style.display = "block";
+}
+function pantallaAdminEstadistica(){
+  ocultarPantallas()
+  document.querySelector("#pantallaAdmin").style.display = "block";
+  document.querySelector("#adminInformacionEstadistica").style.display = "block";
+}
 function mostrarRegistroEmpresa(){
+  ocultarPantallas()
+  document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroEmpresa").style.display = "block";
 }
-
 function mostrarRegistroPresona(){
+  ocultarPantallas()
+  document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroPersona").style.display = "block";
 }
-
 function mostrarLogin(){
+  ocultarPantallas()
+  document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#divLogin").style.display = "block";
 }
-
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
@@ -54,7 +158,6 @@ function precargarDatos() {
   registrarVehiculo("Camión");
   registrarEmpresa("123456789012","Vehiculos","Vehiculos Geniales","VehiGen","VehiGen","2");
 }
-
 function registrarPersona(
   pCedula,
   pNombre,
@@ -125,36 +228,52 @@ function formularioPersona() {
   }
 }
 
-function loginPersona() {
-  let mensaje1 = "";
-  let nombreUsuario = document
-    .querySelector("#txtNombreUsuarioPLogin")
-    .value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaIngresoP").value;
 
-
-  if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
-    mensaje1 = "El usuario es válido";
-  } else {
-    mensaje1 = "Usuario o contraseña no válido";
-  }
-
-  document.querySelector("#mensajeLoginPersona").innerHTML = mensaje1;
-}
-
-function loginEmpresa() {
-  let mensaje2 = "";
+function login() {
+  let mensaje = "";
   let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
 
   if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
-    mensaje2 = "El usuario es válido";
+    mensaje = "El usuario es válido";
+    empresaLogeada = encontrarEmpresapPorUsuario(nombreUsuario);
+    mostrarPantallaEmpresa();
+
+  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    AdminEstaLogeado = true;
+    mostrarPantallaAdmin();
+
+  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    personaLogeada = encontrarPersonaPorUsuario(nombreUsuario);
+    mostrarPantallaPersona();
   } else {
-    mensaje2 = "Usuario o contraseña no válido";
+    mensaje = "Usuario o contraseña no válido";
   }
 
-  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje2;
+
+  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
 }
+
+function mostrarPantallaAdmin(){
+  ocultarPantallas();
+  document.querySelector("#btnCerrarSesion").style.display = "block";
+  document.querySelector("#pantallaAdmin").style.display = "block";
+
+}
+function mostrarPantallaPersona(){
+  ocultarPantallas();
+  document.querySelector("#pantallaPersona").style.display = "block";
+  document.querySelector("#btnCerrarSesion").style.display = "block";
+}
+function mostrarPantallaEmpresa(){
+  ocultarPantallas();
+  document.querySelector("#btnCerrarSesion").style.display = "block";
+  document.querySelector("#pantallaEmpresa").style.display = "block";
+}
+
+
 
 function formularioEmpresa() {
   let mensaje = "";
@@ -211,20 +330,6 @@ function selectVehiculos() {
   document.querySelector("#selectRegistroEmpresa").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
-function loginAdmin(){
-  let mensaje1 = "";
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioALogin").value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaIngresoA").value;
-
-  if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
-    mensaje1 = "El usuario es válido";
-    AdminEstaLogeado = true;
-  } else {
-    mensaje1 = "Usuario o contraseña no válido";
-  }
-
-  document.querySelector("#mensajeLoginAdmin").innerHTML = mensaje1;
-}
 
 function mostrarVehiculos() {
   let vehiculosParaMostrarEnHTML = "";
