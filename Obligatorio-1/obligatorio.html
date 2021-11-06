@@ -148,38 +148,21 @@
             <br><br><br>
             <h3>LISTADO DE EMPRESAS</h3>
             <br><br><br>
-            <input type="text" placeholder="BUSCAR EMPRESA...">
-            <input type="button" value="BUSCAR">
-
+            <input type="text" placeholder="BUSCAR EMPRESA..." id ="txtBuscarEmpresa">
+            <input type="button" value="BUSCAR" id ="btnBuscarEmpresa">
+            <br><br>
             <table border="1">
+                <thead>
 				<tr> 
 					<th>RUT</th>
 					<th>RAZÓN SOCIAL</th>
 					<th>NOMBRE FANTASÍA</th>
                     <th>USUARIO</th>
 					<th>VEHICULO</th>
-					<th>HABILITADO</th>
+					<th>ACCIONES</th>
 				</tr>
-				<tr> 
-					<td>123456789012</td>
-					<td>Empresa 1</td>
-					<td>Vehiculos fantásticos</td>
-                    <td>VehiFan</td>
-					<td>Moto</td>
-					<td>
-                        <input type="button" value="HABILITAR" id="btnHabilitarEmpresa">
-                    </td>
-				</tr>
-                <td>09876543212</td>
-					<td>Empresa 2</td>
-					<td>Vehiculos Geniales</td>
-                    <td>VehiGen</td>
-					<td>Auto</td>
-					<td>                        
-                    <input type="button" value="DESHABILITAR" id="btnHabilitarEmpresa">
-                    </td>
-				<tr> 
-				</tr>
+            </thead>
+            <tbody id="tablaHabilitarEmpresas"></tbody>
             </table>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
@@ -392,7 +375,8 @@
             </table>
             <br>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center> 
+            <br><br><br> 
         </div>
 
 

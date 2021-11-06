@@ -2,9 +2,9 @@ let persona = [];
 let empresa = [];
 let administrador = [];
 let vehiculo = [];
-let AdminEstaLogeado = false;
-let personaLogeada =[]
-let empresaLogeada =[]
+let adminEstaLogeado = false;
+let usuarioLogeado = false;
+let usuarioLogeadoArray =[]
 let IdVehiculo = 1;
 
 inicializar();
@@ -16,6 +16,8 @@ function inicializar() {
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
+  document.querySelector("#txtNombreUsuarioELogin").value = "Admin";
+  document.querySelector("#txtContraseñaIngresoE").value = "Admin01";
 }
 
 function ocultarPantallas(){
@@ -37,7 +39,7 @@ function ocultarPantallas(){
   document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "none";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "none";
   document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
-  if (!AdminEstaLogeado||!personaLogeada||!empresaLogeada){
+  if (!adminEstaLogeado &&!usuarioLogeado){
     document.querySelector("#btnCerrarSesion").style.display = "none";
   }
 
@@ -59,7 +61,8 @@ function botones() {
   document.querySelector("#btnAdminempresas").addEventListener("click", pantallaAdminHabilitarEmpresas);
   document.querySelector("#btnAniadirTransporte").addEventListener("click", pantallaAdminAniadirTransporte);
   document.querySelector("#btnVerEstadísticasAdmin").addEventListener("click", pantallaAdminEstadistica);
-  document .querySelector("#btnAgregarVehiculo").addEventListener("click", AgregarVehiculoAdmin);
+  document.querySelector("#btnAgregarVehiculo").addEventListener("click", AgregarVehiculoAdmin);
+  // document.querySelector("#btnBuscarEmpresa").addEventListener("click", buscarEmpresa);
 
   //Pantallas persona
   document.querySelector("#btnSolicitarEnvio").addEventListener("click", pantallaPersonaSolicitar);
@@ -76,10 +79,10 @@ function botones() {
 
 }
 function cerrarSesion(){
-  AdminEstaLogeado = false;
-  personaLogeada =[]
-  empresaLogeada =[]
-  ocultarPantallas()
+  adminEstaLogeado == false;
+  usuarioLogeado == false;
+  usuarioLogeadoArray = [];
+  ocultarPantallas();
 
 }
 
@@ -119,12 +122,83 @@ function pantallaPersonaEstadisticas(){
   document.querySelector("#PersonaInformacionEstadistica").style.display = "block";
 }
 //MOSTRAR PANTALLAS DE ADMIN
+//PANTALLA HABILITAR EMPRESAS
 
 function pantallaAdminHabilitarEmpresas(){
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadoempresas").style.display = "block";
+  actualizarTablaEmpresas();
 }
+function actualizarTablaEmpresas(){
+  let tbodyHTML = ``;
+
+    for (let i = 0; i < empresa.length; i++) {
+        let empresaActual = empresa[i];
+        let rutEmpresaActual = empresaActual.rut;
+        let razonEmpresaActual = empresaActual.razonSocial;
+        let fantasiaEmpresaActual = empresaActual.nombreFantasia
+        let usuarioEmpresaActual = empresaActual.nombreUsuario;
+        let vehiculoEmpresaActual = empresaActual.obtenerVehiculo();
+                
+        let textoParaBotonDeAcciones = "Habilitar";
+        if (empresaActual.habilitado) {
+            textoParaBotonDeAcciones = "Deshabilitar";
+        }
+
+        tbodyHTML += `<tr></tr>
+                        <td>${rutEmpresaActual}</td>
+                        <td>${razonEmpresaActual}</td>
+                        <td>${fantasiaEmpresaActual}</td>
+                        <td>${usuarioEmpresaActual}</td>
+                        <td>${vehiculoEmpresaActual}</td>
+                        <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
+        </tr>`;
+    }
+    document.querySelector("#tablaHabilitarEmpresas").innerHTML = tbodyHTML;
+    // Recién acá puedo agregar evento de clicks a los botones de la tabla (antes, no existían en el HTML)
+    let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa");
+    for (let i = 0; i < botonesDeLaTabla.length; i++) {
+        let botonActual = botonesDeLaTabla[i];
+        botonActual.addEventListener("click", btnCambiarEstadoEmpresaHandler);
+    }    
+}
+
+function btnCambiarEstadoEmpresaHandler() {
+  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioEmpresa");
+  let empresaDeBotonClickeado = encontrarEmpresaPorUsuario(nombreUsuarioDeBotonClickeado);
+  cambiarEstadoEmpresa(empresaDeBotonClickeado);
+  actualizarTablaEmpresas();
+}
+
+// function buscarEmpresa(){
+//   let mensaje = '';
+//   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
+
+  
+  
+//  let ingresoEmpresa = true;
+//     if (textoParaBuscar.toUpperCase() !== "nombreUsuario") {
+//         ingresoBruno = false;
+//     }
+//
+//     let caracter = textoParaEncontrarUnCaracter[posicionCaracterParaLeer];
+//
+//     mensaje = `
+//         ${textoEnMayusculas} <br>
+//         ${textoEnMinusculas} <br>
+//         ${cantidadCaracteresTexto} <br>
+//         ${ingresoBruno} <br>
+//         ${caracter}
+//     `;
+//
+//     document.querySelector("#divMensajes").innerHTML = mensaje;
+}
+
+
+}
+
+
 function pantallaAdminAniadirTransporte(){
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
@@ -157,6 +231,7 @@ function precargarDatos() {
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camión");
   registrarEmpresa("123456789012","Vehiculos","Vehiculos Geniales","VehiGen","VehiGen","2");
+  registrarEmpresa("123456789014","Fantasticos","Vehiculos Fantasticos","VehiFan","VehiFan","1");
 }
 function registrarPersona(
   pCedula,
@@ -236,17 +311,19 @@ function login() {
 
   if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
     mensaje = "El usuario es válido";
-    empresaLogeada = encontrarEmpresapPorUsuario(nombreUsuario);
+    usuarioLogeadoArray = encontrarEmpresapPorUsuario(nombreUsuario);
+    usuarioLogeado = true;
     mostrarPantallaEmpresa();
 
   } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
     mensaje = "El usuario es válido";
-    AdminEstaLogeado = true;
+    adminEstaLogeado = true;
     mostrarPantallaAdmin();
 
   } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
     mensaje = "El usuario es válido";
-    personaLogeada = encontrarPersonaPorUsuario(nombreUsuario);
+    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario);
+    usuarioLogeado = true;
     mostrarPantallaPersona();
   } else {
     mensaje = "Usuario o contraseña no válido";
@@ -313,13 +390,12 @@ function selectVehiculos() {
 
       for (let i = 0; i < vehiculo.length; i++) {
           let vehiculoActual = vehiculo[i];
-           if (i % 2 == 0){        //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
+                  //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
             vehiculosParaMostrarEnHTML += `
             <option value = "${vehiculoActual.idVehiculo}">
             ${vehiculoActual.vehiculo}
             </option>
     `;
-           }
       }
       vehiculosParaMostrarEnHTML += `
               </select>
@@ -379,3 +455,4 @@ function AgregarVehiculoAdmin(){
   document.querySelector("#mensajeAltaVehiculo").innerHTML=AltaVehiculo;
   
 }
+

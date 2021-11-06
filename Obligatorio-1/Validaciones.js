@@ -174,7 +174,7 @@ function encontrarUsuarioEmpresa(usuario) {
 }
 
 function encontrarEmpresapPorUsuario(usuario) {
-  let empresaEncontrada = null;
+  let empresaEncontrada = [];             //CAMBIAMOS NULL POR []
   let i = 0;
   while (!empresaEncontrada && i < empresa.length) {
       let empresaActual = empresa[i];
@@ -230,4 +230,29 @@ function existeVehiculo(palabra) {
     i++;
   }
   return palabraEncontrado;
+}
+
+///Preguntar a Bruno porque no funca esto
+function cambiarEstadoEmpresa(empresa) {
+
+  let empresaEstaHabilitado = empresa.habilitado;
+
+  if (empresaEstaHabilitado) {
+    empresa.habilitado = false;
+  } else {
+    empresa.habilitado = true;
+  }
+
+}
+function encontrarEmpresaPorUsuario(nombreUsuario) {
+  let empresaEncontrada = null;             
+  let i = 0;
+  while (!empresaEncontrada && i < empresa.length) {
+      let empresaActual = empresa[i];
+      if (nombreUsuario == empresaActual.nombreUsuario) {
+        empresaEncontrada = empresaActual;
+      }
+      i++;
+  }
+  return empresaEncontrada;
 }
