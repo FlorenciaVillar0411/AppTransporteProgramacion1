@@ -4,8 +4,9 @@ let administrador = [];
 let vehiculo = [];
 let adminEstaLogeado = false;
 let usuarioLogeado = false;
-let usuarioLogeadoArray =[]
+let usuarioLogeadoArray = []
 let IdVehiculo = 1;
+let busquedaActiva = false;
 
 inicializar();
 
@@ -20,7 +21,7 @@ function inicializar() {
   document.querySelector("#txtContraseñaIngresoE").value = "Admin01";
 }
 
-function ocultarPantallas(){
+function ocultarPantallas() {
   document.querySelector("#RegistroYLogin").style.display = "none";
   document.querySelector("#formRegistroPersona").style.display = "none";
   document.querySelector("#formRegistroEmpresa").style.display = "none";
@@ -39,7 +40,7 @@ function ocultarPantallas(){
   document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "none";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "none";
   document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
-  if (!adminEstaLogeado &&!usuarioLogeado){
+  if (!adminEstaLogeado && !usuarioLogeado) {
     document.querySelector("#btnCerrarSesion").style.display = "none";
   }
 
@@ -62,23 +63,24 @@ function botones() {
   document.querySelector("#btnAniadirTransporte").addEventListener("click", pantallaAdminAniadirTransporte);
   document.querySelector("#btnVerEstadísticasAdmin").addEventListener("click", pantallaAdminEstadistica);
   document.querySelector("#btnAgregarVehiculo").addEventListener("click", AgregarVehiculoAdmin);
-  // document.querySelector("#btnBuscarEmpresa").addEventListener("click", buscarEmpresa);
+  document.querySelector("#btnBuscarEmpresa").addEventListener("click", buscarEmpresa);
+  document.querySelector("#btNOBuscarEmpresa").addEventListener("click", eliminarBusqueda);
 
   //Pantallas persona
   document.querySelector("#btnSolicitarEnvio").addEventListener("click", pantallaPersonaSolicitar);
   document.querySelector("#btnListadoPedidosP").addEventListener("click", pantallaPersonaListado);
   document.querySelector("#btnVerEstadísticasPersona").addEventListener("click", pantallaPersonaEstadisticas);
- 
-  //Pantallas EMPRESA
- document.querySelector("#btnSolicitudesE").addEventListener("click", pantallaEmpresaSolicitudes);
- document.querySelector("#btnListadoPedidosE").addEventListener("click", pantallaEmpresaPedidosTomados);
- document.querySelector("#btnVerEstadísticasEmpresa").addEventListener("click", pantallaEmpresaEstadisticas);
 
- //CERRAR SESION
- document.querySelector("#btnCerrarSesion").addEventListener("click", cerrarSesion);
+  //Pantallas EMPRESA
+  document.querySelector("#btnSolicitudesE").addEventListener("click", pantallaEmpresaSolicitudes);
+  document.querySelector("#btnListadoPedidosE").addEventListener("click", pantallaEmpresaPedidosTomados);
+  document.querySelector("#btnVerEstadísticasEmpresa").addEventListener("click", pantallaEmpresaEstadisticas);
+
+  //CERRAR SESION
+  document.querySelector("#btnCerrarSesion").addEventListener("click", cerrarSesion);
 
 }
-function cerrarSesion(){
+function cerrarSesion() {
   adminEstaLogeado == false;
   usuarioLogeado == false;
   usuarioLogeadoArray = [];
@@ -88,17 +90,17 @@ function cerrarSesion(){
 
 
 //MOSTRAR PANTALLAS DE EMPRESAS
-function pantallaEmpresaSolicitudes(){
+function pantallaEmpresaSolicitudes() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresaslistadoSolicitudes").style.display = "block";
 }
-function pantallaEmpresaPedidosTomados(){
+function pantallaEmpresaPedidosTomados() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "block";
 }
-function pantallaEmpresaEstadisticas(){
+function pantallaEmpresaEstadisticas() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "block";
@@ -106,17 +108,17 @@ function pantallaEmpresaEstadisticas(){
 
 //MOSTRAR PANTALLAS DE PERSONA
 
-function pantallaPersonaSolicitar(){
+function pantallaPersonaSolicitar() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaSolicitarEnvios").style.display = "block";
 }
-function pantallaPersonaListado(){
+function pantallaPersonaListado() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaListadoSolicitudes").style.display = "block";
 }
-function pantallaPersonaEstadisticas(){
+function pantallaPersonaEstadisticas() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaInformacionEstadistica").style.display = "block";
@@ -124,44 +126,65 @@ function pantallaPersonaEstadisticas(){
 //MOSTRAR PANTALLAS DE ADMIN
 //PANTALLA HABILITAR EMPRESAS
 
-function pantallaAdminHabilitarEmpresas(){
+function pantallaAdminHabilitarEmpresas() {
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadoempresas").style.display = "block";
   actualizarTablaEmpresas();
 }
-function actualizarTablaEmpresas(){
+function actualizarTablaEmpresas() {
   let tbodyHTML = ``;
+  
 
-    for (let i = 0; i < empresa.length; i++) {
-        let empresaActual = empresa[i];
-        let rutEmpresaActual = empresaActual.rut;
-        let razonEmpresaActual = empresaActual.razonSocial;
-        let fantasiaEmpresaActual = empresaActual.nombreFantasia
-        let usuarioEmpresaActual = empresaActual.nombreUsuario;
-        let vehiculoEmpresaActual = empresaActual.obtenerVehiculo();
-                
-        let textoParaBotonDeAcciones = "Habilitar";
-        if (empresaActual.habilitado) {
-            textoParaBotonDeAcciones = "Deshabilitar";
-        }
 
-        tbodyHTML += `<tr></tr>
-                        <td>${rutEmpresaActual}</td>
-                        <td>${razonEmpresaActual}</td>
-                        <td>${fantasiaEmpresaActual}</td>
-                        <td>${usuarioEmpresaActual}</td>
-                        <td>${vehiculoEmpresaActual}</td>
-                        <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
-        </tr>`;
+  for (let i = 0; i < empresa.length; i++) {
+    let empresaActual = empresa[i];
+    let rutEmpresaActual = empresaActual.rut;
+    let razonEmpresaActual = empresaActual.razonSocial;
+    let fantasiaEmpresaActual = empresaActual.nombreFantasia
+    let usuarioEmpresaActual = empresaActual.nombreUsuario;
+    let vehiculoEmpresaActual = empresaActual.obtenerVehiculo();
+    let empresaBuscada = empresaActual.buscado;
+
+    let textoParaBotonDeAcciones = "Habilitar";
+    if (empresaActual.habilitado) {
+      textoParaBotonDeAcciones = "Deshabilitar";
     }
-    document.querySelector("#tablaHabilitarEmpresas").innerHTML = tbodyHTML;
-    // Recién acá puedo agregar evento de clicks a los botones de la tabla (antes, no existían en el HTML)
-    let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa");
-    for (let i = 0; i < botonesDeLaTabla.length; i++) {
-        let botonActual = botonesDeLaTabla[i];
-        botonActual.addEventListener("click", btnCambiarEstadoEmpresaHandler);
-    }    
+    if (busquedaActiva) {
+      console.log("Entra a busqueda activa")
+      if (empresaBuscada) {
+         tbodyHTML += `<tr></tr>
+                    <td>${rutEmpresaActual}</td>
+                    <td>${razonEmpresaActual}</td>
+                    <td>${fantasiaEmpresaActual}</td>
+                    <td>${usuarioEmpresaActual}</td>
+                    <td>${vehiculoEmpresaActual}</td>
+                    <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
+    </tr>`; 
+        console.log("Entra a busqueda activa y a empresa buscada")
+      } 
+    } else {
+       tbodyHTML += `<tr></tr>
+      <td>${rutEmpresaActual}</td>
+      <td>${razonEmpresaActual}</td>
+      <td>${fantasiaEmpresaActual}</td>
+      <td>${usuarioEmpresaActual}</td>
+      <td>${vehiculoEmpresaActual}</td>
+      <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
+      </tr>`;
+      console.log("No enmcontre nada")
+
+    }
+
+  }
+
+  document.querySelector("#tablaHabilitarEmpresas").innerHTML = tbodyHTML;
+  // Recién acá puedo agregar evento de clicks a los botones de la tabla (antes, no existían en el HTML)
+  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa");
+  for (let i = 0; i < botonesDeLaTabla.length; i++) {
+    let botonActual = botonesDeLaTabla[i];
+    botonActual.addEventListener("click", btnCambiarEstadoEmpresaHandler);
+  }
 }
 
 function btnCambiarEstadoEmpresaHandler() {
@@ -171,55 +194,81 @@ function btnCambiarEstadoEmpresaHandler() {
   actualizarTablaEmpresas();
 }
 
-// function buscarEmpresa(){
-//   let mensaje = '';
-//   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
+function buscarEmpresa() {
+  let mensaje = ""
+  let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
+  busquedaActiva = true;
+
+  // let razonEmpresaactualAcortada;
+  // let fantasiaEmpresaactualAcortada;
+
+  for (let i = 0; i < empresa.length; i++) {
+    
+    let empresaActual = empresa[i]
+    let razonEmpresaActual = empresaActual.razonSocial;
+    let fantasiaEmpresaActual = empresaActual.nombreFantasia;
+    empresaActual.buscado = false;
+
+    // for (let a = 0; a < razonEmpresaActual[textoParaBuscar.length]; a++);{
+    //   razonEmpresaactualAcortada +=razonEmpresaActual[a];
+    // }
+
+    // for (let a = 0; a < fantasiaEmpresaActual[textoParaBuscar.length]; a++);{
+    //   fantasiaEmpresaactualAcortada +=fantasiaEmpresaActual[a];
+    // }
+    
+    
+
+    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActual.toLowerCase().trim() ) {
+      empresaActual.buscado = true;
+
+
+
+    } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActual.toLowerCase().trim()) {
+      empresaActual.buscado = true;
+    } else{
+      console.log("No hay busqueda")
+    mensaje = "No hay resultados que coincidan con su búsqueda"
+    }
+  }
+  actualizarTablaEmpresas();
 
   
-  
-//  let ingresoEmpresa = true;
-//     if (textoParaBuscar.toUpperCase() !== "nombreUsuario") {
-//         ingresoBruno = false;
-//     }
-//
-//     let caracter = textoParaEncontrarUnCaracter[posicionCaracterParaLeer];
-//
-//     mensaje = `
-//         ${textoEnMayusculas} <br>
-//         ${textoEnMinusculas} <br>
-//         ${cantidadCaracteresTexto} <br>
-//         ${ingresoBruno} <br>
-//         ${caracter}
-//     `;
-//
-//     document.querySelector("#divMensajes").innerHTML = mensaje;
+
+  document.querySelector("#mensajeBusqueda").innerHTML = mensaje;
+}
+
+function eliminarBusqueda(){
+  busquedaActiva = false;
+  actualizarTablaEmpresas();
+
 }
 
 
-}
 
 
-function pantallaAdminAniadirTransporte(){
+
+function pantallaAdminAniadirTransporte() {
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadotransporte").style.display = "block";
 }
-function pantallaAdminEstadistica(){
+function pantallaAdminEstadistica() {
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminInformacionEstadistica").style.display = "block";
 }
-function mostrarRegistroEmpresa(){
+function mostrarRegistroEmpresa() {
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroEmpresa").style.display = "block";
 }
-function mostrarRegistroPresona(){
+function mostrarRegistroPresona() {
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroPersona").style.display = "block";
 }
-function mostrarLogin(){
+function mostrarLogin() {
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#divLogin").style.display = "block";
@@ -230,8 +279,8 @@ function precargarDatos() {
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camión");
-  registrarEmpresa("123456789012","Vehiculos","Vehiculos Geniales","VehiGen","VehiGen","2");
-  registrarEmpresa("123456789014","Fantasticos","Vehiculos Fantasticos","VehiFan","VehiFan","1");
+  registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2");
+  registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");
 }
 function registrarPersona(
   pCedula,
@@ -333,18 +382,18 @@ function login() {
   document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
 }
 
-function mostrarPantallaAdmin(){
+function mostrarPantallaAdmin() {
   ocultarPantallas();
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaAdmin").style.display = "block";
 
 }
-function mostrarPantallaPersona(){
+function mostrarPantallaPersona() {
   ocultarPantallas();
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#btnCerrarSesion").style.display = "block";
 }
-function mostrarPantallaEmpresa(){
+function mostrarPantallaEmpresa() {
   ocultarPantallas();
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaEmpresa").style.display = "block";
@@ -388,16 +437,16 @@ function selectVehiculos() {
       </option>
     `;
 
-      for (let i = 0; i < vehiculo.length; i++) {
-          let vehiculoActual = vehiculo[i];
-                  //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
-            vehiculosParaMostrarEnHTML += `
+    for (let i = 0; i < vehiculo.length; i++) {
+      let vehiculoActual = vehiculo[i];
+      //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
+      vehiculosParaMostrarEnHTML += `
             <option value = "${vehiculoActual.idVehiculo}">
             ${vehiculoActual.vehiculo}
             </option>
     `;
-      }
-      vehiculosParaMostrarEnHTML += `
+    }
+    vehiculosParaMostrarEnHTML += `
               </select>
       `;
   } else {
@@ -422,37 +471,37 @@ function mostrarVehiculos() {
     `;
 
     for (let i = 0; i < vehiculo.length; i++) {
-        let vehiculoActual = vehiculo[i];
-        if (i % 2 == 0){        //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
+      let vehiculoActual = vehiculo[i];
+      if (i % 2 == 0) {        //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
 
         vehiculosParaMostrarEnHTML += `
                 <tr>
                     <td>${vehiculoActual.vehiculo}</td>
                 </tr>
         `;
-        }
+      }
     }
 
     vehiculosParaMostrarEnHTML += `
             </tbody>
         </table>
     `;
-}
+  }
   document.querySelector("#tablaVehiculosAdmin").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
-function AgregarVehiculoAdmin(){
+function AgregarVehiculoAdmin() {
   let vehiculo = document.querySelector("#ingresarVehiculo").value.trim();
-  if (existeVehiculo(vehiculo)){
-    AltaVehiculo="El vehiculo ingresado ya existe."
-  } else{
-    AltaVehiculo="El vehiculo ha sido ingresado."
+  if (existeVehiculo(vehiculo)) {
+    AltaVehiculo = "El vehiculo ingresado ya existe."
+  } else {
+    AltaVehiculo = "El vehiculo ha sido ingresado."
     registrarVehiculo(vehiculo);
     mostrarVehiculos();
     selectVehiculos();
 
   }
-  document.querySelector("#mensajeAltaVehiculo").innerHTML=AltaVehiculo;
-  
+  document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
+
 }
 

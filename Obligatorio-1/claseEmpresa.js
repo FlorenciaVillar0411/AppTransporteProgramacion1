@@ -7,7 +7,7 @@ class Empresa {
     this.contrasenia = pContrasenia;
     this.vehiculo = pVehiculo;
     this.habilitado = false;
-    // this.buscado = true;
+    this.buscado = false;
   }
   obtenerVehiculo() {
     let vehiculoParaMostrar = '';
