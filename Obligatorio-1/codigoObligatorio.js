@@ -1,7 +1,11 @@
+// array asociados (clases)
 let persona = [];
 let empresa = [];
 let administrador = [];
 let vehiculo = [];
+let solicitud = [];
+
+// variables globales
 let adminEstaLogeado = false;
 let usuarioLogeado = false;
 let usuarioLogeadoArray = []
@@ -17,8 +21,8 @@ function inicializar() {
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
-  document.querySelector("#txtNombreUsuarioELogin").value = "Admin";
-  document.querySelector("#txtContraseñaIngresoE").value = "Admin01";
+  document.querySelector("#txtNombreUsuarioELogin").value = "flopi_villar";
+  document.querySelector("#txtContraseñaIngresoE").value = "123";
 }
 
 function ocultarPantallas() {
@@ -70,6 +74,7 @@ function botones() {
   document.querySelector("#btnSolicitarEnvio").addEventListener("click", pantallaPersonaSolicitar);
   document.querySelector("#btnListadoPedidosP").addEventListener("click", pantallaPersonaListado);
   document.querySelector("#btnVerEstadísticasPersona").addEventListener("click", pantallaPersonaEstadisticas);
+  document.querySelector("#btnSolicitarEnvioFormulario").addEventListener("click", solicitarFormularioEnvio);
 
   //Pantallas EMPRESA
   document.querySelector("#btnSolicitudesE").addEventListener("click", pantallaEmpresaSolicitudes);
@@ -113,6 +118,26 @@ function pantallaPersonaSolicitar() {
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaSolicitarEnvios").style.display = "block";
 }
+function solicitarFormularioEnvio(){
+  let mensaje = "";
+  let descripcionEnvio = document.querySelector("#txtDescripcionenvio").value;
+  let distanciaEnvio = document.querySelector("#txtDistanciaEnvio").value;
+  let vehiculoEnvio = document.querySelector("#txtselectVehiculos").value;
+  let fotoEnvio = document.querySelector("#imagenEnvio").value;
+
+  // No entra al if cuando están todos los datos 
+  if (descripcionEnvio && distanciaEnvio && vehiculoEnvio > 0){
+    registrarSolicitud (descripcionEnvio, distanciaEnvio, vehiculoEnvio, fotoEnvio);
+    mensaje = "Solicitud enviada.";
+  } else {
+    mensaje = "Todos los datos son obligatorios";
+  }
+
+  document.querySelector("#mensajeSolicitudesEnvios").innerHTML=mensaje;
+
+}
+
+
 function pantallaPersonaListado() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
@@ -161,7 +186,6 @@ function actualizarTablaEmpresas() {
                     <td>${vehiculoEmpresaActual}</td>
                     <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
     </tr>`; 
-        console.log("Entra a busqueda activa y a empresa buscada")
       } 
     } else {
        tbodyHTML += `<tr></tr>
@@ -172,7 +196,6 @@ function actualizarTablaEmpresas() {
       <td>${vehiculoEmpresaActual}</td>
       <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
       </tr>`;
-      console.log("No enmcontre nada")
 
     }
 
@@ -216,8 +239,9 @@ function buscarEmpresa() {
     // for (let a = 0; a < fantasiaEmpresaActual[textoParaBuscar.length]; a++);{
     //   fantasiaEmpresaactualAcortada +=fantasiaEmpresaActual[a];
     // }
+  
     
-    
+    console.log(encontrarBusqueda(razonEmpresaActual,textoParaBuscar))
 
     if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActual.toLowerCase().trim() ) {
       empresaActual.buscado = true;
@@ -227,7 +251,6 @@ function buscarEmpresa() {
     } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActual.toLowerCase().trim()) {
       empresaActual.buscado = true;
     } else{
-      console.log("No hay busqueda")
     mensaje = "No hay resultados que coincidan con su búsqueda"
     }
   }
@@ -238,14 +261,20 @@ function buscarEmpresa() {
   document.querySelector("#mensajeBusqueda").innerHTML = mensaje;
 }
 
+function encontrarBusqueda(texto, busqueda){
+
+  let resultado='';
+    for (let i =0; i <texto[busqueda.length-1];i++){
+      resultado += texto[i];
+    }
+  return resultado;
+}
+
 function eliminarBusqueda(){
   busquedaActiva = false;
   actualizarTablaEmpresas();
 
 }
-
-
-
 
 
 function pantallaAdminAniadirTransporte() {
@@ -263,7 +292,7 @@ function mostrarRegistroEmpresa() {
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroEmpresa").style.display = "block";
 }
-function mostrarRegistroPresona() {
+function mostrarRegistroPresona() {//ver luego y editar para que quede bien el nombre!!!!!
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroPersona").style.display = "block";
@@ -303,6 +332,11 @@ function registrarVehiculo(pVehiculo) {
   let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
   vehiculo.push(nuevoVehiculo);
   IdVehiculo += 1;
+}
+
+function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray);
+  solicitud.push(nuevaSolicitud);
 }
 
 function registrarAdmin() {
@@ -409,7 +443,7 @@ function formularioEmpresa() {
   let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaE").value;
   let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
-  let tipoVehiculo = document.querySelector("#txtselectRegistroEmpresa").value;
+  let tipoVehiculo = document.querySelector("#txtselectVehiculos").value;
 
   mensaje += validarRut(Rut);
   mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
@@ -431,7 +465,7 @@ function selectVehiculos() {
 
   if (vehiculo.length > 0) {
     vehiculosParaMostrarEnHTML = `
-    <select id="txtselectRegistroEmpresa">
+    <select id="txtselectVehiculos">
       <option value ="0">
         Seleccione un vehiculo...
       </option>
@@ -439,7 +473,6 @@ function selectVehiculos() {
 
     for (let i = 0; i < vehiculo.length; i++) {
       let vehiculoActual = vehiculo[i];
-      //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
       vehiculosParaMostrarEnHTML += `
             <option value = "${vehiculoActual.idVehiculo}">
             ${vehiculoActual.vehiculo}
@@ -453,6 +486,7 @@ function selectVehiculos() {
     vehiculosParaMostrarEnHTML = "No existen vehiculos";
   }
   document.querySelector("#selectRegistroEmpresa").innerHTML = vehiculosParaMostrarEnHTML;
+  document.querySelector("#selectSolicitudesEnvios").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
 
@@ -472,14 +506,13 @@ function mostrarVehiculos() {
 
     for (let i = 0; i < vehiculo.length; i++) {
       let vehiculoActual = vehiculo[i];
-      if (i % 2 == 0) {        //NO OLIVDARSE SACARLOOOOOOOOOOOOOO!!!!!!!!!!!!!!!
 
-        vehiculosParaMostrarEnHTML += `
-                <tr>
-                    <td>${vehiculoActual.vehiculo}</td>
-                </tr>
-        `;
-      }
+      vehiculosParaMostrarEnHTML += `
+      <tr>
+       <td>${vehiculoActual.vehiculo}</td>
+      </tr>
+      `;
+      
     }
 
     vehiculosParaMostrarEnHTML += `
