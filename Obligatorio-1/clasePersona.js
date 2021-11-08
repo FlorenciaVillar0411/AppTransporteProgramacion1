@@ -45,4 +45,33 @@ class Solicitud{
       }
       return vehiculoParaMostrar;
   }
+  obtenerVehiculoSolicitud() {
+    let vehiculoParaMostrar = '';
+    let i = 0;
+      while (!vehiculoParaMostrar && i < vehiculo.length) {
+        let vehiculoActual = vehiculo[i];
+        if (this.vehiculo == vehiculoActual.idVehiculo){
+          vehiculoParaMostrar = vehiculoActual.vehiculo;
+        }
+        i++;
+      }
+      return vehiculoParaMostrar;
+  }
+  obtenerImagen() {
+    let imagenParaDevolver = '';
+  
+    if (this.foto) {
+        imagenParaDevolver = this.foto;
+    // } else {
+    //     if (!this.sexo) {
+    //         imagenParaDevolver = 'otros.png';
+    //     } else if (this.sexo === "M") {
+    //         imagenParaDevolver = "masculino.png";
+    //     } else if (this.sexo === "F") {
+    //         imagenParaDevolver = "femenino.png";
+    //     }
+    }
+    return imagenParaDevolver;
+  }
 }
+

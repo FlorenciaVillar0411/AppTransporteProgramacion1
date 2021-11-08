@@ -18,6 +18,7 @@ function inicializar() {
   precargarDatos();
   botones();
   selectVehiculos();
+  selectVehiculosEnvios();
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
@@ -122,7 +123,7 @@ function solicitarFormularioEnvio(){
   let mensaje = "";
   let descripcionEnvio = document.querySelector("#txtDescripcionenvio").value;
   let distanciaEnvio = document.querySelector("#txtDistanciaEnvio").value;
-  let vehiculoEnvio = document.querySelector("#txtselectVehiculos").value;
+  let vehiculoEnvio = document.querySelector("#txtselectVehiculosEnvios").value;
   let fotoEnvio = document.querySelector("#imagenEnvio").value;
 
   // No entra al if cuando están todos los datos 
@@ -142,7 +143,38 @@ function pantallaPersonaListado() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaListadoSolicitudes").style.display = "block";
+  actualizarListadoPersona();
 }
+
+function actualizarListadoPersona() {
+  let tbodyHTML = ``;
+
+
+  for (let i = 0; i < solicitud.length; i++) {
+    let solicitudActual = solicitud[i];
+    let descripcionsolicitudActual = solicitudActual.descripcion;
+    let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
+    let distanciaSolicitudActual = solicitudActual.distancia;
+    let vehiculoSolicitudActual = solicitudActual.obtenerVehiculoSolicitud();
+    let estadoSolicitudActual = solicitudActual.obtenerEstado();
+    let empresaSolicitudActual = solicitudActual.empresa; 
+    let personaSolicitudActual = solicitudActual.persona;
+
+  //  if (personaSolicitudActual== usuarioLogeadoArray){
+     tbodyHTML += `<tr></tr>
+      <td>${descripcionsolicitudActual}</td>
+      <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
+      <td>${distanciaSolicitudActual}</td>
+      <td>${vehiculoSolicitudActual}</td>
+      <td>${estadoSolicitudActual}</td>
+      <td>${empresaSolicitudActual}</td>
+      </tr>`;
+  //  } 
+  }
+  document.querySelector("#tablaSolicitudesPersona").innerHTML=tbodyHTML;
+}
+
+
 function pantallaPersonaEstadisticas() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
@@ -176,7 +208,6 @@ function actualizarTablaEmpresas() {
       textoParaBotonDeAcciones = "Deshabilitar";
     }
     if (busquedaActiva) {
-      console.log("Entra a busqueda activa")
       if (empresaBuscada) {
          tbodyHTML += `<tr></tr>
                     <td>${rutEmpresaActual}</td>
@@ -241,7 +272,6 @@ function buscarEmpresa() {
     // }
   
     
-    console.log(encontrarBusqueda(razonEmpresaActual,textoParaBuscar))
 
     if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActual.toLowerCase().trim() ) {
       empresaActual.buscado = true;
@@ -310,6 +340,10 @@ function precargarDatos() {
   registrarVehiculo("Camión");
   registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2");
   registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");
+  precargarSolicitud("1", "50", "caja", "caja.png", 0);
+  precargarSolicitud("2", "80", "moto", "moto.jpg", 0);
+  precargarSolicitud("3", "30", "sabanas", "sabanas.jpg", 0);
+  
 }
 function registrarPersona(
   pCedula,
@@ -337,6 +371,12 @@ function registrarVehiculo(pVehiculo) {
 function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
   let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray);
   solicitud.push(nuevaSolicitud);
+}
+
+function precargarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona) {
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, persona[pPersona]);
+  solicitud.push(nuevaSolicitud);
+
 }
 
 function registrarAdmin() {
@@ -486,6 +526,33 @@ function selectVehiculos() {
     vehiculosParaMostrarEnHTML = "No existen vehiculos";
   }
   document.querySelector("#selectRegistroEmpresa").innerHTML = vehiculosParaMostrarEnHTML;
+}
+
+function selectVehiculosEnvios() {
+  let vehiculosParaMostrarEnHTML = "";
+
+  if (vehiculo.length > 0) {
+    vehiculosParaMostrarEnHTML = `
+    <select id="txtselectVehiculosEnvios">
+      <option value ="0">
+        Seleccione un vehiculo...
+      </option>
+    `;
+
+    for (let i = 0; i < vehiculo.length; i++) {
+      let vehiculoActual = vehiculo[i];
+      vehiculosParaMostrarEnHTML += `
+            <option value = "${vehiculoActual.idVehiculo}">
+            ${vehiculoActual.vehiculo}
+            </option>
+    `;
+    }
+    vehiculosParaMostrarEnHTML += `
+              </select>
+      `;
+  } else {
+    vehiculosParaMostrarEnHTML = "No existen vehiculos";
+  }
   document.querySelector("#selectSolicitudesEnvios").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
@@ -532,6 +599,7 @@ function AgregarVehiculoAdmin() {
     registrarVehiculo(vehiculo);
     mostrarVehiculos();
     selectVehiculos();
+    selectVehiculosEnvios();
 
   }
   document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
