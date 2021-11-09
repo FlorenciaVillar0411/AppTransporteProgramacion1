@@ -306,7 +306,7 @@
 
         <div id="pantallaEmpresa" class="cuerpo"> 
             <br><hr><br>
-            <<center>
+            <center>
                 <h3>PERFIL EMPRESA</h3>
                 <br><br><br>
 
@@ -351,32 +351,20 @@
             <h3>LISTADO DE SOLICITUDES TOMADAS</h3>
 
             <table border="1">
-                <tr> 
-                    <th>PRODUCTO</th>
-                    <th>IMAGEN</th>
-                    <th>KM</th>
-                    <th>VEHICULO</th>
-                    <th>ESTADO</th>
-                </tr>
-                <tr> 
-                    <td>Caja</td>
-                    <td>IMG</td>
-                    <td>56</td>
-                    <td>MOTO</td>
-                    <td>
-                        <input type="button" value="FINALIZAR" id="btnFINALIZARENVIO">
-                    </td>
-                </tr>
-                <tr> 
-                    <td>BOLSA</td>
-                    <td>IMG</td>
-                    <td>4</td>
-                    <td>MOTO</td>
-                    <td>
-                    <input type="button" value="FINALIZAR" id="btnFINALIZARENVIO">
-                    </td>
-                    
-                </tr>
+                <thead>
+                    <tr> 
+                        <th>PRODUCTO</th>
+                        <th>IMAGEN</th>
+                        <th>KM</th>
+                        <th>VEHICULO</th>
+                        <th>USUARIO</th>
+                        <th>ESTADO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody  id = "tablaSolicitudesTomadasEmpresa"> </tbody>
+                
+                
             </table>
             <br>
             <br><br><br>
@@ -393,15 +381,15 @@
 
 
             <table border="1">
-				<tr> 
-					<th><select>
-                        <option>EN TRÁNSITO</option>
-                        <option>FINALIZADO</option>
-                    </select></th>
-				</tr>
-				<tr> 
-					<td>15</td>
-				</tr>
+                <thead>
+                    <tr> 
+                        <th>PRODUCTO</th>
+                        <th>IMAGEN</th>
+                    </tr>
+                </thead>
+                <tbody  id = "tablaInformacionEmpresa"> </tbody>
+                
+                
             </table>
             <br><br><br>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  

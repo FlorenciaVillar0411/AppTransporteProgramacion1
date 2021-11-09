@@ -275,11 +275,11 @@ function encontrarSolicitudPorDescripcion(descripcion) {
 
 function cambiarEstadoSolicitud(solicitud) {
 
-  let solicitudCambiada = solicitud.estado;
-
-  if (solicitudCambiada == 1) {
-    solicitud.estado = 2;
-  } 
+  if (solicitud.estado = "1") {
+    solicitud.estado = "2";
+  } else if (solicitud.estado = "2"){
+    solicitud.estado = "3";
+  }
 
 }
 

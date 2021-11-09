@@ -15,19 +15,19 @@ class Solicitud{
     this.descripcion = pDescripcion;
     this.foto = pFoto;
     this.persona = pPersona;
-    this.estado = 1
+    this.estado = "1";
+
     this.empresa = [];
   }
 
 
   obtenerEstado(){
     let estadoParaMostrar='';
-    if (this.estado = 1){
+    if (this.estado == "1"){
       estadoParaMostrar = "Pendiente";
-    } else if (this.estado = 2){
+    } else if (this.estado == "2"){
       estadoParaMostrar = "En tránsito";
     }else{
-  
       estadoParaMostrar = "Finalizado";
     }
     return estadoParaMostrar;
@@ -79,6 +79,19 @@ class Solicitud{
         i++;
       }
       return personaParaMostrar;
+  }
+
+  obtenerNombreEmpresa() {
+    let empresaParaMostrar = '';
+    let i = 0;
+      while (!empresaParaMostrar && i < empresa.length) {
+        let empresaActual = empresa[i];
+        if (this.empresa == empresaActual){
+          empresaParaMostrar = empresaActual.nombreUsuario;
+        }
+        i++;
+      }
+      return empresaParaMostrar;
   }
 }
 

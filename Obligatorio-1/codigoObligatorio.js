@@ -107,7 +107,6 @@ function pantallaEmpresaSolicitudes() {
 function actualizarListadoEmpresa() {
   let tbodyHTML = ``;
 
-
   for (let i = 0; i < solicitud.length; i++) {
     let solicitudActual = solicitud[i];
     let descripcionSolicitudActual = solicitudActual.descripcion;
@@ -121,8 +120,9 @@ function actualizarListadoEmpresa() {
     let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
 
     let textoParaAcciones = "SOLICITUD TOMADA";
-    if (solicitudActual.estado == 1) {
-      textoParaAcciones = `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
+    if (solicitudActual.estado = "1") {
+      textoParaAcciones = 
+      `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
     }
 
     if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
@@ -142,18 +142,22 @@ function actualizarListadoEmpresa() {
   let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitud");
   for (let i = 0; i < botonesDeLaTabla.length; i++) {
     let botonActual = botonesDeLaTabla[i];
-    botonActual.addEventListener("click", btnCambiarEstadoSolicitudHandler);
+    botonActual.addEventListener("click", cambiarEstadoSolicitudHandler);
   }
 
 }
 
-function btnCambiarEstadoSolicitudHandler() {
+function cambiarEstadoSolicitudHandler() {
   let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual");
   let solicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
+  solicitudDeBotonClickeado.empresa = usuarioLogeadoArray; 
   cambiarEstadoSolicitud(solicitudDeBotonClickeado);
+  console.log(solicitudDeBotonClickeado)
   actualizarListadoEmpresa();
-  solicitudDeBotonClickeado.empresa = usuarioLogeadoArray;
-  
+  console.log(solicitudDeBotonClickeado)
+
+
+  //No cambia el estado y no sabemos porque
 }
 
 
@@ -161,12 +165,96 @@ function pantallaEmpresaPedidosTomados() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "block";
+  actualizarTablaPedidosTomadosEmpresa();
 }
+
+function actualizarTablaPedidosTomadosEmpresa(){
+  let tbodyHTML = ``;
+
+  for (let i = 0; i < solicitud.length; i++) {
+
+  let solicitudActual = solicitud[i];
+    let descripcionSolicitudActual = solicitudActual.descripcion;
+    let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
+    let distanciaSolicitudActual = solicitudActual.distancia;
+    let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud();
+    let estadoSolicitudActual = solicitudActual.estado;
+    let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
+    let empresaSolicitudActual = solicitudActual.empresa;
+    
+    let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
+
+    let textoParaAcciones = "FINALIZADA";
+    if (solicitudActual.estado > 1) {
+      textoParaAcciones = `<input solicitudActualTomada ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
+    }
+
+    if (empresaSolicitudActual == usuarioLogeadoArray){
+     tbodyHTML += `<tr></tr>
+      <td>${descripcionSolicitudActual}</td>
+      <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
+      <td>${distanciaSolicitudActual}</td>
+      <td>${vehiculoSolicitudActualParamostrar}</td>
+      <td>${personaSolicitudActual}</td>
+      <td>${estadoSolicitudActualParaMostrar}</td>
+      <td>${textoParaAcciones}</td>
+      </tr>`;
+    }
+  }
+  
+  document.querySelector("#tablaSolicitudesTomadasEmpresa").innerHTML = tbodyHTML;
+  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitudTomada");
+  for (let i = 0; i < botonesDeLaTabla.length; i++) {
+    let botonActual = botonesDeLaTabla[i];
+    botonActual.addEventListener("click", cambiarEstadoSolicitudTomadaHandler);
+  }
+}
+
+function cambiarEstadoSolicitudTomadaHandler() {
+  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActualTomada");
+  let solicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
+  cambiarEstadoSolicitud(solicitudDeBotonClickeado);
+  actualizarTablaPedidosTomadosEmpresa();
+}
+
+
 function pantallaEmpresaEstadisticas() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "block";
+  actualizarTablaEstadisticaEmpresa();
 }
+
+function actualizarTablaEstadisticaEmpresa() {
+  let tbodyHTML = ``;
+
+  for (let i = 0; i < empresa.length; i++) {
+    let empresaActual = empresa[i];
+    
+      // FALTA TERMINAR ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO//
+
+    let textoParaAcciones = "SOLICITUD TOMADA";
+    if (solicitudActual.estado = "1") {
+      textoParaAcciones = 
+      `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
+    }
+
+    if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
+     tbodyHTML += `<tr></tr>
+      <td>${descripcionSolicitudActual}</td>
+      <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
+      <td>${distanciaSolicitudActual}</td>
+      <td>${vehiculoSolicitudActualParamostrar}</td>
+      <td>${personaSolicitudActual}</td>
+      <td>${estadoSolicitudActualParaMostrar}</td>
+      <td>${textoParaAcciones}</td>
+      </tr>`;
+    }
+  }
+
+  document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML;
+  
+
 
 //MOSTRAR PANTALLAS DE PERSONA
 
@@ -181,17 +269,40 @@ function solicitarFormularioEnvio(){
   let distanciaEnvio = document.querySelector("#txtDistanciaEnvio").value;
   let vehiculoEnvio = document.querySelector("#txtselectVehiculosEnvios").value;
   let fotoEnvio = document.querySelector("#imagenEnvio").value;
+  if (fotoEnvio) {
+    let posicionCaracterContrabarra = obtenerPosicionDeCaracter(fotoEnvio, "\\");
+    fotoEnvio = cortarStringDesdeIndice(fotoEnvio, posicionCaracterContrabarra + 1);
+  }    
+  
 
-  // No entra al if cuando están todos los datos 
-  if (descripcionEnvio && distanciaEnvio && vehiculoEnvio > 0){
-    registrarSolicitud (descripcionEnvio, distanciaEnvio, vehiculoEnvio, fotoEnvio);
+  if (descripcionEnvio && distanciaEnvio && vehiculoEnvio > 0 && fotoEnvio){
+    registrarSolicitud (vehiculoEnvio, distanciaEnvio, descripcionEnvio, fotoEnvio, usuarioLogeadoArray);
     mensaje = "Solicitud enviada.";
   } else {
     mensaje = "Todos los datos son obligatorios";
   }
 
-  document.querySelector("#mensajeSolicitudesEnvios").innerHTML=mensaje;
+  document.querySelector("#mensajeSolicitudesEnvios").innerHTML = mensaje;
+}
 
+function obtenerPosicionDeCaracter(texto, caracter) {
+  let resultado = "";
+    for (let i =4; i < texto.length; i++){
+        if(texto[i].toLowerCase() === caracter){
+            resultado= i;
+        }  
+    }
+    return resultado;
+}
+
+function cortarStringDesdeIndice(texto, indice) {
+  let retorno = "";
+
+  for (let i = indice; i < texto.length; i++) {
+      retorno += texto[i];
+  }
+
+  return retorno;
 }
 
 
@@ -208,17 +319,17 @@ function actualizarListadoPersona() {
 
   for (let i = 0; i < solicitud.length; i++) {
     let solicitudActual = solicitud[i];
-    let descripcionsolicitudActual = solicitudActual.descripcion;
+    let descripcionSolicitudActual = solicitudActual.descripcion;
     let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
     let distanciaSolicitudActual = solicitudActual.distancia;
     let vehiculoSolicitudActual = solicitudActual.obtenerVehiculoSolicitud();
     let estadoSolicitudActual = solicitudActual.obtenerEstado();
-    let empresaSolicitudActual = solicitudActual.empresa; 
+    let empresaSolicitudActual = solicitudActual.obtenerNombreEmpresa(); 
     let personaSolicitudActual = solicitudActual.persona;
 
    if (personaSolicitudActual== usuarioLogeadoArray){
      tbodyHTML += `<tr></tr>
-      <td>${descripcionsolicitudActual}</td>
+      <td>${descripcionSolicitudActual}</td>
       <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
       <td>${distanciaSolicitudActual}</td>
       <td>${vehiculoSolicitudActual}</td>
@@ -236,8 +347,7 @@ function pantallaPersonaEstadisticas() {
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaInformacionEstadistica").style.display = "block";
 }
-//MOSTRAR PANTALLAS DE ADMIN
-//PANTALLA HABILITAR EMPRESAS
+
 
 function pantallaAdminHabilitarEmpresas() {
   ocultarPantallas()
@@ -247,8 +357,6 @@ function pantallaAdminHabilitarEmpresas() {
 }
 function actualizarTablaEmpresas() {
   let tbodyHTML = ``;
-  
-
 
   for (let i = 0; i < empresa.length; i++) {
     let empresaActual = empresa[i];
@@ -283,13 +391,10 @@ function actualizarTablaEmpresas() {
       <td>${vehiculoEmpresaActual}</td>
       <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
       </tr>`;
-
     }
-
   }
 
   document.querySelector("#tablaHabilitarEmpresas").innerHTML = tbodyHTML;
-  // Recién acá puedo agregar evento de clicks a los botones de la tabla (antes, no existían en el HTML)
   let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa");
   for (let i = 0; i < botonesDeLaTabla.length; i++) {
     let botonActual = botonesDeLaTabla[i];
@@ -341,9 +446,6 @@ function buscarEmpresa() {
     }
   }
   actualizarTablaEmpresas();
-
-  
-
   document.querySelector("#mensajeBusqueda").innerHTML = mensaje;
 }
 
@@ -359,7 +461,6 @@ function encontrarBusqueda(texto, busqueda){
 function eliminarBusqueda(){
   busquedaActiva = false;
   actualizarTablaEmpresas();
-
 }
 
 
