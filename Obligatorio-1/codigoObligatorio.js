@@ -254,6 +254,7 @@ function actualizarTablaEstadisticaEmpresa() {
 
   document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML;
   
+}
 
 
 //MOSTRAR PANTALLAS DE PERSONA
