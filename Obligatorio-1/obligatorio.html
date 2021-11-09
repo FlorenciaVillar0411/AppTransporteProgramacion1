@@ -25,7 +25,7 @@
         <div id="btnCerrarSesion">
             <input type="button" value="CERRAR SESIÓN" id="btnCerrarSesion">
         </div>
-        <main role="main">
+        <main role="main" class = "intro">
             <section id ="LemaYFoto"class="intro">
                 <article>
                     <div class="flex-center">
@@ -322,13 +322,22 @@
             <h3>LISTADO DE SOLICITUDES PENDIENTES</h3>
 
             <table border="1">
-				<tr> 
-					<th>PRODUCTO</th>
-					<th>IMAGEN</th>
-					<th>KM</th>
-                    <th>VEHICULO</th>
-					<th>ESTADO</th>
-				</tr>
+                <thead>
+                    <tr> 
+                        <th>PRODUCTO</th>
+                        <th>IMAGEN</th>
+                        <th>KM</th>
+                        <th>VEHICULO</th>
+                        <th>USUARIO</th>
+                        <th>ESTADO</th>
+                        <th>ACCIONES</th>
+
+                    </tr>
+                </thead>
+                <tbody  id = "tablaSolicitudesPendientesEmpresa"> </tbody>
+
+
+				
 				
             </table>
             <br><br><br>

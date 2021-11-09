@@ -22,8 +22,8 @@ function inicializar() {
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
-  document.querySelector("#txtNombreUsuarioELogin").value = "flopi_villar";
-  document.querySelector("#txtContraseñaIngresoE").value = "123";
+  document.querySelector("#txtNombreUsuarioELogin").value = "VehiGen";
+  document.querySelector("#txtContraseñaIngresoE").value = "VehiGen";
 }
 
 function ocultarPantallas() {
@@ -100,7 +100,61 @@ function pantallaEmpresaSolicitudes() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresaslistadoSolicitudes").style.display = "block";
+  actualizarListadoEmpresa ();
 }
+
+
+function actualizarListadoEmpresa() {
+  let tbodyHTML = ``;
+
+
+  for (let i = 0; i < solicitud.length; i++) {
+    let solicitudActual = solicitud[i];
+    let descripcionSolicitudActual = solicitudActual.descripcion;
+    let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
+    let distanciaSolicitudActual = solicitudActual.distancia;
+    let vehiculoSolicitudActual = solicitudActual.vehiculo;
+    let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud();
+    let estadoSolicitudActual = solicitudActual.estado;
+    let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
+    
+    let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
+
+    let textoParaAcciones = "SOLICITUD TOMADA";
+    if (solicitudActual.estado == 1) {
+      textoParaAcciones = `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
+    }
+
+    if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
+     tbodyHTML += `<tr></tr>
+      <td>${descripcionSolicitudActual}</td>
+      <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
+      <td>${distanciaSolicitudActual}</td>
+      <td>${vehiculoSolicitudActualParamostrar}</td>
+      <td>${personaSolicitudActual}</td>
+      <td>${estadoSolicitudActualParaMostrar}</td>
+      <td>${textoParaAcciones}</td>
+      </tr>`;
+    }
+  }
+
+  document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML;
+  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitud");
+  for (let i = 0; i < botonesDeLaTabla.length; i++) {
+    let botonActual = botonesDeLaTabla[i];
+    botonActual.addEventListener("click", btnCambiarEstadoSolicitudHandler);
+  }
+
+}
+
+function btnCambiarEstadoSolicitudHandler() {
+  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual");
+  let SolicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
+  cambiarEstadoSolicitud(SolicitudDeBotonClickeado);
+  actualizarListadoEmpresa();
+}
+
+
 function pantallaEmpresaPedidosTomados() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
@@ -160,7 +214,7 @@ function actualizarListadoPersona() {
     let empresaSolicitudActual = solicitudActual.empresa; 
     let personaSolicitudActual = solicitudActual.persona;
 
-  //  if (personaSolicitudActual== usuarioLogeadoArray){
+   if (personaSolicitudActual== usuarioLogeadoArray){
      tbodyHTML += `<tr></tr>
       <td>${descripcionsolicitudActual}</td>
       <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
@@ -169,7 +223,7 @@ function actualizarListadoPersona() {
       <td>${estadoSolicitudActual}</td>
       <td>${empresaSolicitudActual}</td>
       </tr>`;
-  //  } 
+   } 
   }
   document.querySelector("#tablaSolicitudesPersona").innerHTML=tbodyHTML;
 }
@@ -342,7 +396,7 @@ function precargarDatos() {
   registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");
   precargarSolicitud("1", "50", "caja", "caja.png", 0);
   precargarSolicitud("2", "80", "moto", "moto.jpg", 0);
-  precargarSolicitud("3", "30", "sabanas", "sabanas.jpg", 0);
+  precargarSolicitud("2", "30", "sabanas", "sabanas.jpg", 0);
   
 }
 function registrarPersona(
@@ -434,7 +488,7 @@ function login() {
 
   if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
     mensaje = "El usuario es válido";
-    usuarioLogeadoArray = encontrarEmpresapPorUsuario(nombreUsuario);
+    usuarioLogeadoArray = encontrarEmpresaPorUsuario(nombreUsuario);
     usuarioLogeado = true;
     mostrarPantallaEmpresa();
 
@@ -472,7 +526,6 @@ function mostrarPantallaEmpresa() {
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaEmpresa").style.display = "block";
 }
-
 
 
 function formularioEmpresa() {

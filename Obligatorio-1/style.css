@@ -62,8 +62,8 @@ body {
   font-size: 10.3em;
   padding-top: 0.2em;
   text-align: center;
-   font-family: "Big Shoulders Display", cursive; 
 }
+
 h1 {
   font-size: 15px;
 }
@@ -121,7 +121,7 @@ a:focus {
   text-decoration: none;
   color: black;
   font-size: 3.6em;
-  font-family: "Big Shoulders Display", cursive;
+  font-family: 'Times New Roman', Times, serif;
   padding: 0 20px;
   line-height: 70px;
 }

@@ -24,9 +24,6 @@ class Empresa {
 }
 
 
-
-
-
 class Vehiculo {
   constructor(pTipoVehiculo, pIdVehiculo) {
     this.vehiculo = pTipoVehiculo;

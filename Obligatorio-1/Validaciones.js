@@ -186,18 +186,6 @@ function encontrarEmpresapPorUsuario(usuario) {
   return empresaEncontrada;
 }
 
-function encontrarPersonaPorUsuario(usuario) {
-  let personaEncontrada = null;
-  let i = 0;
-  while (!personaEncontrada && i < persona.length) {
-      let personaActual = persona[i];
-      if (usuario == personaActual.id) {
-        personaEncontrada = personaActual;
-      }
-      i++;
-  }
-  return personaEncontrada;
-}
 
 
 function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
@@ -234,25 +222,64 @@ function existeVehiculo(palabra) {
 
 ///Preguntar a Bruno porque no funca esto
 function cambiarEstadoEmpresa(empresa) {
-
+  
   let empresaEstaHabilitado = empresa.habilitado;
-
+  
   if (empresaEstaHabilitado) {
     empresa.habilitado = false;
   } else {
     empresa.habilitado = true;
   }
-
+  
 }
 function encontrarEmpresaPorUsuario(nombreUsuario) {
   let empresaEncontrada = null;             
   let i = 0;
   while (!empresaEncontrada && i < empresa.length) {
-      let empresaActual = empresa[i];
-      if (nombreUsuario == empresaActual.nombreUsuario) {
-        empresaEncontrada = empresaActual;
-      }
-      i++;
+    let empresaActual = empresa[i];
+    if (nombreUsuario == empresaActual.nombreUsuario) {
+      empresaEncontrada = empresaActual;
+    }
+    i++;
   }
   return empresaEncontrada;
 }
+
+
+
+function encontrarPersonaPorUsuario(usuario) {
+  let personaEncontrada = null;
+  let i = 0;
+  while (!personaEncontrada && i < persona.length) {
+      let personaActual = persona[i];
+      if (usuario == personaActual.nombreUsuario) {
+        personaEncontrada = personaActual;
+      }
+      i++;
+  }
+  return personaEncontrada;
+}
+
+function encontrarSolicitudPorDescripcion(descripcion) {
+  let descripcionEncontrada = null;
+  let i = 0;
+  while (!descripcionEncontrada && i < solicitud.length) {
+      let solicitudActual = solicitud[i];
+      if (descripcion == solicitudActual.descripcion) {
+        descripcionEncontrada = solicitudActual;
+      }
+      i++;
+  }
+  return descripcionEncontrada;
+}
+
+function cambiarEstadoSolicitud(solicitud) {
+
+  let solicitudCambiada = solicitud.estado;
+
+  if (solicitudCambiada == 1) {
+    solicitud.estado = 2;
+  } 
+
+}
+
