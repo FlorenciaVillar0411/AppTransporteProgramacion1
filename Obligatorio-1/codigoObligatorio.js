@@ -149,9 +149,11 @@ function actualizarListadoEmpresa() {
 
 function btnCambiarEstadoSolicitudHandler() {
   let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual");
-  let SolicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
-  cambiarEstadoSolicitud(SolicitudDeBotonClickeado);
+  let solicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
+  cambiarEstadoSolicitud(solicitudDeBotonClickeado);
   actualizarListadoEmpresa();
+  solicitudDeBotonClickeado.empresa = usuarioLogeadoArray;
+  
 }
 
 
@@ -480,7 +482,6 @@ function formularioPersona() {
   }
 }
 
-
 function login() {
   let mensaje = "";
   let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
@@ -505,8 +506,6 @@ function login() {
   } else {
     mensaje = "Usuario o contraseña no válido";
   }
-
-
   document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
 }
 
@@ -563,7 +562,6 @@ function selectVehiculos() {
         Seleccione un vehiculo...
       </option>
     `;
-
     for (let i = 0; i < vehiculo.length; i++) {
       let vehiculoActual = vehiculo[i];
       vehiculosParaMostrarEnHTML += `
@@ -631,10 +629,8 @@ function mostrarVehiculos() {
       <tr>
        <td>${vehiculoActual.vehiculo}</td>
       </tr>
-      `;
-      
+      `; 
     }
-
     vehiculosParaMostrarEnHTML += `
             </tbody>
         </table>
