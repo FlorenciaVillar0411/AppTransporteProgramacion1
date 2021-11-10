@@ -275,9 +275,9 @@ function encontrarSolicitudPorId(id) {
 
 function cambiarEstadoSolicitud(solicitud) {
 
-  if (solicitud.estado = "1") {
+  if (solicitud.estado == "1") {
     solicitud.estado = "2";
-  } else if (solicitud.estado = "2"){
+  } else{
     solicitud.estado = "3";
   }
 

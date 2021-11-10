@@ -180,15 +180,16 @@ function actualizarTablaPedidosTomadosEmpresa(){
     let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
     let distanciaSolicitudActual = solicitudActual.distancia;
     let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud();
-    let estadoSolicitudActual = solicitudActual.estado;
     let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
     let empresaSolicitudActual = solicitudActual.empresa;
+    let idSolicitudActual = solicitudActual.id;
+    
     
     let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
 
     let textoParaAcciones = "FINALIZADA";
-    if (solicitudActual.estado > 1) {
-      textoParaAcciones = `<input solicitudActualTomada ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
+    if (solicitudActual.estado  == 2) {
+      textoParaAcciones = `<input solicitudActualTomada ="${idSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
     }
 
     if (empresaSolicitudActual == usuarioLogeadoArray){
@@ -213,8 +214,8 @@ function actualizarTablaPedidosTomadosEmpresa(){
 }
 
 function cambiarEstadoSolicitudTomadaHandler() {
-  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActualTomada");
-  let solicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
+  let idSolicitudDeBotonClickeado = this.getAttribute("solicitudActualTomada");
+  let solicitudDeBotonClickeado = encontrarSolicitudPorId(idSolicitudDeBotonClickeado);
   cambiarEstadoSolicitud(solicitudDeBotonClickeado);
   actualizarTablaPedidosTomadosEmpresa();
 }
@@ -241,7 +242,7 @@ function actualizarTablaEstadisticaEmpresa() {
       `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
     }
 
-    if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
+    if (estadoSolicitudActual == "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
      tbodyHTML += `<tr></tr>
       <td>${descripcionSolicitudActual}</td>
       <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
@@ -430,9 +431,6 @@ function buscarEmpresa() {
     console.log(razonEmpresaActualRecortada);
     let fantasiaEmpresaActualRecortada = encontrarBusqueda(fantasiaEmpresaActual, textoParaBuscar).toLowerCase().trim()
     empresaActual.buscado = false;
-
-   
-
 
 
     if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) {
