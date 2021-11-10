@@ -122,7 +122,7 @@ function actualizarListadoEmpresa() {
     let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
 
     let textoParaAcciones = "SOLICITUD TOMADA";
-    if (solicitudActual.estado = "1") {
+    if (solicitudActual.estado == "1") {
       textoParaAcciones = 
       `<input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
     }
@@ -416,6 +416,7 @@ function buscarEmpresa() {
   let mensaje = ""
   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
   busquedaActiva = true;
+  let busquedaTuvoResultados = false;
 
   // let razonEmpresaactualAcortada;
   // let fantasiaEmpresaactualAcortada;
@@ -425,37 +426,38 @@ function buscarEmpresa() {
     let empresaActual = empresa[i]
     let razonEmpresaActual = empresaActual.razonSocial;
     let fantasiaEmpresaActual = empresaActual.nombreFantasia;
+    let razonEmpresaActualRecortada = encontrarBusqueda(razonEmpresaActual, textoParaBuscar).toLowerCase().trim()
+    console.log(razonEmpresaActualRecortada);
+    let fantasiaEmpresaActualRecortada = encontrarBusqueda(fantasiaEmpresaActual, textoParaBuscar).toLowerCase().trim()
     empresaActual.buscado = false;
 
-    // for (let a = 0; a < razonEmpresaActual[textoParaBuscar.length]; a++);{
-    //   razonEmpresaactualAcortada +=razonEmpresaActual[a];
-    // }
+   
 
-    // for (let a = 0; a < fantasiaEmpresaActual[textoParaBuscar.length]; a++);{
-    //   fantasiaEmpresaactualAcortada +=fantasiaEmpresaActual[a];
-    // }
-  
+
+
+    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) {
+      empresaActual.buscado = true;
+      busquedaTuvoResultados = true;
+
+
+
+    } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActualRecortada) {
+      empresaActual.buscado = true;
+      busquedaTuvoResultados = true;
+
+    } 
     
-
-    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActual.toLowerCase().trim() ) {
-      empresaActual.buscado = true;
-
-
-
-    } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActual.toLowerCase().trim()) {
-      empresaActual.buscado = true;
-    } else{
-    mensaje = "No hay resultados que coincidan con su búsqueda"
-    }
+  }
+  if (!busquedaTuvoResultados){
+    mensaje = "No hay resultados que coincidan con la búsqueda";
   }
   actualizarTablaEmpresas();
   document.querySelector("#mensajeBusqueda").innerHTML = mensaje;
 }
 
 function encontrarBusqueda(texto, busqueda){
-
-  let resultado='';
-    for (let i =0; i <texto[busqueda.length-1];i++){
+  let resultado="";
+    for (let i =0; i < busqueda.length;i++){
       resultado += texto[i];
     }
   return resultado;
