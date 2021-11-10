@@ -352,12 +352,13 @@ function actualizarPersonaEstadistica() {
 
   let solicitudesEstado = obtenerEnviosEnEstado2y3Persona();
   let totalPorcentaje =  solicitudesEstado[0] + solicitudesEstado[1];
-  let porcentajeEnTránsito = solicitudesEstado[0]*100 /totalPorcentaje;
-  let porcentajeFinalizado = solicitudesEstado[1]*100 /totalPorcentaje;
+  let porcentajeEnTránsito = solicitudesEstado[1]*100 /totalPorcentaje;
+  let porcentajeFinalizado = solicitudesEstado[2]*100 /totalPorcentaje;
 
   if (solicitudesEstado) {
-    estadisticas = "Cantidad de envíos en tránsito: " + solicitudesEstado[0] + ".<br>";
-    estadisticas += "Cantidad de envíos finalizados: " + solicitudesEstado[1] + ".<br>";
+    estadisticas += "Cantidad de envíos pedientes: " + solicitudesEstado[0] + ".<br>";
+    estadisticas += "Cantidad de envíos en tránsito: " + solicitudesEstado[1] + ".<br>";
+    estadisticas += "Cantidad de envíos finalizados: " + solicitudesEstado[2] + ".<br> <br>";
     estadisticas += "Porcentaje de envíos en tránsito: " + porcentajeEnTránsito + "%.<br>";
     estadisticas += "Porcentaje de envíos finalizados: " + porcentajeFinalizado + "%.<br>";
 
@@ -367,6 +368,7 @@ function actualizarPersonaEstadistica() {
 }
 
 function obtenerEnviosEnEstado2y3Persona() {
+  let enviosEstado1 = 0
   let enviosEstado2 = 0;
   let enviosEstado3 = 0;
 
@@ -378,10 +380,12 @@ function obtenerEnviosEnEstado2y3Persona() {
           enviosEstado2 += 1;
       } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
         enviosEstado3 += 1;
+      } else if (estadoSolicitudActual == 1 && personaSolicitudActual == usuarioLogeadoArray){
+        enviosEstado1 += 1;
       }
   }
   
-  return [enviosEstado2, enviosEstado3];
+  return [enviosEstado1, enviosEstado2, enviosEstado3];
 }
 
 
