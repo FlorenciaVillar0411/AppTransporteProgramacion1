@@ -23,8 +23,8 @@ function inicializar() {
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
-  document.querySelector("#txtNombreUsuarioELogin").value = "VehiGen";
-  document.querySelector("#txtContraseñaIngresoE").value = "VehiGen";
+  document.querySelector("#txtNombreUsuarioELogin").value = "flopi_villar";
+  document.querySelector("#txtContraseñaIngresoE").value = "123";
 }
 
 function ocultarPantallas() {
@@ -159,7 +159,6 @@ function cambiarEstadoSolicitudHandler() {
   console.log(solicitudDeBotonClickeado)
 
 
-  //No cambia el estado y no sabemos porque
 }
 
 
@@ -288,7 +287,6 @@ function solicitarFormularioEnvio(){
 
   document.querySelector("#mensajeSolicitudesEnvios").innerHTML = mensaje;
 }
-
 function obtenerPosicionDeCaracter(texto, caracter) {
   let resultado = "";
     for (let i =4; i < texto.length; i++){
@@ -298,7 +296,6 @@ function obtenerPosicionDeCaracter(texto, caracter) {
     }
     return resultado;
 }
-
 function cortarStringDesdeIndice(texto, indice) {
   let retorno = "";
 
@@ -308,15 +305,12 @@ function cortarStringDesdeIndice(texto, indice) {
 
   return retorno;
 }
-
-
 function pantallaPersonaListado() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaListadoSolicitudes").style.display = "block";
   actualizarListadoPersona();
 }
-
 function actualizarListadoPersona() {
   let tbodyHTML = ``;
 
@@ -344,14 +338,56 @@ function actualizarListadoPersona() {
   }
   document.querySelector("#tablaSolicitudesPersona").innerHTML=tbodyHTML;
 }
-
+// INFORMACION ESTADISTICA PERSONA
 
 function pantallaPersonaEstadisticas() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaInformacionEstadistica").style.display = "block";
+  actualizarPersonaEstadistica();
 }
 
+function actualizarPersonaEstadistica() {
+  let estadisticas = ``;
+
+  let solicitudesEstado = obtenerEnviosEnEstado2y3Persona();
+  let totalPorcentaje =  solicitudesEstado[0] + solicitudesEstado[1];
+  let porcentajeEnTránsito = solicitudesEstado[0]*100 /totalPorcentaje;
+  let porcentajeFinalizado = solicitudesEstado[1]*100 /totalPorcentaje;
+
+  if (solicitudesEstado) {
+    estadisticas = "Cantidad de envíos en tránsito: " + solicitudesEstado[0] + ".<br>";
+    estadisticas += "Cantidad de envíos finalizados: " + solicitudesEstado[1] + ".<br>";
+    estadisticas += "Porcentaje de envíos en tránsito: " + porcentajeEnTránsito + "%.<br>";
+    estadisticas += "Porcentaje de envíos finalizados: " + porcentajeFinalizado + "%.<br>";
+
+  }
+
+  document.querySelector("#mensajeInformaciónEstadistica").innerHTML = estadisticas;
+}
+
+function obtenerEnviosEnEstado2y3Persona() {
+  let enviosEstado2 = 0;
+  let enviosEstado3 = 0;
+
+  for (let i = 0; i < solicitud.length; i++) {
+      let solicitudActual = solicitud[i];
+      let estadoSolicitudActual = solicitudActual.estado;
+      let personaSolicitudActual = solicitudActual.persona;
+      if (estadoSolicitudActual == 2 && personaSolicitudActual == usuarioLogeadoArray) {
+          enviosEstado2 += 1;
+      } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
+        enviosEstado3 += 1;
+      }
+  }
+  
+  return [enviosEstado2, enviosEstado3];
+}
+
+
+
+
+//PANTALLAS ADMIN
 
 function pantallaAdminHabilitarEmpresas() {
   ocultarPantallas()
@@ -413,14 +449,14 @@ function btnCambiarEstadoEmpresaHandler() {
   actualizarTablaEmpresas();
 }
 
+//BUSQUEDA POR EMPRESA
+
 function buscarEmpresa() {
   let mensaje = ""
   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
   busquedaActiva = true;
   let busquedaTuvoResultados = false;
 
-  // let razonEmpresaactualAcortada;
-  // let fantasiaEmpresaactualAcortada;
 
   for (let i = 0; i < empresa.length; i++) {
     
@@ -472,26 +508,64 @@ function pantallaAdminAniadirTransporte() {
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadotransporte").style.display = "block";
 }
-function pantallaAdminEstadistica() {
+
+function pantallaAdminEstadistica() { 
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminInformacionEstadistica").style.display = "block";
 }
+
+
+// MOSTARR PANTALLAS REGISTRO 
+
 function mostrarRegistroEmpresa() {
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroEmpresa").style.display = "block";
 }
-function mostrarRegistroPresona() {//ver luego y editar para que quede bien el nombre!!!!!
+function mostrarRegistroPresona() {
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroPersona").style.display = "block";
 }
+
+
+//LOGIN
+
 function mostrarLogin() {
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#divLogin").style.display = "block";
 }
+function login() {
+  let mensaje = "";
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
+
+  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    usuarioLogeadoArray = encontrarEmpresaPorUsuario(nombreUsuario);
+    usuarioLogeado = true;
+    mostrarPantallaEmpresa();
+
+  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    adminEstaLogeado = true;
+    mostrarPantallaAdmin();
+
+  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario);
+    usuarioLogeado = true;
+    mostrarPantallaPersona();
+  } else {
+    mensaje = "Usuario o contraseña no válido";
+  }
+  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
+}
+
+//PRECARGAR DATOS Y REGISTRAR DATOS
+
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
@@ -505,6 +579,9 @@ function precargarDatos() {
   precargarSolicitud("2", "30", "sabanas", "sabanas.jpg", 0);
   
 }
+
+// FUNCIONES REGISTRAR
+
 function registrarPersona(
   pCedula,
   pNombre,
@@ -521,19 +598,16 @@ function registrarPersona(
   );
   persona.push(nuevaPersona);
 }
-
 function registrarVehiculo(pVehiculo) {
   let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
   vehiculo.push(nuevoVehiculo);
   IdVehiculo += 1;
 }
-
 function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
   let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, idSolicitud);
   solicitud.push(nuevaSolicitud);
   idSolicitud++;
 }
-
 function precargarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona) {
   let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, persona[pPersona],idSolicitud);
   solicitud.push(nuevaSolicitud);
@@ -564,7 +638,6 @@ function registrarEmpresa(
   );
   empresa.push(nuevaEmpresa);
 }
-
 function formularioPersona() {
   let mensaje = "";
   let cedula = parseInt(document.querySelector("#txtCedula").value);
@@ -588,33 +661,6 @@ function formularioPersona() {
   }
 }
 
-function login() {
-  let mensaje = "";
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
-
-  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    usuarioLogeadoArray = encontrarEmpresaPorUsuario(nombreUsuario);
-    usuarioLogeado = true;
-    mostrarPantallaEmpresa();
-
-  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    adminEstaLogeado = true;
-    mostrarPantallaAdmin();
-
-  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario);
-    usuarioLogeado = true;
-    mostrarPantallaPersona();
-  } else {
-    mensaje = "Usuario o contraseña no válido";
-  }
-  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
-}
-
 function mostrarPantallaAdmin() {
   ocultarPantallas();
   document.querySelector("#btnCerrarSesion").style.display = "block";
@@ -631,8 +677,6 @@ function mostrarPantallaEmpresa() {
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaEmpresa").style.display = "block";
 }
-
-
 function formularioEmpresa() {
   let mensaje = "";
   let Rut = document.querySelector("#txtRut").value;
@@ -657,6 +701,8 @@ function formularioEmpresa() {
       "El empresa se ingresó correctamente";
   }
 }
+
+// FUNCIONES RELACIONADOS A VEHICULOS
 
 function selectVehiculos() {
   let vehiculosParaMostrarEnHTML = "";
@@ -760,4 +806,8 @@ function AgregarVehiculoAdmin() {
   document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
 
 }
+
+
+
+
 
