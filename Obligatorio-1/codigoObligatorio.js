@@ -11,6 +11,7 @@ let usuarioLogeado = false;
 let usuarioLogeadoArray = []
 let IdVehiculo = 1;
 let busquedaActiva = false;
+let idSolicitud = 1;
 
 inicializar();
 
@@ -109,6 +110,7 @@ function actualizarListadoEmpresa() {
 
   for (let i = 0; i < solicitud.length; i++) {
     let solicitudActual = solicitud[i];
+    let idSolicitudActual = solicitudActual.id;
     let descripcionSolicitudActual = solicitudActual.descripcion;
     let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
     let distanciaSolicitudActual = solicitudActual.distancia;
@@ -122,7 +124,7 @@ function actualizarListadoEmpresa() {
     let textoParaAcciones = "SOLICITUD TOMADA";
     if (solicitudActual.estado = "1") {
       textoParaAcciones = 
-      `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
+      `<input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
     }
 
     if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
@@ -149,7 +151,7 @@ function actualizarListadoEmpresa() {
 
 function cambiarEstadoSolicitudHandler() {
   let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual");
-  let solicitudDeBotonClickeado = encontrarSolicitudPorDescripcion(nombreSolicitudDeBotonClickeado);
+  let solicitudDeBotonClickeado = encontrarSolicitudPorId(nombreSolicitudDeBotonClickeado);
   solicitudDeBotonClickeado.empresa = usuarioLogeadoArray; 
   cambiarEstadoSolicitud(solicitudDeBotonClickeado);
   console.log(solicitudDeBotonClickeado)
@@ -527,13 +529,15 @@ function registrarVehiculo(pVehiculo) {
 }
 
 function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray);
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, idSolicitud);
   solicitud.push(nuevaSolicitud);
+  idSolicitud++;
 }
 
 function precargarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, persona[pPersona]);
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, persona[pPersona],idSolicitud);
   solicitud.push(nuevaSolicitud);
+  idSolicitud++;
 
 }
 

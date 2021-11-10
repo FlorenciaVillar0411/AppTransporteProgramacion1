@@ -9,15 +9,18 @@ class Persona {
 }
 
 class Solicitud{
-  constructor(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona) {
+  constructor(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona, pId) {
     this.vehiculo = pVehiculo;
     this.distancia = pDistancia;
     this.descripcion = pDescripcion;
     this.foto = pFoto;
     this.persona = pPersona;
     this.estado = "1";
+    this.id = pId;
+
 
     this.empresa = [];
+
   }
 
 

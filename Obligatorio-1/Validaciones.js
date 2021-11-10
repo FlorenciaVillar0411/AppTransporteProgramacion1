@@ -260,17 +260,17 @@ function encontrarPersonaPorUsuario(usuario) {
   return personaEncontrada;
 }
 
-function encontrarSolicitudPorDescripcion(descripcion) {
-  let descripcionEncontrada = null;
+function encontrarSolicitudPorId(id) {
+  let solicitudEncontrada = null;
   let i = 0;
-  while (!descripcionEncontrada && i < solicitud.length) {
+  while (!solicitudEncontrada && i < solicitud.length) {
       let solicitudActual = solicitud[i];
-      if (descripcion == solicitudActual.descripcion) {
-        descripcionEncontrada = solicitudActual;
+      if (id == solicitudActual.id) {
+        solicitudEncontrada = solicitudActual;
       }
       i++;
   }
-  return descripcionEncontrada;
+  return solicitudEncontrada;
 }
 
 function cambiarEstadoSolicitud(solicitud) {
