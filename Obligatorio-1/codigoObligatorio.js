@@ -366,6 +366,7 @@ function pantallaPersonaListado() {
   document.querySelector("#PersonaListadoSolicitudes").style.display = "block";
   actualizarListadoPersona();
 }
+
 function actualizarListadoPersona() {
   let tbodyHTML = ``;
 
@@ -671,14 +672,47 @@ function login() {
 function precargarDatos() {
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
+  registrarPersona("12836273", "Esteban", "Machado", "Esteban", "Esteban");
+  registrarPersona("12836273", "Bruno", "Diaz", "Bruno", "123");
+
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camión");
+  
   registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2");
   registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");
-  precargarSolicitud("1", 12, "caja", "caja.png", 0);
-  precargarSolicitud("2", 80, "moto", "moto.jpg", 0);
-  precargarSolicitud("2", 30, "sabanas", "sabanas.jpg", 0);
+  registrarEmpresa("123456789015", "Mejores", "Los Mejores", "Mejorcitos", "Mejorcitos","3");
+  registrarEmpresa("123456789765", "Muchos Kilometros", "Kilometros Muchos", "MuchosKm", "MuchosKm", "2");
+  registrarEmpresa("123457659014", "Rapidos", "Rapiditos", "Rapiditos", "Rapiditos", "1");
+
+  cambiarEstadoEmpresa(empresa[0]);
+  cambiarEstadoEmpresa(empresa[1]);
+  cambiarEstadoEmpresa(empresa[2]);
+
+
+  precargarSolicitud("1", 12, "caja", "caja.png", 0); //0
+  cambiarEstadoSolicitud(solicitud[0])
+  cambiarEstadoSolicitud(solicitud[0])
+
+  precargarSolicitud("2", 80, "pelota", "pelota.jpeg", 1); //1
+  cambiarEstadoSolicitud(solicitud[1])
+  cambiarEstadoSolicitud(solicitud[1])
+  precargarSolicitud("2", 35, "sabanas", "sabanas.jpg", 2); //2
+  cambiarEstadoSolicitud(solicitud[2])
+  cambiarEstadoSolicitud(solicitud[2])
+
+  precargarSolicitud("3", 12, "reloj", "reloj.gif", 0); //3
+  cambiarEstadoSolicitud(solicitud[3])
+  
+  precargarSolicitud("2", 70, "monitor", "monitor.jpg", 0); //4
+  cambiarEstadoSolicitud(solicitud[4])
+  precargarSolicitud("3", 30, "silla", "silla.jpeg", 2); //5
+  cambiarEstadoSolicitud(solicitud[5])
+
+
+  precargarSolicitud("3", 12, "reloj", "reloj.gif", 0); //6
+  precargarSolicitud("2", 15, "monitor", "monitor.jpg", 0); //7
+  precargarSolicitud("3", 39, "silla", "silla.jpeg", 2); //8
   
 }
 
