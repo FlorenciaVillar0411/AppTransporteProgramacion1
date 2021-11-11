@@ -23,8 +23,8 @@ function inicializar() {
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
-  document.querySelector("#txtNombreUsuarioELogin").value = "VehiGen";
-  document.querySelector("#txtContraseñaIngresoE").value = "VehiGen";
+  document.querySelector("#txtNombreUsuarioELogin").value = "Admin";
+  document.querySelector("#txtContraseñaIngresoE").value = "Admin01";
 }
 
 function ocultarPantallas() {
@@ -324,7 +324,7 @@ function pantallaPersonaSolicitar() {
 function solicitarFormularioEnvio(){
   let mensaje = "";
   let descripcionEnvio = document.querySelector("#txtDescripcionenvio").value;
-  let distanciaEnvio = document.querySelector("#txtDistanciaEnvio").value;
+  let distanciaEnvio = parseInt(document.querySelector("#txtDistanciaEnvio").value);
   let vehiculoEnvio = document.querySelector("#txtselectVehiculosEnvios").value;
   let fotoEnvio = document.querySelector("#imagenEnvio").value;
   if (fotoEnvio) {
@@ -444,8 +444,6 @@ function obtenerEnviosEnEstado2y3Persona() {
 }
 
 
-
-
 //PANTALLAS ADMIN
 
 function pantallaAdminHabilitarEmpresas() {
@@ -454,6 +452,7 @@ function pantallaAdminHabilitarEmpresas() {
   document.querySelector("#adminlistadoempresas").style.display = "block";
   actualizarTablaEmpresas();
 }
+
 function actualizarTablaEmpresas() {
   let tbodyHTML = ``;
 
@@ -572,6 +571,51 @@ function pantallaAdminEstadistica() {
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminInformacionEstadistica").style.display = "block";
+  actualizarAdminEstadistica()
+}
+
+// INFORMACION ESTADISTICA ADMINISTRADOR - TOTAL DE KILOMETROS RECORRIDOS POR EMPRESA
+
+function actualizarAdminEstadistica(){
+  let tbodyHTML = ``;
+  let arrayKilometrosYEmpresas = kilometrosPorEmpresa();
+  let empresasPorKilometros = arrayKilometrosYEmpresas[0];
+  let kilometrosPorEmpresas = arrayKilometrosYEmpresas[1];
+
+  for (let i = 0; i < empresasPorKilometros.length; i++) {
+    let empresaActual = empresasPorKilometros[i];
+    let kilometroActual = kilometrosPorEmpresas[i];
+   
+    
+    tbodyHTML += `<tr></tr>
+    <td>${empresaActual}</td>
+    <td>${kilometroActual}</td>
+    </tr>`;
+  }
+  document.querySelector("#tablaAdminInformacionEstadistica").innerHTML = tbodyHTML;
+}
+
+
+function kilometrosPorEmpresa(){
+  
+  let nombreEmpresas = [];
+  let kilometrosRecorridos = [];
+
+  for (let i = 0; i < empresa.length; i++) {
+    let kilometrosDeCadaEmpresa = 0;
+    let empresaActual = empresa[i];
+      for (let a = 0; a < solicitud.length; a++){
+        let solicitudActual = solicitud[a];
+        if (solicitudActual.empresa == empresaActual && solicitudActual.estado == "3"){
+          kilometrosDeCadaEmpresa += solicitudActual.distancia;
+        }
+      }
+      nombreEmpresas.push(empresaActual.nombreUsuario);
+      kilometrosRecorridos.push(kilometrosDeCadaEmpresa);
+     
+  }
+  
+  return [nombreEmpresas, kilometrosRecorridos];
 }
 
 
@@ -587,7 +631,6 @@ function mostrarRegistroPresona() {
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroPersona").style.display = "block";
 }
-
 
 //LOGIN
 
@@ -633,9 +676,9 @@ function precargarDatos() {
   registrarVehiculo("Camión");
   registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2");
   registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");
-  precargarSolicitud("1", "50", "caja", "caja.png", 0);
-  precargarSolicitud("2", "80", "moto", "moto.jpg", 0);
-  precargarSolicitud("2", "30", "sabanas", "sabanas.jpg", 0);
+  precargarSolicitud("1", 12, "caja", "caja.png", 0);
+  precargarSolicitud("2", 80, "moto", "moto.jpg", 0);
+  precargarSolicitud("2", 30, "sabanas", "sabanas.jpg", 0);
   
 }
 
