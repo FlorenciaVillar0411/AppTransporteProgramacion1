@@ -9,7 +9,7 @@ class Persona {
 }
 
 class Solicitud{
-  constructor(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona, pId) {
+  constructor(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona, pEmpresa, pId) {
     this.vehiculo = pVehiculo;
     this.distancia = pDistancia;
     this.descripcion = pDescripcion;
@@ -19,7 +19,7 @@ class Solicitud{
     this.id = pId;
 
 
-    this.empresa = [];
+    this.empresa = pEmpresa;
 
   }
 

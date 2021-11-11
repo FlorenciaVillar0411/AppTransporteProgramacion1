@@ -14,7 +14,7 @@
         <header class="logo-nav-container">
             <div class="logo">
             </div>
-            <div class="nav-menu">
+            <div class="nav-menu" id = "listaLoginYRegistroBotones">
                 <ul>
                     <li><a id="btnLogin" href="#login" f>Login</a></li>
                     <li><a id="btnRegistroPersona" href="#registroPersona">Registro Persona</a></li>
@@ -196,6 +196,7 @@
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <br><br>
+            
             <table border="1">
                 <thead>
                     <tr> 
@@ -296,11 +297,14 @@
         </div>
 
         <div id ="EmpresaslistadoSolicitudes" class="cuerpo"> 
-           
+            
+            
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES PENDIENTES</h3>
-
-            <table border="1">
+            <br><br>
+            <div id="MensajeNoHabilitado"></div>
+            <br><br>
+            <table border="1" id="tablaSolicitudesPendientes">
                 <thead>
                     <tr> 
                         <th>PRODUCTO</th>
@@ -329,7 +333,9 @@
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES TOMADAS</h3>
             <br><br>
-            <table border="1">
+            <div id="MensajeNoHabilitado1"></div>
+            <br><br>
+            <table border="1" id = "tablaSolicitudesTomadas">
                 <thead>
                     <tr> 
                         <th>PRODUCTO</th>
@@ -341,6 +347,7 @@
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
+                <br><br><br>
                 <tbody  id = "tablaSolicitudesTomadasEmpresa"> </tbody>
                 
                 
@@ -352,29 +359,37 @@
         </div>
 
 
-        <div id ="EmpresasInformacionEstadistica" class="cuerpo"> 
+      <div   id ="EmpresasInformacionEstadistica" class="cuerpo"> 
            
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <br><br>
-
+            <br><br><br>
             <div id ="divInformacionEstadisticaEmpresa"></div>
             
-
+            <br><br>
             <select id = "selectInfoEstadisticaEmpresa">
                 <option value="0">SELECCIONE OPCIÓN...</option>
                 <option value="1">EN TRÁNSITO</option>
                 <option value="2">FINALIZADO</option>
             </select>
             <input type="button" id="btnSelectInfoEstadisticaEmpresa" value="MOSTRAR">
-            <div id = "divSelectInfoEmpresa"
+            <br><br><br>
+            <div id = "divSelectInfoEmpresa"></div>
 
             <br>
             <br><br><br>
             <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center> 
             <br><br><br> 
-        </div>
-        
+    </div>
+         <!-- //Reveer lo del footer -->
+        <!-- <footer class="footer" id="footer">
+            <ul>
+                <li><a href="aviso-legal.html">Aviso legal</a></li>
+                <li><a href="privacidad.html">Provacidad</a></li>
+                <li><a href="contactar.html">Contactar</a></li>
+            </ul>
+        </footer>  -->
 
 
         <script type="text/javascript" src="claseAdmin.js"></script>
@@ -382,6 +397,10 @@
         <script type="text/javascript" src="clasePersona.js"></script>
         <script type="text/javascript" src="Validaciones.js"></script>
         <script type="text/javascript" src="codigoObligatorio.js"></script>
+
+        
+
+
     </body>
 </html>
 
