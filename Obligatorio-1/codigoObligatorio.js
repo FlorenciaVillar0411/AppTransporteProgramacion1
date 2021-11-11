@@ -82,6 +82,7 @@ function botones() {
   document.querySelector("#btnSolicitudesE").addEventListener("click", pantallaEmpresaSolicitudes);
   document.querySelector("#btnListadoPedidosE").addEventListener("click", pantallaEmpresaPedidosTomados);
   document.querySelector("#btnVerEstadísticasEmpresa").addEventListener("click", pantallaEmpresaEstadisticas);
+  document.querySelector("#btnSelectInfoEstadisticaEmpresa").addEventListener("click", selectEmpresaEstadisticas);
 
   //CERRAR SESION
   document.querySelector("#btnCerrarSesion").addEventListener("click", cerrarSesion);
@@ -276,6 +277,41 @@ function obtenerPersonaConMasEnvios() {
   
   return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
 }
+
+function selectEmpresaEstadisticas(){
+  let selectInfoEstadistica = document.querySelector("#selectInfoEstadisticaEmpresa").value;
+  let mensaje = ""
+
+    switch (selectInfoEstadistica){
+      case "0":
+        mensaje = "Seleccione un tipo de estado del desplegable";
+      break;
+      case "1":
+        mensaje = "Tiene "+mostrarSolicitudesSegunEstado(2) +  " solicitud/es en tránsito";
+      break;
+      case "2":
+        mensaje = "Tiene "+mostrarSolicitudesSegunEstado(3) +  " solicitud/es finalizadas";
+      break;
+
+    }
+
+    document.querySelector("#divSelectInfoEmpresa").innerHTML = mensaje;
+
+}
+function mostrarSolicitudesSegunEstado(num){
+  let contadorSolicitudes = 0;
+
+  for (let i = 0; i < solicitud.length; i++){
+    let solicitudActual = solicitud[i];
+    if (solicitudActual.empresa == usuarioLogeadoArray ){
+      if (solicitudActual.estado == num){
+        contadorSolicitudes +=1;
+      }
+    }
+  }
+  return contadorSolicitudes;
+}
+
 
 
 //MOSTRAR PANTALLAS DE PERSONA
