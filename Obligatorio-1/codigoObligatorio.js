@@ -23,8 +23,8 @@ function inicializar() {
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
-  document.querySelector("#txtNombreUsuarioELogin").value = "flopi_villar";
-  document.querySelector("#txtContraseñaIngresoE").value = "123";
+  document.querySelector("#txtNombreUsuarioELogin").value = "VehiGen";
+  document.querySelector("#txtContraseñaIngresoE").value = "VehiGen";
 }
 
 function ocultarPantallas() {
@@ -224,38 +224,57 @@ function pantallaEmpresaEstadisticas() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "block";
-  actualizarTablaEstadisticaEmpresa();
+  actualizarEmpresaEstadistica();
 }
 
-function actualizarTablaEstadisticaEmpresa() {
-  let tbodyHTML = ``;
+function actualizarEmpresaEstadistica() {
+  let estadisticas = ``;
 
-  for (let i = 0; i < empresa.length; i++) {
-    let empresaActual = empresa[i];
+  let personaConMasEnvios = obtenerPersonaConMasEnvios();
+  console.log(obtenerPersonaConMasEnvios())
+  let nombrePersonaMasEnvios = personaConMasEnvios[0];
+  console.log(nombrePersonaMasEnvios)
+  let cantidadPersonaMasEnvios = personaConMasEnvios[1];
+
+  if (cantidadPersonaMasEnvios>0){
+    estadisticas = "La persona que tiene más envíos es: "+ nombrePersonaMasEnvios  + ".<br>";
     
-      // FALTA TERMINAR ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO//
-
-    let textoParaAcciones = "SOLICITUD TOMADA";
-    if (solicitudActual.estado = "1") {
-      textoParaAcciones = 
-      `<input solicitudActual ="${descripcionSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
-    }
-
-    if (estadoSolicitudActual == "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
-     tbodyHTML += `<tr></tr>
-      <td>${descripcionSolicitudActual}</td>
-      <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
-      <td>${distanciaSolicitudActual}</td>
-      <td>${vehiculoSolicitudActualParamostrar}</td>
-      <td>${personaSolicitudActual}</td>
-      <td>${estadoSolicitudActualParaMostrar}</td>
-      <td>${textoParaAcciones}</td>
-      </tr>`;
-    }
+    estadisticas += "Tiene "+ cantidadPersonaMasEnvios +" envíos con la empresa" + ".<br>";
+  } else {
+    estadisticas = "No hay envíos con la empresa."
   }
 
-  document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML;
+
+
+  document.querySelector("#divInformacionEstadisticaEmpresa").innerHTML = estadisticas;
+}
+
+function obtenerPersonaConMasEnvios() {
+  let personaConMasEnvios = [];
+  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY;
+
+
+  for (let i = 0; i < persona.length; i++) {
+      let cantidadEnviosPersona = 0;
+      let personaActual = persona[i];
+      for (let a = 0; a < solicitud.length; a++){
+        let solicitudActual = solicitud[a];
+        if (solicitudActual.empresa == usuarioLogeadoArray ){
+          if (solicitudActual.persona == personaActual){
+            cantidadEnviosPersona += 1;
+          }
+        }
+      }
+    if (cantidadEnviosPersona > mayorCantidadDeEnviosEncontrados) {
+      mayorCantidadDeEnviosEncontrados = cantidadEnviosPersona;
+      personaConMasEnvios = [personaActual.nombreUsuario];
+    } else if (cantidadEnviosPersona == mayorCantidadDeEnviosEncontrados){
+      personaConMasEnvios.push(personaActual.nombreUsuario);
+    }
+     
+  }
   
+  return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
 }
 
 
