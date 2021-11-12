@@ -21,8 +21,17 @@ class Empresa {
       }
       return vehiculoParaMostrar;
   }
-}
 
+  obtenerHabilitado(){
+    let habilitadoParaMostrar='';
+    if (this.habilitado){
+      habilitadoParaMostrar = "Habilitada";
+    }else{
+      habilitadoParaMostrar = "Deshabilitada";
+    }
+    return habilitadoParaMostrar;
+  }
+}
 
 class Vehiculo {
   constructor(pTipoVehiculo, pIdVehiculo) {

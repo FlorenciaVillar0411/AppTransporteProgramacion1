@@ -116,7 +116,7 @@ function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) {
   let nombreUsuarioEncontrado = false;
   while (!nombreUsuarioEncontrado && i < persona.length) {
     let usuarioGuardado = persona[i];
-    if (usuario === usuarioGuardado.nombreUsuario) {
+    if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) {
       nombreUsuarioEncontrado = true;
       let contraseniaGuardada = usuarioGuardado.contrasenia;
       if (contrasenia === contraseniaGuardada) {
@@ -134,7 +134,7 @@ function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) {
   let nombreUsuarioEncontrado = false;
   while (!nombreUsuarioEncontrado && i < empresa.length) {
     let usuarioGuardado = empresa[i];
-    if (usuario === usuarioGuardado.nombreUsuario) {
+    if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) {
       nombreUsuarioEncontrado = true;
       let contraseniaGuardada = usuarioGuardado.contrasenia;
       if (contrasenia === contraseniaGuardada) {

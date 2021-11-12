@@ -71,13 +71,13 @@ class Solicitud{
     return imagenParaDevolver;
   }
   
-  obtenerNombrePersona() {
+  obtenerNombreYApellidoPersona() {
     let personaParaMostrar = '';
     let i = 0;
       while (!personaParaMostrar && i < persona.length) {
         let personaActual = persona[i];
         if (this.persona == personaActual){
-          personaParaMostrar = personaActual.nombreUsuario;
+          personaParaMostrar = personaActual.nombre + " " + personaActual.apellido;
         }
         i++;
       }

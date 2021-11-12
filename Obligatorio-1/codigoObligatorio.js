@@ -7,7 +7,7 @@ let solicitud = [];
 
 // variables globales
 let adminEstaLogeado = false;
-let usuarioLogeado = false;
+let usuarioLogeado = false; //persona o empresa
 let usuarioLogeadoArray = []
 let IdVehiculo = 1;
 let busquedaActiva = false;
@@ -52,7 +52,6 @@ function ocultarPantallas() {
   if (adminEstaLogeado || usuarioLogeado) {
     document.querySelector("#listaLoginYRegistroBotones").style.display = "none";
   }
-
 }
 
 function botones() {
@@ -64,6 +63,8 @@ function botones() {
   //Login
   document.querySelector("#btnLogin").addEventListener("click", mostrarLogin);
   document.querySelector("#btnIngresarE").addEventListener("click", login);
+  document.querySelector("#btnLoginP").addEventListener("click", mostrarLogin);
+  document.querySelector("#btnLoginE").addEventListener("click", mostrarLogin);
 
   // Pantallas Admin
   document.querySelector("#btnAdminempresas").addEventListener("click", pantallaAdminHabilitarEmpresas);
@@ -89,6 +90,7 @@ function botones() {
   document.querySelector("#btnCerrarSesion").addEventListener("click", cerrarSesion);
 
 }
+
 function cerrarSesion() {
   adminEstaLogeado == false;
   usuarioLogeado == false;
@@ -129,7 +131,7 @@ function actualizarListadoEmpresa() {
     let estadoSolicitudActual = solicitudActual.estado;
     let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
     
-    let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
+    let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona();
 
     let textoParaAcciones = "SOLICITUD TOMADA";
     if (solicitudActual.estado == "1") {
@@ -156,7 +158,6 @@ function actualizarListadoEmpresa() {
     let botonActual = botonesDeLaTabla[i];
     botonActual.addEventListener("click", cambiarEstadoSolicitudHandler);
   }
-
 }
 
 function cambiarEstadoSolicitudHandler() {
@@ -195,7 +196,7 @@ function actualizarTablaPedidosTomadosEmpresa(){
     let idSolicitudActual = solicitudActual.id;
     
     
-    let personaSolicitudActual = solicitudActual.obtenerNombrePersona();
+    let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona();
 
     let textoParaAcciones = "FINALIZADA";
     if (solicitudActual.estado  == 2) {
@@ -306,10 +307,9 @@ function selectEmpresaEstadisticas(){
       break;
 
     }
-
     document.querySelector("#divSelectInfoEmpresa").innerHTML = mensaje;
-
 }
+
 function mostrarSolicitudesSegunEstado(num){
   let contadorSolicitudes = 0;
 
@@ -351,9 +351,9 @@ function solicitarFormularioEnvio(){
   } else {
     mensaje = "Todos los datos son obligatorios";
   }
-
   document.querySelector("#mensajeSolicitudesEnvios").innerHTML = mensaje;
 }
+
 function obtenerPosicionDeCaracter(texto, caracter) {
   let resultado = "";
     for (let i =4; i < texto.length; i++){
@@ -363,6 +363,7 @@ function obtenerPosicionDeCaracter(texto, caracter) {
     }
     return resultado;
 }
+
 function cortarStringDesdeIndice(texto, indice) {
   let retorno = "";
 
@@ -372,6 +373,7 @@ function cortarStringDesdeIndice(texto, indice) {
 
   return retorno;
 }
+
 function pantallaPersonaListado() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
@@ -406,6 +408,8 @@ function actualizarListadoPersona() {
   }
   document.querySelector("#tablaSolicitudesPersona").innerHTML=tbodyHTML;
 }
+
+
 // INFORMACION ESTADISTICA PERSONA
 
 function pantallaPersonaEstadisticas() {
@@ -419,19 +423,19 @@ function actualizarPersonaEstadistica() {
   let estadisticas = ``;
 
   let solicitudesEstado = obtenerEnviosEnEstado2y3Persona();
-  let totalPorcentaje =  solicitudesEstado[0] + solicitudesEstado[1];
-  let porcentajeEnTránsito = solicitudesEstado[1]*100 /totalPorcentaje;
-  let porcentajeFinalizado = solicitudesEstado[2]*100 /totalPorcentaje;
+  let solicitudesTomadas = solicitudesEstado[1] + solicitudesEstado[2]
+  let solicitudesTotales = solicitudesEstado[0] + solicitudesEstado[1] + solicitudesEstado[2];
+
+  let porcentajeEnTomados = Math.round(solicitudesTomadas *100 /solicitudesTotales);
+
 
   if (solicitudesEstado) {
     estadisticas += "Cantidad de envíos pedientes: " + solicitudesEstado[0] + ".<br>";
     estadisticas += "Cantidad de envíos en tránsito: " + solicitudesEstado[1] + ".<br>";
     estadisticas += "Cantidad de envíos finalizados: " + solicitudesEstado[2] + ".<br> <br>";
-    estadisticas += "Porcentaje de envíos en tránsito: " + porcentajeEnTránsito + "%.<br>";
-    estadisticas += "Porcentaje de envíos finalizados: " + porcentajeFinalizado + "%.<br>";
-
+    estadisticas += "Porcentaje de envíos tomados: " + porcentajeEnTomados + "%.<br>";
+   
   }
-
   document.querySelector("#mensajeInformaciónEstadistica").innerHTML = estadisticas;
 }
 
@@ -452,7 +456,6 @@ function obtenerEnviosEnEstado2y3Persona() {
         enviosEstado1 += 1;
       }
   }
-  
   return [enviosEstado1, enviosEstado2, enviosEstado3];
 }
 
@@ -476,6 +479,7 @@ function actualizarTablaEmpresas() {
     let fantasiaEmpresaActual = empresaActual.nombreFantasia
     let usuarioEmpresaActual = empresaActual.nombreUsuario;
     let vehiculoEmpresaActual = empresaActual.obtenerVehiculo();
+    let habilitadoEmpresaActual = empresaActual.obtenerHabilitado();
     let empresaBuscada = empresaActual.buscado;
 
     let textoParaBotonDeAcciones = "Habilitar";
@@ -490,6 +494,7 @@ function actualizarTablaEmpresas() {
                     <td>${fantasiaEmpresaActual}</td>
                     <td>${usuarioEmpresaActual}</td>
                     <td>${vehiculoEmpresaActual}</td>
+                    <td>${habilitadoEmpresaActual}</td>
                     <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
     </tr>`; 
       } 
@@ -500,6 +505,7 @@ function actualizarTablaEmpresas() {
       <td>${fantasiaEmpresaActual}</td>
       <td>${usuarioEmpresaActual}</td>
       <td>${vehiculoEmpresaActual}</td>
+      <td>${habilitadoEmpresaActual}</td>
       <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
       </tr>`;
     }
@@ -665,9 +671,15 @@ function login() {
 
   if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
     mensaje = "El usuario es válido";
-    usuarioLogeadoArray = encontrarEmpresaPorUsuario(nombreUsuario);
-    usuarioLogeado = true;
-    mostrarPantallaEmpresa();
+    let empresaEncontrada = encontrarEmpresaPorUsuario(nombreUsuario);
+    if (!empresaEncontrada.habilitado){
+      mensaje = "La empresa no está habilitada";
+    } else{
+      usuarioLogeado = true;
+      usuarioLogeadoArray = empresaEncontrada
+      mostrarPantallaEmpresa();
+    }
+  
 
   } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
     mensaje = "El usuario es válido";
@@ -833,6 +845,7 @@ function mostrarPantallaEmpresa() {
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaEmpresa").style.display = "block";
 }
+
 function formularioEmpresa() {
   let mensaje = "";
   let Rut = document.querySelector("#txtRut").value;
