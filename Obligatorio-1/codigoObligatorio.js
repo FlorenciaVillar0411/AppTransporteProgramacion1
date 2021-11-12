@@ -541,7 +541,6 @@ function buscarEmpresa() {
     let razonEmpresaActual = empresaActual.razonSocial;
     let fantasiaEmpresaActual = empresaActual.nombreFantasia;
     let razonEmpresaActualRecortada = encontrarBusqueda(razonEmpresaActual, textoParaBuscar).toLowerCase().trim()
-    console.log(razonEmpresaActualRecortada);
     let fantasiaEmpresaActualRecortada = encontrarBusqueda(fantasiaEmpresaActual, textoParaBuscar).toLowerCase().trim()
     empresaActual.buscado = false;
 
@@ -727,7 +726,7 @@ function precargarDatos() {
   precargarSolicitud("2", 80, "pelota", "pelota.jpeg", 1, 0); //1
   cambiarEstadoSolicitud(solicitud[1])
   cambiarEstadoSolicitud(solicitud[1])
-  precargarSolicitud("2", 35, "sabanas", "sabanas.jpg", 0); //2
+  precargarSolicitud("2", 35, "sabanas", "sabanas.jpg", 0, 0); //2
   cambiarEstadoSolicitud(solicitud[2])
   cambiarEstadoSolicitud(solicitud[2])
 
@@ -770,7 +769,7 @@ function registrarVehiculo(pVehiculo) {
   IdVehiculo += 1;
 }
 function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, idSolicitud);
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null, idSolicitud);
   solicitud.push(nuevaSolicitud);
   idSolicitud++;
 }
