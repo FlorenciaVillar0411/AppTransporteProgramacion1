@@ -218,7 +218,7 @@ function pantallaEmpresaEstadisticas() { //Se ocultan pantallas y muestra la inf
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "block";
   actualizarEmpresaEstadistica();
 }
-function actualizarEmpresaEstadistica() {
+function actualizarEmpresaEstadistica() { //Primera parte info estadística
   let estadisticas = ``;
 
   let personaConMasEnvios = obtenerPersonaConMasEnvios(); //La función devuelve un array con la persona con más envíos en la primera posición y la cantidad de envíos en la segunda
@@ -235,8 +235,7 @@ function actualizarEmpresaEstadistica() {
 
   document.querySelector("#divInformacionEstadisticaEmpresa").innerHTML = estadisticas;
 }
-
-function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística
+function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística select
   let selectInfoEstadistica = document.querySelector("#selectInfoEstadisticaEmpresa").value;
   let mensaje = ""
 
@@ -245,7 +244,7 @@ function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística
         mensaje = "Seleccione un tipo de estado del desplegable";
       break;
       case "1":
-        mensaje = "Tiene "+mostrarSolicitudesSegunEstado(2) +  " solicitud/es en tránsito";
+        mensaje = "Tiene "+mostrarSolicitudesSegunEstado(2) +  " solicitud/es en tránsito"; // Se obtiene el estado del número de la variable que se le pasa (1= pendiente, 2 = en tránsito, 3=finalizada)
       break;
       case "2":
         mensaje = "Tiene "+mostrarSolicitudesSegunEstado(3) +  " solicitud/es finalizadas";
@@ -254,40 +253,29 @@ function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística
     }
     document.querySelector("#divSelectInfoEmpresa").innerHTML = mensaje;
 }
-function mostrarSolicitudesSegunEstado(num){
-  let contadorSolicitudes = 0;
 
-  for (let i = 0; i < solicitud.length; i++){
-    let solicitudActual = solicitud[i];
-    if (solicitudActual.empresa == usuarioLogeadoArray ){
-      if (solicitudActual.estado == num){
-        contadorSolicitudes +=1;
-      }
-    }
-  }
-  return contadorSolicitudes;
-}
 
 //MOSTRAR PANTALLAS DE PERSONA
 
-function pantallaPersonaSolicitar() {
+//Formulario envío - perfil persona
+function pantallaPersonaSolicitar() { // Muestra la pantalla en html de formulario de solicitud de envío
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#PersonaSolicitarEnvios").style.display = "block";
+  document.querySelector("#mensajeSolicitudesEnvios").innerHTML = "";
 }
-function solicitarFormularioEnvio(){
+function solicitarFormularioEnvio(){ // Toma la solicitud
   let mensaje = "";
-  let descripcionEnvio = document.querySelector("#txtDescripcionenvio").value;
-  let distanciaEnvio = parseInt(document.querySelector("#txtDistanciaEnvio").value);
-  let vehiculoEnvio = document.querySelector("#txtselectVehiculosEnvios").value;
+  let descripcionEnvio = document.querySelector("#txtDescripcionenvio").value; //carga los datos
+  let distanciaEnvio = parseInt(document.querySelector("#txtDistanciaEnvio").value); //DEBE SER NÚMERO PARA USAR LUEGO EN INFO ESTADISTICA
+  let vehiculoEnvio = document.querySelector("#txtselectVehiculosEnvios").value; 
   let fotoEnvio = document.querySelector("#imagenEnvio").value;
   if (fotoEnvio) {
-    let posicionCaracterContrabarra = obtenerPosicionDeCaracter(fotoEnvio, "\\");
-    fotoEnvio = cortarStringDesdeIndice(fotoEnvio, posicionCaracterContrabarra + 1);
+    let posicionCaracterContrabarra = obtenerPosicionDeCaracter(fotoEnvio, "\\"); //Se obtiene el caracter para saber donde empieza el nombre de la foto
+    fotoEnvio = cortarStringDesdeIndice(fotoEnvio, posicionCaracterContrabarra + 1); // Se corta el nombre del archivo para mostrar solo el nombre de la foto sino no se puede mostrar
   }    
-  
 
-  if (descripcionEnvio && distanciaEnvio && vehiculoEnvio > 0 && fotoEnvio){
+  if (descripcionEnvio && distanciaEnvio && vehiculoEnvio > 0 && fotoEnvio){ //Si todos los datos son ingresados se registra la solicitud
     registrarSolicitud (vehiculoEnvio, distanciaEnvio, descripcionEnvio, fotoEnvio, usuarioLogeadoArray);
     mensaje = "Solicitud enviada.";
   } else {
@@ -296,26 +284,7 @@ function solicitarFormularioEnvio(){
   document.querySelector("#mensajeSolicitudesEnvios").innerHTML = mensaje;
 }
 
-function obtenerPosicionDeCaracter(texto, caracter) {
-  let resultado = "";
-    for (let i =4; i < texto.length; i++){
-        if(texto[i].toLowerCase() === caracter){
-            resultado= i;
-        }  
-    }
-    return resultado;
-}
-
-function cortarStringDesdeIndice(texto, indice) {
-  let retorno = "";
-
-  for (let i = indice; i < texto.length; i++) {
-      retorno += texto[i];
-  }
-
-  return retorno;
-}
-
+//Listado de solicitudes de la persona - perfil persona
 function pantallaPersonaListado() {
   ocultarPantallas()
   document.querySelector("#pantallaPersona").style.display = "block";
@@ -327,7 +296,7 @@ function actualizarListadoPersona() {
   let tbodyHTML = ``;
 
 
-  for (let i = 0; i < solicitud.length; i++) {
+  for (let i = 0; i < solicitud.length; i++) { //Se recorren las solicitudes y se crean variable con los atributos
     let solicitudActual = solicitud[i];
     let descripcionSolicitudActual = solicitudActual.descripcion;
     let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
@@ -337,7 +306,7 @@ function actualizarListadoPersona() {
     let empresaSolicitudActual = solicitudActual.obtenerNombreEmpresa(); 
     let personaSolicitudActual = solicitudActual.persona;
 
-   if (personaSolicitudActual== usuarioLogeadoArray){
+   if (personaSolicitudActual== usuarioLogeadoArray){ //Solo muestra solicitudes de la persona logueada
      tbodyHTML += `<tr></tr>
       <td>${descripcionSolicitudActual}</td>
       <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
@@ -351,8 +320,7 @@ function actualizarListadoPersona() {
   document.querySelector("#tablaSolicitudesPersona").innerHTML=tbodyHTML;
 }
 
-
-// INFORMACION ESTADISTICA PERSONA
+// información estadística - perfil persona
 
 function pantallaPersonaEstadisticas() {
   ocultarPantallas()
@@ -364,11 +332,11 @@ function pantallaPersonaEstadisticas() {
 function actualizarPersonaEstadistica() {
   let estadisticas = ``;
 
-  let solicitudesEstado = obtenerEnviosEnEstado2y3Persona();
+  let solicitudesEstado = obtenerEnviosEnEstado2y3Persona(); //devuelve solicitudes en estado 1, 2 y en estado 3 de la persona logueada
   let solicitudesTomadas = solicitudesEstado[1] + solicitudesEstado[2]
   let solicitudesTotales = solicitudesEstado[0] + solicitudesEstado[1] + solicitudesEstado[2];
 
-  let porcentajeEnTomados = Math.round(solicitudesTomadas *100 /solicitudesTotales);
+  let porcentajeEnTomados = Math.round(solicitudesTomadas *100 /solicitudesTotales); //Se redondea el porcentaje
 
 
   if (solicitudesEstado) {
@@ -381,27 +349,6 @@ function actualizarPersonaEstadistica() {
   document.querySelector("#mensajeInformaciónEstadistica").innerHTML = estadisticas;
 }
 
-function obtenerEnviosEnEstado2y3Persona() {
-  let enviosEstado1 = 0
-  let enviosEstado2 = 0;
-  let enviosEstado3 = 0;
-
-  for (let i = 0; i < solicitud.length; i++) {
-      let solicitudActual = solicitud[i];
-      let estadoSolicitudActual = solicitudActual.estado;
-      let personaSolicitudActual = solicitudActual.persona;
-      if (estadoSolicitudActual == 2 && personaSolicitudActual == usuarioLogeadoArray) {
-          enviosEstado2 += 1;
-      } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
-        enviosEstado3 += 1;
-      } else if (estadoSolicitudActual == 1 && personaSolicitudActual == usuarioLogeadoArray){
-        enviosEstado1 += 1;
-      }
-  }
-  return [enviosEstado1, enviosEstado2, enviosEstado3];
-}
-
-
 //PANTALLAS ADMIN
 
 function pantallaAdminHabilitarEmpresas() {
@@ -411,10 +358,10 @@ function pantallaAdminHabilitarEmpresas() {
   actualizarTablaEmpresas();
 }
 
-function actualizarTablaEmpresas() {
+function actualizarTablaEmpresas() { //Listado empresas
   let tbodyHTML = ``;
 
-  for (let i = 0; i < empresa.length; i++) {
+  for (let i = 0; i < empresa.length; i++) { //Recorre empresas y crea variables con atributos
     let empresaActual = empresa[i];
     let rutEmpresaActual = empresaActual.rut;
     let razonEmpresaActual = empresaActual.razonSocial;
@@ -424,11 +371,11 @@ function actualizarTablaEmpresas() {
     let habilitadoEmpresaActual = empresaActual.obtenerHabilitado();
     let empresaBuscada = empresaActual.buscado;
 
-    let textoParaBotonDeAcciones = "Habilitar";
+    let textoParaBotonDeAcciones = "Habilitar"; // cambia el texto del botón según el estado
     if (empresaActual.habilitado) {
       textoParaBotonDeAcciones = "Deshabilitar";
     }
-    if (busquedaActiva) {
+    if (busquedaActiva) {   //En el caso de que se esté buscando algo en el buscador la tabla se actualizará con solo las empresas que estén siendo buscadas. Esto es un atributo que se cambia en la función buscarEmpresa
       if (empresaBuscada) {
          tbodyHTML += `<tr></tr>
                     <td>${rutEmpresaActual}</td>
@@ -440,7 +387,7 @@ function actualizarTablaEmpresas() {
                     <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
     </tr>`; 
       } 
-    } else {
+    } else { //Si no hay búsquedas se muestran todas las empresas
        tbodyHTML += `<tr></tr>
       <td>${rutEmpresaActual}</td>
       <td>${razonEmpresaActual}</td>
@@ -454,53 +401,54 @@ function actualizarTablaEmpresas() {
   }
 
   document.querySelector("#tablaHabilitarEmpresas").innerHTML = tbodyHTML;
-  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa");
+  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa"); //Variable con todos los botones
   for (let i = 0; i < botonesDeLaTabla.length; i++) {
     let botonActual = botonesDeLaTabla[i];
-    botonActual.addEventListener("click", btnCambiarEstadoEmpresaHandler);
+    botonActual.addEventListener("click", btnCambiarEstadoEmpresaHandler); //Si se apreta el botón actual se llama a función para cambiar el estado de la empresa
   }
 }
 
-function btnCambiarEstadoEmpresaHandler() {
-  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioEmpresa");
-  let empresaDeBotonClickeado = encontrarEmpresaPorUsuario(nombreUsuarioDeBotonClickeado);
-  cambiarEstadoEmpresa(empresaDeBotonClickeado);
+function btnCambiarEstadoEmpresaHandler() {  
+  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioEmpresa"); 
+  let empresaDeBotonClickeado = encontrarEmpresaPorUsuario(nombreUsuarioDeBotonClickeado); //se encuentra la empresa clickeada
+  cambiarEstadoEmpresa(empresaDeBotonClickeado); //Se cambia el estado
   actualizarTablaEmpresas();
 }
 
-//BUSQUEDA POR EMPRESA
+//Buscador de empresas
 
 function buscarEmpresa() {
+  document.querySelector("#mensajeBusqueda").innerHTML = "";
   let mensaje = ""
   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
-  busquedaActiva = true;
+  busquedaActiva = true; //Activa la búsqueda cambiando la variable global a true
   let busquedaTuvoResultados = false;
 
 
-  for (let i = 0; i < empresa.length; i++) {
+  for (let i = 0; i < empresa.length; i++) { //Recorre las empresas
     
     let empresaActual = empresa[i]
     let razonEmpresaActual = empresaActual.razonSocial;
     let fantasiaEmpresaActual = empresaActual.nombreFantasia;
-    let razonEmpresaActualRecortada = encontrarBusqueda(razonEmpresaActual, textoParaBuscar).toLowerCase().trim()
-    let fantasiaEmpresaActualRecortada = encontrarBusqueda(fantasiaEmpresaActual, textoParaBuscar).toLowerCase().trim()
+    let razonEmpresaActualRecortada = encontrarBusqueda(razonEmpresaActual, textoParaBuscar).toLowerCase().trim();  //Acorta la razón social y el nombre de fantasía a la misma cantidad de letras que lo que se ingresó en el input a buscar.
+    let fantasiaEmpresaActualRecortada = encontrarBusqueda(fantasiaEmpresaActual, textoParaBuscar).toLowerCase().trim();
     empresaActual.buscado = false;
 
 
-    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) {
+    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) { //Compara razón co lo buscado y si coincide cambia el estado de búsqueda de la empresa
       empresaActual.buscado = true;
       busquedaTuvoResultados = true;
 
 
 
-    } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActualRecortada) {
+    } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActualRecortada) { //si no coincide con razón busca con fantasía.
       empresaActual.buscado = true;
       busquedaTuvoResultados = true;
 
     } 
     
   }
-  if (!busquedaTuvoResultados){
+  if (!busquedaTuvoResultados){  
     mensaje = "No hay resultados que coincidan con la búsqueda";
   }
   actualizarTablaEmpresas();
@@ -518,6 +466,8 @@ function encontrarBusqueda(texto, busqueda){
 function eliminarBusqueda(){
   busquedaActiva = false;
   actualizarTablaEmpresas();
+  document.querySelector("#mensajeBusqueda").innerHTML = ""
+
 }
 
 

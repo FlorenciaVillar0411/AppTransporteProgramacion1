@@ -311,3 +311,58 @@ function obtenerPersonaConMasEnvios() {
   
   return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
 }
+
+
+function mostrarSolicitudesSegunEstado(num){
+  let contadorSolicitudes = 0;
+
+  for (let i = 0; i < solicitud.length; i++){
+    let solicitudActual = solicitud[i];
+    if (solicitudActual.empresa == usuarioLogeadoArray ){
+      if (solicitudActual.estado == num){
+        contadorSolicitudes +=1;
+      }
+    }
+  }
+  return contadorSolicitudes;
+}
+
+function obtenerPosicionDeCaracter(texto, caracter) {
+  let resultado = "";
+    for (let i =4; i < texto.length; i++){
+        if(texto[i].toLowerCase() === caracter){
+            resultado= i;
+        }  
+    }
+    return resultado;
+}
+
+function cortarStringDesdeIndice(texto, indice) {
+  let retorno = "";
+
+  for (let i = indice; i < texto.length; i++) {
+      retorno += texto[i];
+  }
+
+  return retorno;
+}
+
+function obtenerEnviosEnEstado2y3Persona() {
+  let enviosEstado1 = 0
+  let enviosEstado2 = 0;
+  let enviosEstado3 = 0;
+
+  for (let i = 0; i < solicitud.length; i++) {
+      let solicitudActual = solicitud[i];
+      let estadoSolicitudActual = solicitudActual.estado;
+      let personaSolicitudActual = solicitudActual.persona;
+      if (estadoSolicitudActual == 2 && personaSolicitudActual == usuarioLogeadoArray) {
+          enviosEstado2 += 1;
+      } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
+        enviosEstado3 += 1;
+      } else if (estadoSolicitudActual == 1 && personaSolicitudActual == usuarioLogeadoArray){
+        enviosEstado1 += 1;
+      }
+  }
+  return [enviosEstado1, enviosEstado2, enviosEstado3];
+}
