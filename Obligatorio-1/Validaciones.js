@@ -283,3 +283,31 @@ function cambiarEstadoSolicitud(solicitud) {
 
 }
 
+function obtenerPersonaConMasEnvios() {
+  let personaConMasEnvios = [];
+  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY;
+
+
+  for (let i = 0; i < persona.length; i++) {
+      let cantidadEnviosPersona = 0;
+      let personaActual = persona[i];
+
+      for (let a = 0; a < solicitud.length; a++){
+        let solicitudActual = solicitud[a];
+        if (solicitudActual.empresa == usuarioLogeadoArray ){
+          if (solicitudActual.persona == personaActual){
+            cantidadEnviosPersona += 1;
+          }
+        }
+      }
+    if (cantidadEnviosPersona > mayorCantidadDeEnviosEncontrados) {
+      mayorCantidadDeEnviosEncontrados = cantidadEnviosPersona;
+      personaConMasEnvios = [personaActual.obtenerNombreYApellido()];
+    } else if (cantidadEnviosPersona == mayorCantidadDeEnviosEncontrados){
+      personaConMasEnvios.push(personaActual.obtenerNombreYApellido());
+    }
+     
+  }
+  
+  return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
+}

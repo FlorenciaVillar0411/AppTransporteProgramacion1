@@ -1,4 +1,4 @@
-class Persona {
+class Persona {// Clase Persona con su constructor.
   constructor(pCedula, pNombre, pApellido, pNombreUsuario, pContrasenia) {
     this.cedula = pCedula;
     this.nombre = pNombre;
@@ -6,9 +6,14 @@ class Persona {
     this.nombreUsuario = pNombreUsuario;
     this.contrasenia = pContrasenia;
   }
+
+  obtenerNombreYApellido() {
+    let personaParaMostrar = this.nombre + " " + this.apellido;
+    return personaParaMostrar;
+  }
 }
 
-class Solicitud{
+class Solicitud{//Clase Solicitud con su constructor.
   constructor(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona, pEmpresa, pId) {
     this.vehiculo = pVehiculo;
     this.distancia = pDistancia;
@@ -24,7 +29,7 @@ class Solicitud{
   }
 
 
-  obtenerEstado(){
+  obtenerEstado(){// Método para obtener el estado de la solicitud
     let estadoParaMostrar='';
     if (this.estado == "1"){
       estadoParaMostrar = "Pendiente";

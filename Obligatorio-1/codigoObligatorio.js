@@ -15,6 +15,8 @@ let idSolicitud = 1;
 
 inicializar();
 
+// funciones básicas de uso de la aplicación
+
 function inicializar() {
   precargarDatos();
   botones();
@@ -46,10 +48,10 @@ function ocultarPantallas() {
   document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "none";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "none";
   document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
-  if (!adminEstaLogeado && !usuarioLogeado) {
+  if (!adminEstaLogeado && !usuarioLogeado) { //Oculta botón de cerrar sesión únicamente si no hay usuarios logueados
     document.querySelector("#btnCerrarSesion").style.display = "none";
   } 
-  if (adminEstaLogeado || usuarioLogeado) {
+  if (adminEstaLogeado || usuarioLogeado) { // Oculta los botones de login y registro cuando hay algún usuario logeado
     document.querySelector("#listaLoginYRegistroBotones").style.display = "none";
   }
 }
@@ -91,55 +93,46 @@ function botones() {
 
 }
 
-function cerrarSesion() {
-  adminEstaLogeado == false;
-  usuarioLogeado == false;
+function cerrarSesion() { //Cierra el usuario logueado dejando la pantalla de inicio
+  adminEstaLogeado = false;
+  usuarioLogeado = false;
   usuarioLogeadoArray = [];
   
-  ocultarPantallas();
   document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
+  ocultarPantallas();
 
 }
 
 
 //MOSTRAR PANTALLAS DE EMPRESAS
+// Se muestran las pantallas de empresas y sus funcionalidades
 
+
+//La primer pantalla de solicitudes pendientes
 function pantallaEmpresaSolicitudes() {
-  ocultarPantallas()
+  ocultarPantallas()        //Oculta la pantalla abierta y muestra el listado de solicitudes pendientes
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresaslistadoSolicitudes").style.display = "block";
-  if (usuarioLogeadoArray.habilitado){
     actualizarListadoEmpresa ();
-  } else{
-    document.querySelector("#MensajeNoHabilitado").innerHTML= "La empresa no está habilitada"; 
-    document.querySelector("#tablaSolicitudesPendientes").style.display = "none";
-  }
 }
-
-
 function actualizarListadoEmpresa() {
   let tbodyHTML = ``;
 
-  for (let i = 0; i < solicitud.length; i++) {
-    let solicitudActual = solicitud[i];
+  for (let i = 0; i < solicitud.length; i++) { //Recorremos las solicitudes.
+    let solicitudActual = solicitud[i];       //nombramos los atributos de la solicitud actual.
     let idSolicitudActual = solicitudActual.id;
     let descripcionSolicitudActual = solicitudActual.descripcion;
-    let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
+    let fotoSolicitudActual = solicitudActual.obtenerImagen() ; //Esta función se encuentra dentro de la clase solicitud y es para mostrar la imagen asociada al objeto.
     let distanciaSolicitudActual = solicitudActual.distancia;
     let vehiculoSolicitudActual = solicitudActual.vehiculo;
-    let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud();
+    let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud(); //Esta función muestra el nombre del vehículo ya que solo está asociado el id.
     let estadoSolicitudActual = solicitudActual.estado;
-    let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
+    let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado(); // Obtiene el nombre del estado a partir de un id.
     
-    let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona();
+    let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona(); //Obtiene el nombre y  el apellido de la persona que realiza la solicitud.
 
-    let textoParaAcciones = "SOLICITUD TOMADA";
-    if (solicitudActual.estado == "1") {
-      textoParaAcciones = 
-      `<input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR">`;
-    }
 
-    if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){
+    if (estadoSolicitudActual== "1" && vehiculoSolicitudActual == usuarioLogeadoArray.vehiculo){ //Solo muestra en la tabla las solicitudes pendientes que tengan el mismo vehículo que la empresa que está logueada.
      tbodyHTML += `<tr></tr>
       <td>${descripcionSolicitudActual}</td>
       <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
@@ -147,46 +140,42 @@ function actualizarListadoEmpresa() {
       <td>${vehiculoSolicitudActualParamostrar}</td>
       <td>${personaSolicitudActual}</td>
       <td>${estadoSolicitudActualParaMostrar}</td>
-      <td>${textoParaAcciones}</td>
+      <td><input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR"></td>
       </tr>`;
     }
   }
 
-  document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML;
-  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitud");
-  for (let i = 0; i < botonesDeLaTabla.length; i++) {
-    let botonActual = botonesDeLaTabla[i];
-    botonActual.addEventListener("click", cambiarEstadoSolicitudHandler);
+  document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML; //Se muestra la tabla.
+  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitud"); // la variable tiene los botones de la tabla ya que todos tienen la misma clase.
+  for (let i = 0; i < botonesDeLaTabla.length; i++) { // Se recorre los botones de la tabla
+    let botonActual = botonesDeLaTabla[i]; 
+    botonActual.addEventListener("click", cambiarEstadoSolicitudHandler); // si se selecciona el botón actual va a la tabla.
   }
 }
-
-function cambiarEstadoSolicitudHandler() {
-  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual");
-  let solicitudDeBotonClickeado = encontrarSolicitudPorId(nombreSolicitudDeBotonClickeado);
-  solicitudDeBotonClickeado.empresa = usuarioLogeadoArray; 
-  cambiarEstadoSolicitud(solicitudDeBotonClickeado);
+function cambiarEstadoSolicitudHandler() { 
+  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual"); // se obtiene el atributo del botón presionado
+  let solicitudDeBotonClickeado = encontrarSolicitudPorId(nombreSolicitudDeBotonClickeado); // A partir del Id (que es el atributo del botón) se encuentra la solicitud.
+  solicitudDeBotonClickeado.empresa = usuarioLogeadoArray; // Se le asigna una empresa a la solicitud encontrada
+  cambiarEstadoSolicitud(solicitudDeBotonClickeado); //Se le cambia el estado al siguiente a la solicitud encontrada.
   actualizarListadoEmpresa();
+  actualizarTablaPedidosTomadosEmpresa();
 }
 
 
+//La pantalla de los pedidos asignados a la empresa
 function pantallaEmpresaPedidosTomados() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresaslistadoSolicitudesTomadas").style.display = "block";
-  if (usuarioLogeadoArray.habilitado){
-    actualizarTablaPedidosTomadosEmpresa();
-  } else{
-    document.querySelector("#MensajeNoHabilitado1").innerHTML= "La empresa no está habilitada";
-    document.querySelector("#tablaSolicitudesTomadas").style.display = "none";
-  }
+  actualizarTablaPedidosTomadosEmpresa();
 }
 
 function actualizarTablaPedidosTomadosEmpresa(){
   let tbodyHTML = ``;
 
-  for (let i = 0; i < solicitud.length; i++) {
+    for (let i = 0; i < solicitud.length; i++) { //Se recorren las solicitudes
 
-  let solicitudActual = solicitud[i];
+    let solicitudActual = solicitud[i];  
     let descripcionSolicitudActual = solicitudActual.descripcion;
     let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
     let distanciaSolicitudActual = solicitudActual.distancia;
@@ -194,17 +183,15 @@ function actualizarTablaPedidosTomadosEmpresa(){
     let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
     let empresaSolicitudActual = solicitudActual.empresa;
     let idSolicitudActual = solicitudActual.id;
-    
-    
     let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona();
 
     let textoParaAcciones = "FINALIZADA";
     if (solicitudActual.estado  == 2) {
-      textoParaAcciones = `<input solicitudActualTomada ="${idSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
+      textoParaAcciones = `<input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
     }
 
-    if (empresaSolicitudActual == usuarioLogeadoArray){
-     tbodyHTML += `<tr></tr>
+    if (empresaSolicitudActual == usuarioLogeadoArray){ //Muestra solo solicitudes asociados a la empresa
+    tbodyHTML += `<tr></tr>
       <td>${descripcionSolicitudActual}</td>
       <td><img  class = "fotosProducto" src="fotos/${fotoSolicitudActual}" height = "1" ></td>
       <td>${distanciaSolicitudActual}</td>
@@ -216,41 +203,29 @@ function actualizarTablaPedidosTomadosEmpresa(){
     }
   }
   
-  document.querySelector("#tablaSolicitudesTomadasEmpresa").innerHTML = tbodyHTML;
-  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitudTomada");
-  for (let i = 0; i < botonesDeLaTabla.length; i++) {
+  document.querySelector("#tablaSolicitudesTomadasEmpresa").innerHTML = tbodyHTML; //muestra la tabla
+  let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitudTomada"); //variable con todos los botones
+  for (let i = 0; i < botonesDeLaTabla.length; i++) { //Recorrida botones
     let botonActual = botonesDeLaTabla[i];
-    botonActual.addEventListener("click", cambiarEstadoSolicitudTomadaHandler);
+    botonActual.addEventListener("click", cambiarEstadoSolicitudHandler); //cuando se apreta un botón llama a la función
   }
 }
 
-function cambiarEstadoSolicitudTomadaHandler() {
-  let idSolicitudDeBotonClickeado = this.getAttribute("solicitudActualTomada");
-  let solicitudDeBotonClickeado = encontrarSolicitudPorId(idSolicitudDeBotonClickeado);
-  cambiarEstadoSolicitud(solicitudDeBotonClickeado);
-  actualizarTablaPedidosTomadosEmpresa();
-}
-
-
-function pantallaEmpresaEstadisticas() {
-  ocultarPantallas()
+//Pantallas de información estadística de la empresa
+function pantallaEmpresaEstadisticas() { //Se ocultan pantallas y muestra la información estadística
+  ocultarPantallas();
   document.querySelector("#pantallaEmpresa").style.display = "block";
   document.querySelector("#EmpresasInformacionEstadistica").style.display = "block";
-  if (usuarioLogeadoArray.habilitado){
-    actualizarEmpresaEstadistica();
-  } else{
-    document.querySelector("#divInformacionEstadisticaEmpresa").innerHTML= "La empresa no está habilitada"
-  }
+  actualizarEmpresaEstadistica();
 }
-
 function actualizarEmpresaEstadistica() {
   let estadisticas = ``;
 
-  let personaConMasEnvios = obtenerPersonaConMasEnvios();
+  let personaConMasEnvios = obtenerPersonaConMasEnvios(); //La función devuelve un array con la persona con más envíos en la primera posición y la cantidad de envíos en la segunda
   let nombrePersonaMasEnvios = personaConMasEnvios[0];
   let cantidadPersonaMasEnvios = personaConMasEnvios[1];
 
-  if (cantidadPersonaMasEnvios>0){
+  if (cantidadPersonaMasEnvios>0){  //Si hay personas con envíos en la empresa se muestran sus nombre.
     estadisticas = "La persona que tiene más envíos es: "+ nombrePersonaMasEnvios  + ".<br>";
     
     estadisticas += "Tiene "+ cantidadPersonaMasEnvios +" envíos con la empresa" + ".<br>";
@@ -258,40 +233,10 @@ function actualizarEmpresaEstadistica() {
     estadisticas = "No hay envíos con la empresa."
   }
 
-
-
   document.querySelector("#divInformacionEstadisticaEmpresa").innerHTML = estadisticas;
 }
 
-function obtenerPersonaConMasEnvios() {
-  let personaConMasEnvios = [];
-  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY;
-
-
-  for (let i = 0; i < persona.length; i++) {
-      let cantidadEnviosPersona = 0;
-      let personaActual = persona[i];
-      for (let a = 0; a < solicitud.length; a++){
-        let solicitudActual = solicitud[a];
-        if (solicitudActual.empresa == usuarioLogeadoArray ){
-          if (solicitudActual.persona == personaActual){
-            cantidadEnviosPersona += 1;
-          }
-        }
-      }
-    if (cantidadEnviosPersona > mayorCantidadDeEnviosEncontrados) {
-      mayorCantidadDeEnviosEncontrados = cantidadEnviosPersona;
-      personaConMasEnvios = [personaActual.nombreUsuario];
-    } else if (cantidadEnviosPersona == mayorCantidadDeEnviosEncontrados){
-      personaConMasEnvios.push(personaActual.nombreUsuario);
-    }
-     
-  }
-  
-  return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
-}
-
-function selectEmpresaEstadisticas(){
+function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística
   let selectInfoEstadistica = document.querySelector("#selectInfoEstadisticaEmpresa").value;
   let mensaje = ""
 
@@ -309,7 +254,6 @@ function selectEmpresaEstadisticas(){
     }
     document.querySelector("#divSelectInfoEmpresa").innerHTML = mensaje;
 }
-
 function mostrarSolicitudesSegunEstado(num){
   let contadorSolicitudes = 0;
 
@@ -323,8 +267,6 @@ function mostrarSolicitudesSegunEstado(num){
   }
   return contadorSolicitudes;
 }
-
-
 
 //MOSTRAR PANTALLAS DE PERSONA
 
@@ -769,7 +711,7 @@ function registrarVehiculo(pVehiculo) {
   IdVehiculo += 1;
 }
 function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null, idSolicitud);
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null,                    idSolicitud);
   solicitud.push(nuevaSolicitud);
   idSolicitud++;
 }

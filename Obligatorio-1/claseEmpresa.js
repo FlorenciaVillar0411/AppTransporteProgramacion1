@@ -1,4 +1,4 @@
-class Empresa {
+class Empresa {//clase Empresa con su constructor y datos requeridos
   constructor(pRut,pRazonSocial,pNombreFantasia,pNombreUsuario,pContrasenia,pVehiculo) {
     this.rut = pRut;
     this.razonSocial = pRazonSocial;
@@ -9,7 +9,7 @@ class Empresa {
     this.habilitado = false;
     this.buscado = false;
   }
-  obtenerVehiculo() {
+  obtenerVehiculo() {// Método para obtener el vehículo de la empresa.
     let vehiculoParaMostrar = '';
     let i = 0;
       while (!vehiculoParaMostrar && i < vehiculo.length) {
@@ -22,7 +22,7 @@ class Empresa {
       return vehiculoParaMostrar;
   }
 
-  obtenerHabilitado(){
+  obtenerHabilitado(){// Método para obtener el estado de la empresa (habilitado/deshabilitado).
     let habilitadoParaMostrar='';
     if (this.habilitado){
       habilitadoParaMostrar = "Habilitada";
@@ -33,7 +33,7 @@ class Empresa {
   }
 }
 
-class Vehiculo {
+class Vehiculo {// clase Veículo con su constructor
   constructor(pTipoVehiculo, pIdVehiculo) {
     this.vehiculo = pTipoVehiculo;
     this.idVehiculo = pIdVehiculo;
