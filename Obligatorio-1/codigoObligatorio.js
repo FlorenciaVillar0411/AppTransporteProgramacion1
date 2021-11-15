@@ -674,7 +674,7 @@ function actualizarTablaEmpresas() { //Listado empresas
       <td>${usuarioEmpresaActual}</td>
       <td>${vehiculoEmpresaActual}</td>
       <td>${habilitadoEmpresaActual}</td>
-      <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
+      <td><input usuarioempresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
       </tr>`;
     }
   }
@@ -683,12 +683,12 @@ function actualizarTablaEmpresas() { //Listado empresas
   let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoEmpresa"); //Variable con todos los botones
   for (let i = 0; i < botonesDeLaTabla.length; i++) {
     let botonActual = botonesDeLaTabla[i];
-    botonActual.addEventListener("click", btnCambiarEstadoEmpresaHandler); //Si se apreta el botón actual se llama a función para cambiar el estado de la empresa
+    botonActual.addEventListener("click", btnCambiarEstadoEmpresa); //Si se apreta el botón actual se llama a función para cambiar el estado de la empresa
   }
 }
 
-function btnCambiarEstadoEmpresaHandler() {  
-  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioEmpresa"); 
+function btnCambiarEstadoEmpresa() {  
+  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioempresa"); 
   let empresaDeBotonClickeado = encontrarEmpresaPorUsuario(nombreUsuarioDeBotonClickeado); //se encuentra la empresa clickeada
   cambiarEstadoEmpresa(empresaDeBotonClickeado); //Se cambia el estado
   actualizarTablaEmpresas();
@@ -752,11 +752,12 @@ function pantallaAdminAniadirTransporte() { // Se muestra la mantalla de vehícu
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadotransporte").style.display = "block";
   document.querySelector("#mensajeAltaVehiculo").innerHTML = "";
+  document.querySelector("#ingresarVehiculo").value = "";
 }
 
 function AgregarVehiculoAdmin() {
   let vehiculo = document.querySelector("#ingresarVehiculo").value.trim();
-  document.querySelector("#ingresarVehiculo").value = ""
+  document.querySelector("#ingresarVehiculo").value = "";
   if (existeVehiculo(vehiculo)) { //Se corrobora si ya existe el vehículo.
     AltaVehiculo = "El vehiculo ingresado ya existe."
   } else {
