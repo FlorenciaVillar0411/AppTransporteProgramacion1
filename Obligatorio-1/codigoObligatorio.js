@@ -92,9 +92,10 @@ function botones() {
   document.querySelector("#btnVerEstadísticasEmpresa").addEventListener("click", pantallaEmpresaEstadisticas);
   document.querySelector("#btnSelectInfoEstadisticaEmpresa").addEventListener("click", selectEmpresaEstadisticas);
 
-  //CERRAR SESION
+  //CERRAR SESION Y volver a inicio
   document.querySelector("#btnCerrarSesion").addEventListener("click", cerrarSesion);
-
+  document.querySelector("#btnVolverAInicio").addEventListener("click", cerrarSesion); //Este botón está en la interfaz de login y registro.
+  
 }
 
 function cerrarSesion() { //Cierra el usuario logueado dejando la pantalla de inicio
@@ -165,28 +166,29 @@ function precargarDatos() {
   registrarEmpresa("123456789765", "Muchos Kilometros", "Kilometros Muchos", "MuchosKm", "MuchosKm", "2");
   registrarEmpresa("123457659014", "Rapidos", "Rapiditos", "Rapiditos", "Rapiditos", "1");
 
-  cambiarEstadoEmpresa(empresa[0]);
+  cambiarEstadoEmpresa(empresa[0]); //Habilitamos las empresas
   cambiarEstadoEmpresa(empresa[1]);
   cambiarEstadoEmpresa(empresa[2]);
 
   precargarSolicitud("1", 12, "caja", "caja.png", 0, 1); //0
-  cambiarEstadoSolicitud(solicitud[0])
-  cambiarEstadoSolicitud(solicitud[0])
+  cambiarEstadoSolicitud(solicitud[0]); //Cada vez que se llama la función la solicitud cambia al estado siguiente.
+  cambiarEstadoSolicitud(solicitud[0]);
 
   precargarSolicitud("2", 80, "pelota", "pelota.jpeg", 1, 0); //1
-  cambiarEstadoSolicitud(solicitud[1])
-  cambiarEstadoSolicitud(solicitud[1])
+  cambiarEstadoSolicitud(solicitud[1]);
+  cambiarEstadoSolicitud(solicitud[1]);
   precargarSolicitud("2", 35, "sabanas", "sabanas.jpg", 0, 0); //2
-  cambiarEstadoSolicitud(solicitud[2])
-  cambiarEstadoSolicitud(solicitud[2])
+  cambiarEstadoSolicitud(solicitud[2]);
+  cambiarEstadoSolicitud(solicitud[2]);
 
   precargarSolicitud("3", 12, "reloj", "reloj.gif", 0, 2); //3
-  cambiarEstadoSolicitud(solicitud[3])
+  cambiarEstadoSolicitud(solicitud[3]);
   
   precargarSolicitud("2", 70, "computadora", "computadora.png", 0, 0); //4
-  cambiarEstadoSolicitud(solicitud[4])
+  cambiarEstadoSolicitud(solicitud[4]);
+
   precargarSolicitud("3", 30, "silla", "silla.jpeg", 2, 2); //5
-  cambiarEstadoSolicitud(solicitud[5])
+  cambiarEstadoSolicitud(solicitud[5]);
 
   precargarSolicitud("3", 12, "reloj", "reloj.gif", 0, null); //6
   precargarSolicitud("2", 15, "monitor", "computadora.png", 0, null); //7
@@ -196,20 +198,8 @@ function precargarDatos() {
 
 // FUNCIONES REGISTRAR
 
-function registrarPersona(
-  pCedula,
-  pNombre,
-  pApellido,
-  pNombreUsuario,
-  pContrasenia
-) {
-  let nuevaPersona = new Persona(
-    pCedula,
-    pNombre,
-    pApellido,
-    pNombreUsuario,
-    pContrasenia
-  );
+function registrarPersona(pCedula,pNombre,pApellido,pNombreUsuario,pContrasenia) { 
+  let nuevaPersona = new Persona(pCedula,pNombre,pApellido,pNombreUsuario,pContrasenia);
   persona.push(nuevaPersona);
 }
 function registrarVehiculo(pVehiculo) {
@@ -217,8 +207,8 @@ function registrarVehiculo(pVehiculo) {
   vehiculo.push(nuevoVehiculo);
   IdVehiculo += 1;
 }
-function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null,                    idSolicitud);
+function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) { //Al registrar la solicitud hay menos datos que al precargarla por lo tanto tenemos funciones distintas
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null, idSolicitud);
   solicitud.push(nuevaSolicitud);
   idSolicitud++;
 }
@@ -229,35 +219,71 @@ function precargarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona
 
 }
 
-function registrarAdmin() {
+function registrarAdmin() { //Hay uno solo
   let nuevoAdmin = new Admin("Admin", "Admin01");
   administrador.push(nuevoAdmin);
 }
 
-function registrarEmpresa(
-  pRut,
-  pRazonSocial,
-  pNombreFantasia,
-  pNombreUsuario,
-  pContrasenia,
-  pVehiculo
-) {
-  let nuevaEmpresa = new Empresa(
-    pRut,
-    pRazonSocial,
-    pNombreFantasia,
-    pNombreUsuario,
-    pContrasenia,
-    pVehiculo
-  );
+function registrarEmpresa(pRut,pRazonSocial,pNombreFantasia,pNombreUsuario,pContrasenia,pVehiculo) {
+  let nuevaEmpresa = new Empresa(pRut,pRazonSocial,pNombreFantasia,pNombreUsuario,pContrasenia,pVehiculo);
   empresa.push(nuevaEmpresa);
 }
-function formularioPersona() {
+// MOSTARR PANTALLAS REGISTRO 
+
+function mostrarRegistroEmpresa() {
+  ocultarPantallas()
+  document.querySelector("#RegistroYLogin").style.display = "block";
+  document.querySelector("#formRegistroEmpresa").style.display = "block";
+  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
+  document.querySelector("#banner").style.display = "none";
+  document.querySelector("#txtRut").value ="";
+  document.querySelector("#txtRazon").value="";
+  document.querySelector("#txtFantasia").value="";
+  document.querySelector("#txtNombreUsuarioE").value="";
+  document.querySelector("#txtContraseñaE").value="";
+  document.querySelector("#txtContraseñaE2").value="";
+  document.querySelector("#txtselectVehiculos").value="";
+
+}
+function mostrarRegistroPresona() {
+  ocultarPantallas()
+  document.querySelector("#RegistroYLogin").style.display = "block";
+  document.querySelector("#formRegistroPersona").style.display = "block";
+  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
+  document.querySelector("#banner").style.display = "none";
+  document.querySelector("#txtCedula").value=""; 
+  document.querySelector("#txtNombre").value="";
+  document.querySelector("#txtApellido").value="";
+  document.querySelector("#txtNombreUsuarioPRegistro").value="";
+  document.querySelector("#txtContraseñaP").value="";
+  document.querySelector("#txtContraseñaP2").value="";
+}
+
+function mostrarPantallaAdmin() {
+  ocultarPantallas();
+  document.querySelector("#btnCerrarSesion").style.display = "block";
+  document.querySelector("#pantallaAdmin").style.display = "block";
+
+}
+function mostrarPantallaPersona() {
+  ocultarPantallas();
+  document.querySelector("#pantallaPersona").style.display = "block";
+  document.querySelector("#btnCerrarSesion").style.display = "block";
+}
+function mostrarPantallaEmpresa() {
+  ocultarPantallas();
+  document.querySelector("#btnCerrarSesion").style.display = "block";
+  document.querySelector("#pantallaEmpresa").style.display = "block";
+}
+
+//FORMULARIOS DE REGISTRO
+//Para regustrar un usuario PERSONA
+function formularioPersona() { 
   document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
   document.querySelector("#banner").style.display = "none";
 
   let mensaje = "";
-  let cedula = parseInt(document.querySelector("#txtCedula").value);
+  let cedula = parseInt(document.querySelector("#txtCedula").value); //se validan datos.
   let nombre = document.querySelector("#txtNombre").value.trim();
   let apellido = document.querySelector("#txtApellido").value.trim();
   let nombreUsuario = document.querySelector("#txtNombreUsuarioPRegistro").value.trim();
@@ -271,10 +297,35 @@ function formularioPersona() {
 
   document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
 
-  if (mensaje == "<hr><hr><hr><hr>") {
+  if (mensaje == "<hr><hr><hr><hr>") { //Los mensajes tienen lineas dentro.
     registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
     document.querySelector("#divRegistroUsuarioMensajes").innerHTML =
       "El usuario se ingresó correctamente";
+  }
+}
+//Para regustrar un usuario EMPRESA
+function formularioEmpresa() {
+  let mensaje = "";
+  let Rut = document.querySelector("#txtRut").value;
+  let RazonSocial = document.querySelector("#txtRazon").value.trim();
+  let Fantasia = document.querySelector("#txtFantasia").value.trim();
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaE").value;
+  let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
+  let tipoVehiculo = document.querySelector("#txtselectVehiculos").value;
+  //Se validan datos
+  mensaje += validarRut(Rut);
+  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
+  mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+  mensaje += validarSelect(tipoVehiculo);
+
+  document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
+
+  if (mensaje == "<hr><hr><hr><hr>") {
+    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia, tipoVehiculo); //Se registra la empresa si los datos son correctos
+    document.querySelector("#divRegistroEmpresaMensajes").innerHTML =
+      "El empresa se ingresó correctamente";
   }
 }
 
@@ -530,6 +581,8 @@ function pantallaAdminHabilitarEmpresas() {
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadoempresas").style.display = "block";
+  eliminarBusqueda();
+  document.querySelector("#mensajeBusqueda").innerHTML = "";
   actualizarTablaEmpresas();
 }
 
@@ -595,6 +648,7 @@ function buscarEmpresa() {
   document.querySelector("#mensajeBusqueda").innerHTML = "";
   let mensaje = ""
   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
+  document.querySelector("#txtBuscarEmpresa").value= "";
   busquedaActiva = true; //Activa la búsqueda cambiando la variable global a true
   let busquedaTuvoResultados = false;
 
@@ -627,7 +681,7 @@ function buscarEmpresa() {
   document.querySelector("#mensajeBusqueda").innerHTML = mensaje;
 }
 
-function encontrarBusqueda(texto, busqueda){
+function encontrarBusqueda(texto, busqueda){ //La palabra a coincidir se reduce a misma cantidad de letras que tiene la búsqueda.
   let resultado="";
     for (let i =0; i < busqueda.length;i++){
       resultado += texto[i];
@@ -635,17 +689,64 @@ function encontrarBusqueda(texto, busqueda){
   return resultado;
 }
 
-function eliminarBusqueda(){
+function eliminarBusqueda(){ //Se elimina la búsqueda para que la tabla vuelva a mostrar todo.
   busquedaActiva = false;
   actualizarTablaEmpresas();
   document.querySelector("#mensajeBusqueda").innerHTML = ""
 
 }
 
-function pantallaAdminAniadirTransporte() {
+function pantallaAdminAniadirTransporte() { // Se muestra la mantalla de vehículos
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadotransporte").style.display = "block";
+  document.querySelector("#mensajeAltaVehiculo").innerHTML = "";
+}
+
+function AgregarVehiculoAdmin() {
+  let vehiculo = document.querySelector("#ingresarVehiculo").value.trim();
+  document.querySelector("#ingresarVehiculo").value = ""
+  if (existeVehiculo(vehiculo)) { //Se corrobora si ya existe el vehículo.
+    AltaVehiculo = "El vehiculo ingresado ya existe."
+  } else {
+    AltaVehiculo = "El vehiculo ha sido ingresado."
+    registrarVehiculo(vehiculo); //Se registra el vehículo.
+    mostrarVehiculos(); //Se actualiza la tabla que muestra los vehículos.
+    selectVehiculos(); //Se actualiza el select de registro de empresas.
+    selectVehiculosEnvios(); // Se actualiza el select de registro de solicitudes.
+
+  }
+  document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
+}
+
+function mostrarVehiculos() { //Muestra los vehículos existentes
+  let vehiculosParaMostrarEnHTML = "";
+
+  if (vehiculo.length > 0) {
+    vehiculosParaMostrarEnHTML = `
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Vehiculo</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    for (let i = 0; i < vehiculo.length; i++) {
+      let vehiculoActual = vehiculo[i];
+
+      vehiculosParaMostrarEnHTML += `
+      <tr>
+       <td>${vehiculoActual.vehiculo}</td>
+      </tr>
+      `; 
+    }
+    vehiculosParaMostrarEnHTML += `
+            </tbody>
+        </table>
+    `;
+  }
+  document.querySelector("#tablaVehiculosAdmin").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
 function pantallaAdminEstadistica() { 
@@ -655,19 +756,19 @@ function pantallaAdminEstadistica() {
   actualizarAdminEstadistica()
 }
 
-// INFORMACION ESTADISTICA ADMINISTRADOR - TOTAL DE KILOMETROS RECORRIDOS POR EMPRESA
+// Información estadística - TOTAL DE KILOMETROS RECORRIDOS POR EMPRESA
 
 function actualizarAdminEstadistica(){
   let tbodyHTML = ``;
-  let arrayKilometrosYEmpresas = kilometrosPorEmpresa();
-  let empresasPorKilometros = arrayKilometrosYEmpresas[0];
+  let arrayKilometrosYEmpresas = kilometrosPorEmpresa(); //Llama a función y recibe 2 arrays uno con los nombres de las empresas y el segundo con sus km respectivos.
+  let empresasPorKilometros = arrayKilometrosYEmpresas[0]; //Separamos los arrays
   let kilometrosPorEmpresas = arrayKilometrosYEmpresas[1];
 
   for (let i = 0; i < empresasPorKilometros.length; i++) {
     let empresaActual = empresasPorKilometros[i];
-    let kilometroActual = kilometrosPorEmpresas[i];
+    let kilometroActual = kilometrosPorEmpresas[i]; 
    
-    
+    //Se muestra en tabla los datos
     tbodyHTML += `<tr></tr>
     <td>${empresaActual}</td>
     <td>${kilometroActual}</td>
@@ -676,88 +777,28 @@ function actualizarAdminEstadistica(){
   document.querySelector("#tablaAdminInformacionEstadistica").innerHTML = tbodyHTML;
 }
 
-function kilometrosPorEmpresa(){
+function kilometrosPorEmpresa(){ //Función para debolver empresas y sus km.
   
   let nombreEmpresas = [];
   let kilometrosRecorridos = [];
 
-  for (let i = 0; i < empresa.length; i++) {
+  for (let i = 0; i < empresa.length; i++) { //Recorre las empresas cargadas.
     let kilometrosDeCadaEmpresa = 0;
     let empresaActual = empresa[i];
-      for (let a = 0; a < solicitud.length; a++){
+      for (let a = 0; a < solicitud.length; a++){ //Recorre las solicitudes
         let solicitudActual = solicitud[a];
-        if (solicitudActual.empresa == empresaActual && solicitudActual.estado == "3"){
-          kilometrosDeCadaEmpresa += solicitudActual.distancia;
+        if (solicitudActual.empresa == empresaActual && solicitudActual.estado == "3"){ //Si la solicitud está finalizada y es de la empresa que se está recorriendo se suma a un contador los km recorridos por esa empresa
+          kilometrosDeCadaEmpresa += solicitudActual.distancia; 
         }
       }
-      nombreEmpresas.push(empresaActual.nombreUsuario);
+      nombreEmpresas.push(empresaActual.nombreUsuario); //En el primer array se pushea el nombre de usuario de la empresa y en el segundo sus km.
       kilometrosRecorridos.push(kilometrosDeCadaEmpresa);
   }
   return [nombreEmpresas, kilometrosRecorridos];
 }
 
 
-// MOSTARR PANTALLAS REGISTRO 
-
-function mostrarRegistroEmpresa() {
-  ocultarPantallas()
-  document.querySelector("#RegistroYLogin").style.display = "block";
-  document.querySelector("#formRegistroEmpresa").style.display = "block";
-  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
-  document.querySelector("#banner").style.display = "none";
-
-}
-function mostrarRegistroPresona() {
-  ocultarPantallas()
-  document.querySelector("#RegistroYLogin").style.display = "block";
-  document.querySelector("#formRegistroPersona").style.display = "block";
-  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
-  document.querySelector("#banner").style.display = "none";
-}
-
-function mostrarPantallaAdmin() {
-  ocultarPantallas();
-  document.querySelector("#btnCerrarSesion").style.display = "block";
-  document.querySelector("#pantallaAdmin").style.display = "block";
-
-}
-function mostrarPantallaPersona() {
-  ocultarPantallas();
-  document.querySelector("#pantallaPersona").style.display = "block";
-  document.querySelector("#btnCerrarSesion").style.display = "block";
-}
-function mostrarPantallaEmpresa() {
-  ocultarPantallas();
-  document.querySelector("#btnCerrarSesion").style.display = "block";
-  document.querySelector("#pantallaEmpresa").style.display = "block";
-}
-
-function formularioEmpresa() {
-  let mensaje = "";
-  let Rut = document.querySelector("#txtRut").value;
-  let RazonSocial = document.querySelector("#txtRazon").value.trim();
-  let Fantasia = document.querySelector("#txtFantasia").value.trim();
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaE").value;
-  let contrasenia2 = document.querySelector("#txtContraseñaE2").value;
-  let tipoVehiculo = document.querySelector("#txtselectVehiculos").value;
-
-  mensaje += validarRut(Rut);
-  mensaje += ValidarRazonFantasia(RazonSocial, Fantasia);
-  mensaje += validarNombreUsuarioEmpresa(nombreUsuario);
-  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-  mensaje += validarSelect(tipoVehiculo);
-
-  document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
-
-  if (mensaje == "<hr><hr><hr><hr>") {
-    registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia, tipoVehiculo);
-    document.querySelector("#divRegistroEmpresaMensajes").innerHTML =
-      "El empresa se ingresó correctamente";
-  }
-}
-
-// FUNCIONES RELACIONADOS A VEHICULOS
+// FUNCIONES DE SELECT VEHÍCULOS A VEHICULOS para formulario empresa y solicitud
 
 function selectVehiculos() {
   let vehiculosParaMostrarEnHTML = "";
@@ -813,50 +854,9 @@ function selectVehiculosEnvios() {
   document.querySelector("#selectSolicitudesEnvios").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
-function mostrarVehiculos() {
-  let vehiculosParaMostrarEnHTML = "";
 
-  if (vehiculo.length > 0) {
-    vehiculosParaMostrarEnHTML = `
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Vehiculo</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-    for (let i = 0; i < vehiculo.length; i++) {
-      let vehiculoActual = vehiculo[i];
 
-      vehiculosParaMostrarEnHTML += `
-      <tr>
-       <td>${vehiculoActual.vehiculo}</td>
-      </tr>
-      `; 
-    }
-    vehiculosParaMostrarEnHTML += `
-            </tbody>
-        </table>
-    `;
-  }
-  document.querySelector("#tablaVehiculosAdmin").innerHTML = vehiculosParaMostrarEnHTML;
-}
 
-function AgregarVehiculoAdmin() {
-  let vehiculo = document.querySelector("#ingresarVehiculo").value.trim();
-  if (existeVehiculo(vehiculo)) {
-    AltaVehiculo = "El vehiculo ingresado ya existe."
-  } else {
-    AltaVehiculo = "El vehiculo ha sido ingresado."
-    registrarVehiculo(vehiculo);
-    mostrarVehiculos();
-    selectVehiculos();
-    selectVehiculosEnvios();
-
-  }
-  document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
-}
 
 
 
