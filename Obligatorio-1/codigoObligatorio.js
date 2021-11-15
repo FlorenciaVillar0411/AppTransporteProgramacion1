@@ -365,7 +365,7 @@ function actualizarListadoEmpresa() {
       <td>${vehiculoSolicitudActualParamostrar}</td>
       <td>${personaSolicitudActual}</td>
       <td>${estadoSolicitudActualParaMostrar}</td>
-      <td><input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR"></td>
+      <td><input solicitudactual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR"></td>
       </tr>`;
     }
   }
@@ -374,11 +374,11 @@ function actualizarListadoEmpresa() {
   let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitud"); // la variable tiene los botones de la tabla ya que todos tienen la misma clase.
   for (let i = 0; i < botonesDeLaTabla.length; i++) { // Se recorre los botones de la tabla
     let botonActual = botonesDeLaTabla[i]; 
-    botonActual.addEventListener("click", cambiarEstadoSolicitudHandler); // si se selecciona el botón actual va a la tabla.
+    botonActual.addEventListener("click", btncambiarEstadoSolicitud); // si se selecciona el botón actual va a la tabla.
   }
 }
-function cambiarEstadoSolicitudHandler() { 
-  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudActual"); // se obtiene el atributo del botón presionado
+function btncambiarEstadoSolicitud() { 
+  let nombreSolicitudDeBotonClickeado = this.getAttribute("solicitudactual"); // se obtiene el atributo del botón presionado
   let solicitudDeBotonClickeado = encontrarSolicitudPorId(nombreSolicitudDeBotonClickeado); // A partir del Id (que es el atributo del botón) se encuentra la solicitud.
   solicitudDeBotonClickeado.empresa = usuarioLogeadoArray; // Se le asigna una empresa a la solicitud encontrada
   cambiarEstadoSolicitud(solicitudDeBotonClickeado); //Se le cambia el estado al siguiente a la solicitud encontrada.
@@ -412,7 +412,7 @@ function actualizarTablaPedidosTomadosEmpresa(){
 
     let textoParaAcciones = "FINALIZADA";
     if (solicitudActual.estado  == 2) {
-      textoParaAcciones = `<input solicitudActual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
+      textoParaAcciones = `<input solicitudactual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
     }
 
     if (empresaSolicitudActual == usuarioLogeadoArray){ //Muestra solo solicitudes asociados a la empresa
@@ -432,7 +432,7 @@ function actualizarTablaPedidosTomadosEmpresa(){
   let botonesDeLaTabla = document.querySelectorAll(".btnCambiarEstadoSolicitudTomada"); //variable con todos los botones
   for (let i = 0; i < botonesDeLaTabla.length; i++) { //Recorrida botones
     let botonActual = botonesDeLaTabla[i];
-    botonActual.addEventListener("click", cambiarEstadoSolicitudHandler); //cuando se apreta un botón llama a la función
+    botonActual.addEventListener("click", btncambiarEstadoSolicitud); //cuando se apreta un botón llama a la función
   }
 }
 
