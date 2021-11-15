@@ -460,6 +460,36 @@ function actualizarEmpresaEstadistica() { //Primera parte info estadística
 
   document.querySelector("#divInformacionEstadisticaEmpresa").innerHTML = estadisticas;
 }
+
+function obtenerPersonaConMasEnvios() {
+  let personaConMasEnvios = [];
+  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY;
+
+
+  for (let i = 0; i < persona.length; i++) { //Se recorren las personas 
+      let cantidadEnviosPersona = 0; //Se crea un contador para esta persona
+      let personaActual = persona[i];
+
+      for (let a = 0; a < solicitud.length; a++){ //Se recorren las solicitudes
+        let solicitudActual = solicitud[a];
+        if (solicitudActual.empresa == usuarioLogeadoArray ){ //Si la solicitud actual es del usuario se suma al contador
+          if (solicitudActual.persona == personaActual){
+            cantidadEnviosPersona += 1;
+          }
+        }
+      }
+    if (cantidadEnviosPersona > mayorCantidadDeEnviosEncontrados) { // Si el contador es el mayor, el nombre y apellido de la persona serán los datos del array
+      mayorCantidadDeEnviosEncontrados = cantidadEnviosPersona;
+      personaConMasEnvios = [personaActual.obtenerNombreYApellido()];
+    } else if (cantidadEnviosPersona == mayorCantidadDeEnviosEncontrados){ //Si los datos son iguales a otro contador se pushea otro usuario al array.
+      personaConMasEnvios.push(personaActual.obtenerNombreYApellido());
+    }
+     
+  }
+  
+  return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
+}
+
 function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística select
   let selectInfoEstadistica = document.querySelector("#selectInfoEstadisticaEmpresa").value;
   let mensaje = ""
@@ -558,7 +588,7 @@ function pantallaPersonaEstadisticas() {
 function actualizarPersonaEstadistica() {
   let estadisticas = ``;
 
-  let solicitudesEstado = obtenerEnviosEnEstado2y3Persona(); //devuelve solicitudes en estado 1, 2 y en estado 3 de la persona logueada
+  let solicitudesEstado = obtenerEnviosEnEstado1y2y3Persona(); //devuelve solicitudes en estado 1, 2 y en estado 3 de la persona logueada
   let solicitudesTomadas = solicitudesEstado[1] + solicitudesEstado[2]
   let solicitudesTotales = solicitudesEstado[0] + solicitudesEstado[1] + solicitudesEstado[2];
 
@@ -573,6 +603,27 @@ function actualizarPersonaEstadistica() {
    
   }
   document.querySelector("#mensajeInformaciónEstadistica").innerHTML = estadisticas;
+}
+
+function obtenerEnviosEnEstado1y2y3Persona() {
+  let enviosEstado1 = 0
+  let enviosEstado2 = 0;
+  let enviosEstado3 = 0;
+
+  for (let i = 0; i < solicitud.length; i++) { //Se recorren solicitudes
+      let solicitudActual = solicitud[i];
+      let estadoSolicitudActual = solicitudActual.estado;
+      let personaSolicitudActual = solicitudActual.persona;
+      //Se suman a los contadores las solicitudes que pertenecen al usuario logueado.
+      if (estadoSolicitudActual == 2 && personaSolicitudActual == usuarioLogeadoArray) {
+          enviosEstado2 += 1;
+      } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
+        enviosEstado3 += 1;
+      } else if (estadoSolicitudActual == 1 && personaSolicitudActual == usuarioLogeadoArray){
+        enviosEstado1 += 1;
+      }
+  }
+  return [enviosEstado1, enviosEstado2, enviosEstado3];
 }
 
 //PANTALLAS ADMIN

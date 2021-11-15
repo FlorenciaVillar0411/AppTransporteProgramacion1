@@ -1,3 +1,5 @@
+// VALIDACIONES REGISTRO Y LOGIN
+
 function Validarcontrasenia(contra1, contra2) {
   let mensaje = "<hr>";
   if (contra1 != contra2) {
@@ -50,7 +52,6 @@ function validarNombreUsuario(usuario) {
   }
   return mensaje;
 }
-///////////////////////////////////////////////////////
 
 function validarRut(Rut) {
   let mensaje = "<hr>";
@@ -92,8 +93,6 @@ function validarSelect (tipoVehiculo){
   return mensaje;
 }
 
-/////////////////////////////////////////////////////////////
-//            VALIDACIONES LOGIN USUARIO
 
 function validarNombreUsuarioLogin(usuario) {
   let mensaje = "<hr>";
@@ -106,6 +105,14 @@ function validarNombreUsuarioLogin(usuario) {
   }
   return mensaje;
 }
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//UTILIDADES Y FUNCIONES ESPECÍFICAS
+///////////////////////////////////////////////////////
+
 
 function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) {
   let existe = false;
@@ -277,34 +284,6 @@ function cambiarEstadoSolicitud(solicitud) {
 
 }
 
-function obtenerPersonaConMasEnvios() {
-  let personaConMasEnvios = [];
-  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY;
-
-
-  for (let i = 0; i < persona.length; i++) {
-      let cantidadEnviosPersona = 0;
-      let personaActual = persona[i];
-
-      for (let a = 0; a < solicitud.length; a++){
-        let solicitudActual = solicitud[a];
-        if (solicitudActual.empresa == usuarioLogeadoArray ){
-          if (solicitudActual.persona == personaActual){
-            cantidadEnviosPersona += 1;
-          }
-        }
-      }
-    if (cantidadEnviosPersona > mayorCantidadDeEnviosEncontrados) {
-      mayorCantidadDeEnviosEncontrados = cantidadEnviosPersona;
-      personaConMasEnvios = [personaActual.obtenerNombreYApellido()];
-    } else if (cantidadEnviosPersona == mayorCantidadDeEnviosEncontrados){
-      personaConMasEnvios.push(personaActual.obtenerNombreYApellido());
-    }
-     
-  }
-  
-  return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
-}
 
 function mostrarSolicitudesSegunEstado(num){
   let contadorSolicitudes = 0;
@@ -338,24 +317,4 @@ function cortarStringDesdeIndice(texto, indice) {
   }
 
   return retorno;
-}
-
-function obtenerEnviosEnEstado2y3Persona() {
-  let enviosEstado1 = 0
-  let enviosEstado2 = 0;
-  let enviosEstado3 = 0;
-
-  for (let i = 0; i < solicitud.length; i++) {
-      let solicitudActual = solicitud[i];
-      let estadoSolicitudActual = solicitudActual.estado;
-      let personaSolicitudActual = solicitudActual.persona;
-      if (estadoSolicitudActual == 2 && personaSolicitudActual == usuarioLogeadoArray) {
-          enviosEstado2 += 1;
-      } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
-        enviosEstado3 += 1;
-      } else if (estadoSolicitudActual == 1 && personaSolicitudActual == usuarioLogeadoArray){
-        enviosEstado1 += 1;
-      }
-  }
-  return [enviosEstado1, enviosEstado2, enviosEstado3];
 }
