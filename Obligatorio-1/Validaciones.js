@@ -26,9 +26,6 @@ function validarCi(cedula) {
   if (cedula.length == "") {
     mensaje += "<br> El campo de la cedula no puede estar vacío";
   }
-  // if(cedula.length != 8){
-  //     mensaje += "<br> El campo de la cedula, debe contener 8 digitos"
-  // }
   return mensaje;
 }
 
@@ -146,7 +143,6 @@ function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) {
   return existe;
 }
 
-
 function encontrarUsuario(usuario) {
   // let existe = false;
   let i = 0;
@@ -160,6 +156,7 @@ function encontrarUsuario(usuario) {
   }
   return nombreUsuarioEncontrado;
 }
+
 function encontrarUsuarioEmpresa(usuario) {
   let i = 0;
   let nombreUsuarioEncontrado = false;
@@ -185,8 +182,6 @@ function encontrarEmpresapPorUsuario(usuario) {
   }
   return empresaEncontrada;
 }
-
-
 
 function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
   let existe = false;
@@ -244,7 +239,6 @@ function encontrarEmpresaPorUsuario(nombreUsuario) {
   }
   return empresaEncontrada;
 }
-
 
 
 function encontrarPersonaPorUsuario(usuario) {
@@ -311,7 +305,6 @@ function obtenerPersonaConMasEnvios() {
   
   return [personaConMasEnvios, mayorCantidadDeEnviosEncontrados];
 }
-
 
 function mostrarSolicitudesSegunEstado(num){
   let contadorSolicitudes = 0;

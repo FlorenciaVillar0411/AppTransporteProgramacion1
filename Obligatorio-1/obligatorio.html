@@ -12,14 +12,14 @@
 	</head>
 	<body>
         <header class="logo-nav-container">
-            <div class="logo">
-            </div>
+            <div class="logo"></div>
             <div class="nav-menu" id = "listaLoginYRegistroBotones">
                 <ul>
                     <li><a id="btnLogin" href="#login" f>Login</a></li>
                     <li><a id="btnRegistroPersona" href="#registroPersona">Registro Persona</a></li>
                     <li><a id="btnRegistroEmpresa" href="#registroEmpresa">Registro Empresa</a></li>
                 </ul>
+            </div>
             </div>
         </header>
         <div id="btnCerrarSesion">
@@ -29,13 +29,10 @@
             <section id ="LemaYFoto"class="intro">
                 <article>
                     <div class="flex-center">
-                        <div class="banner y-flex-center flex-center">
-                            <div> 
-                                <h1 class="titulo">Transportes  FES</h1>
-                                <h2 class="lema">LLegamos a donde estes</h2>
-                            </div>
-                            </div>
-                        </div>
+                        <div class="banner y-flex-center flex-center" id="banner">  
+                            <h1 class="titulo">Transportes  FES</h1>
+                            <h2 class="lema">Llegamos a donde estes</h2>
+                        </div> 
                     </div>
                 </article>
             </section>
@@ -44,12 +41,11 @@
 
         <div id="RegistroYLogin" class="cuerpo">
             <br><br><br>
-            <input class="boton" type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
+            <input class="boton" type="button" value="VOLVER A INICIO" href="#login" id="btnVolverAInicio">
             <br><br><br>
         </div>
 
-
-            
+  
         <div id="formRegistroPersona" class="cuerpo"> 
             <br><br><br>
             <h3>REGISTRARSE - PERFIL PERSONA</h3>
@@ -72,18 +68,13 @@
 
             <input type="button" value="Registrarse" id="btnRegistrarseP">
             <input type="button" value="Ya estoy registrado" id="btnLoginP">
-            <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
+            <br><br><br> 
             <br><br><br>
         </div>
 
 
-
-
         <div id="formRegistroEmpresa" class="cuerpo"> 
-            
             <br><hr><br>
-         
             <h3>REGISTRARSE - PERFIL EMPRESA</h3>
             <br><br><br>
             <P>Llene el formulario para registrarse:</P><br>
@@ -106,11 +97,8 @@
             <input type="button" value="Registrarse" id="btnRegistrarseE">
             <input type="button" value="Ya estoy registrado" id="btnLoginE">
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
             <br><br><br>
         </div>
-
-
 
 
         <div id="divLogin" class="cuerpo"> <!--EMPRESA-->
@@ -119,17 +107,14 @@
             <h3>INGRESAR USUARIO</h3>
             <br><br><br>
             <label>Ingrese Nombre de Usuario:</label><br>
-            <input type="text" id="txtNombreUsuarioELogin" placeholder="NombreDeUsuario"><br><br>
+            <input type="text" id="txtNombreUsuarioELogin" placeholder="Nombre De Usuario"><br><br>
             <label>Ingrese Contraseña:</label><br>
             <input type="password" id="txtContraseñaIngresoE" placeholder="Contraseña"><br><br>
             <div id = "mensajeLoginEmpresa"></div>
             <input type="button" value="INGRESAR" id="btnIngresarE">
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
             <br><br><br>
         </div>
-
- 
 
 
         <div id="pantallaAdmin" class="cuerpo"> 
@@ -143,6 +128,7 @@
                 <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
             </center>
         </div>
+
 
         <div id = "adminlistadoempresas" class="cuerpo"> 
             
@@ -172,7 +158,6 @@
             </thead>
             <tbody id="tablaHabilitarEmpresas"></tbody>
             </table>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
 
@@ -187,7 +172,6 @@
             <input type="button" value="AGREGAR AL LISTADO" id ="btnAgregarVehiculo">
             <div id = "mensajeAltaVehiculo"></div>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
 
@@ -211,7 +195,6 @@
 				
             </table>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
         <div id="pantallaPersona" class="cuerpo"> 
@@ -232,9 +215,10 @@
             <P>Llene el formulario para realizar un envío:</P><br>
             <br><br><br>
             <label>Ingrese Descripción del Producto</label><br>
+            <br><br><br>
             <input type="text" id="txtDescripcionenvio" placeholder="Producto"><br><br>
             <label>Ingrese distancia en km:</label><br>
-            <input type="number" id="txtDistanciaEnvio" placeholder="Producto"><br><br>
+            <input type="number" id="txtDistanciaEnvio" placeholder="Distancia"><br><br>
             <label>Ingrese imagen:</label><br>
             <input type="file" id="imagenEnvio" placeholder="imagen Producto"><br><br>
             <div id = "selectSolicitudesEnvios"></div>
@@ -242,8 +226,6 @@
             <div id = "mensajeSolicitudesEnvios"></div><br><br><br>
             <input type="button" value="SOLICITAR" id="btnSolicitarEnvioFormulario">
             <br><br><br>
-
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
             <br><br><br>
         </div>
 
@@ -271,7 +253,6 @@
 				
             </table>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
 
@@ -282,7 +263,6 @@
             <br><br>
             <div id = "mensajeInformaciónEstadistica"></div>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
         <div id="pantallaEmpresa" class="cuerpo"> 
@@ -318,14 +298,9 @@
 
                     </tr>
                 </thead>
-                <tbody  id = "tablaSolicitudesPendientesEmpresa"> </tbody>
-
-
-				
-				
+                <tbody  id = "tablaSolicitudesPendientesEmpresa"> </tbody>	
             </table>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center>  
         </div>
 
 
@@ -355,7 +330,6 @@
             </table>
             <br>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center> 
             <br><br><br> 
         </div>
 
@@ -377,30 +351,60 @@
             <input type="button" id="btnSelectInfoEstadisticaEmpresa" value="MOSTRAR">
             <br><br><br>
             <div id = "divSelectInfoEmpresa"></div>
-
             <br>
             <br><br><br>
-            <center><p><strong> EMPRESA DE ENVÍOS</strong></p></center> 
             <br><br><br> 
     </div>
+    <br><br><br>
+    <hr>
 
-    
-         <!-- //Reveer lo del footer -->
-        <!-- <footer class="footer" id="footer">
-            <ul>
-                <li><a href="aviso-legal.html">Aviso legal</a></li>
-                <li><a href="privacidad.html">Provacidad</a></li>
-                <li><a href="contactar.html">Contactar</a></li>
-            </ul>
-        </footer>  -->
 
-        <div class="pie" id="pie">
-            <br><br><br>
-            <br><br><br>
-            <a class="footer" href="https://www.ort.edu.uy">Footer</a>
-            <br><br><br>
-            <br><br><br>
-        </div><!-- FIN PIE -->
+    <footer id="contactos">       
+        <div class="container-footer-all">         
+             <div class="container-body"> 
+                 <div class="colum1">
+                     <h1>Mas informacion de la compañia</h1> 
+                     <p>Somos una empresa constituida hace más de 17 años como una empresa de transportes,  en búsqueda de la satisfacción total de nuestros clientes.</p>
+                     <br>
+                     <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3272.1227584102407!2d-56.192943684309526!3d-34.903368730382944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959f8032f2ec6a2b%3A0x20fd10ea401868bf!2sUniversidad%20ORT%20Uruguay%20(Campus%20Centro)!5e0!3m2!1ses-419!2suy!4v1636949247475!5m2!1ses-419!2suy" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>></iframe></div>
+                  </div>
+                  <div class="colum2">
+                      <h1>Redes Sociales</h1>
+                      <div class="rowdani">
+                         <img src="fotos/facebook.png">
+                         <label>Siguenos en Facebook</label>
+                     </div>
+                     <div class="rowdani">
+                         <img src="fotos/twitter.png">
+                         <label>Siguenos en Twitter</label>
+                     </div>
+                     <div class="rowdani">
+                         <img src="fotos/instagram.png">
+                         <label>Siguenos en Instagram</label>
+                     </div>
+                     <div class="rowdani">
+                         <img src="fotos/pinterest.png">
+                         <label>Siguenos en Pinterest</label>
+                     </div>
+                  </div>
+                  <div class="colum3">
+                      <h1>Informacion Contactos</h1>
+                      <div class="row2">
+                         <img src="fotos/house.png">
+                         <label>Montevideo, Departamento de Montevideo</label>
+                     </div>
+                     <div class="row2">
+                         <img src="fotos/smartphone.png">
+                         <label>2123-456-789</label>
+                     </div>
+                     <div class="row2">
+                         <img src="fotos/contact.png">
+                          <label>www.transportesFes.com</label>
+                     </div>
+                  </div>
+              </div>     
+         </div>    
+     </footer>
 
 
         <script type="text/javascript" src="claseAdmin.js"></script>

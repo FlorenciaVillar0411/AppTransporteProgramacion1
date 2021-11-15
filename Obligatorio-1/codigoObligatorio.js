@@ -50,9 +50,13 @@ function ocultarPantallas() {
   document.querySelector("#PersonaListadoSolicitudes").style.display = "none";
   if (!adminEstaLogeado && !usuarioLogeado) { //Oculta botón de cerrar sesión únicamente si no hay usuarios logueados
     document.querySelector("#btnCerrarSesion").style.display = "none";
+    document.querySelector("#banner").style.display = "block";
+
   } 
   if (adminEstaLogeado || usuarioLogeado) { // Oculta los botones de login y registro cuando hay algún usuario logeado
     document.querySelector("#listaLoginYRegistroBotones").style.display = "none";
+    document.querySelector("#banner").style.display = "none";
+
   }
 }
 
@@ -102,7 +106,177 @@ function cerrarSesion() { //Cierra el usuario logueado dejando la pantalla de in
   ocultarPantallas();
 
 }
+//LOGIN
 
+function mostrarLogin() {
+  ocultarPantallas()
+  document.querySelector("#RegistroYLogin").style.display = "block";
+  document.querySelector("#divLogin").style.display = "block";
+  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
+  document.querySelector("#banner").style.display = "none";
+}
+
+function login() {
+  let mensaje = "";
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
+
+  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    let empresaEncontrada = encontrarEmpresaPorUsuario(nombreUsuario);
+    if (!empresaEncontrada.habilitado){
+      mensaje = "La empresa no está habilitada";
+    } else{
+      usuarioLogeado = true;
+      usuarioLogeadoArray = empresaEncontrada
+      mostrarPantallaEmpresa();
+    }
+  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    adminEstaLogeado = true;
+    mostrarPantallaAdmin();
+
+  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
+    mensaje = "El usuario es válido";
+    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario);
+    usuarioLogeado = true;
+    mostrarPantallaPersona();
+  } else {
+    mensaje = "Usuario o contraseña no válido";
+  }
+  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
+}
+
+//PRECARGAR DATOS Y REGISTRAR DATOS
+
+function precargarDatos() {
+  registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
+  registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
+  registrarPersona("12836273", "Esteban", "Machado", "Esteban", "Esteban");
+  registrarPersona("12836273", "Bruno", "Diaz", "Bruno", "123");
+
+  registrarVehiculo("Moto");
+  registrarVehiculo("Camioneta");
+  registrarVehiculo("Camión");
+  
+  registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2"); //0
+  registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");//1
+  registrarEmpresa("123456789015", "Mejores", "Los Mejores", "Mejorcitos", "Mejorcitos","3");//2
+  registrarEmpresa("123456789765", "Muchos Kilometros", "Kilometros Muchos", "MuchosKm", "MuchosKm", "2");
+  registrarEmpresa("123457659014", "Rapidos", "Rapiditos", "Rapiditos", "Rapiditos", "1");
+
+  cambiarEstadoEmpresa(empresa[0]);
+  cambiarEstadoEmpresa(empresa[1]);
+  cambiarEstadoEmpresa(empresa[2]);
+
+  precargarSolicitud("1", 12, "caja", "caja.png", 0, 1); //0
+  cambiarEstadoSolicitud(solicitud[0])
+  cambiarEstadoSolicitud(solicitud[0])
+
+  precargarSolicitud("2", 80, "pelota", "pelota.jpeg", 1, 0); //1
+  cambiarEstadoSolicitud(solicitud[1])
+  cambiarEstadoSolicitud(solicitud[1])
+  precargarSolicitud("2", 35, "sabanas", "sabanas.jpg", 0, 0); //2
+  cambiarEstadoSolicitud(solicitud[2])
+  cambiarEstadoSolicitud(solicitud[2])
+
+  precargarSolicitud("3", 12, "reloj", "reloj.gif", 0, 2); //3
+  cambiarEstadoSolicitud(solicitud[3])
+  
+  precargarSolicitud("2", 70, "computadora", "computadora.png", 0, 0); //4
+  cambiarEstadoSolicitud(solicitud[4])
+  precargarSolicitud("3", 30, "silla", "silla.jpeg", 2, 2); //5
+  cambiarEstadoSolicitud(solicitud[5])
+
+  precargarSolicitud("3", 12, "reloj", "reloj.gif", 0, null); //6
+  precargarSolicitud("2", 15, "monitor", "computadora.png", 0, null); //7
+  precargarSolicitud("1", 39, "silla", "silla.jpeg", 2, null); //8
+  
+}
+
+// FUNCIONES REGISTRAR
+
+function registrarPersona(
+  pCedula,
+  pNombre,
+  pApellido,
+  pNombreUsuario,
+  pContrasenia
+) {
+  let nuevaPersona = new Persona(
+    pCedula,
+    pNombre,
+    pApellido,
+    pNombreUsuario,
+    pContrasenia
+  );
+  persona.push(nuevaPersona);
+}
+function registrarVehiculo(pVehiculo) {
+  let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
+  vehiculo.push(nuevoVehiculo);
+  IdVehiculo += 1;
+}
+function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null,                    idSolicitud);
+  solicitud.push(nuevaSolicitud);
+  idSolicitud++;
+}
+function precargarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona, pEmpresa) {
+  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, persona[pPersona],empresa[pEmpresa],idSolicitud);
+  solicitud.push(nuevaSolicitud);
+  idSolicitud++;
+
+}
+
+function registrarAdmin() {
+  let nuevoAdmin = new Admin("Admin", "Admin01");
+  administrador.push(nuevoAdmin);
+}
+
+function registrarEmpresa(
+  pRut,
+  pRazonSocial,
+  pNombreFantasia,
+  pNombreUsuario,
+  pContrasenia,
+  pVehiculo
+) {
+  let nuevaEmpresa = new Empresa(
+    pRut,
+    pRazonSocial,
+    pNombreFantasia,
+    pNombreUsuario,
+    pContrasenia,
+    pVehiculo
+  );
+  empresa.push(nuevaEmpresa);
+}
+function formularioPersona() {
+  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
+  document.querySelector("#banner").style.display = "none";
+
+  let mensaje = "";
+  let cedula = parseInt(document.querySelector("#txtCedula").value);
+  let nombre = document.querySelector("#txtNombre").value.trim();
+  let apellido = document.querySelector("#txtApellido").value.trim();
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioPRegistro").value.trim();
+  let contrasenia = document.querySelector("#txtContraseñaP").value;
+  let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
+
+  mensaje += validarCi(cedula);
+  mensaje += ValidarNombreApellido(nombre, apellido);
+  mensaje += validarNombreUsuario(nombreUsuario);
+  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
+
+  document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
+
+  if (mensaje == "<hr><hr><hr><hr>") {
+    registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
+    document.querySelector("#divRegistroUsuarioMensajes").innerHTML =
+      "El usuario se ingresó correctamente";
+  }
+}
 
 //MOSTRAR PANTALLAS DE EMPRESAS
 // Se muestran las pantallas de empresas y sus funcionalidades
@@ -264,6 +438,7 @@ function pantallaPersonaSolicitar() { // Muestra la pantalla en html de formular
   document.querySelector("#PersonaSolicitarEnvios").style.display = "block";
   document.querySelector("#mensajeSolicitudesEnvios").innerHTML = "";
 }
+
 function solicitarFormularioEnvio(){ // Toma la solicitud
   let mensaje = "";
   let descripcionEnvio = document.querySelector("#txtDescripcionenvio").value; //carga los datos
@@ -416,7 +591,6 @@ function btnCambiarEstadoEmpresaHandler() {
 }
 
 //Buscador de empresas
-
 function buscarEmpresa() {
   document.querySelector("#mensajeBusqueda").innerHTML = "";
   let mensaje = ""
@@ -444,9 +618,7 @@ function buscarEmpresa() {
     } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActualRecortada) { //si no coincide con razón busca con fantasía.
       empresaActual.buscado = true;
       busquedaTuvoResultados = true;
-
     } 
-    
   }
   if (!busquedaTuvoResultados){  
     mensaje = "No hay resultados que coincidan con la búsqueda";
@@ -469,7 +641,6 @@ function eliminarBusqueda(){
   document.querySelector("#mensajeBusqueda").innerHTML = ""
 
 }
-
 
 function pantallaAdminAniadirTransporte() {
   ocultarPantallas()
@@ -505,7 +676,6 @@ function actualizarAdminEstadistica(){
   document.querySelector("#tablaAdminInformacionEstadistica").innerHTML = tbodyHTML;
 }
 
-
 function kilometrosPorEmpresa(){
   
   let nombreEmpresas = [];
@@ -522,9 +692,7 @@ function kilometrosPorEmpresa(){
       }
       nombreEmpresas.push(empresaActual.nombreUsuario);
       kilometrosRecorridos.push(kilometrosDeCadaEmpresa);
-     
   }
-  
   return [nombreEmpresas, kilometrosRecorridos];
 }
 
@@ -536,6 +704,7 @@ function mostrarRegistroEmpresa() {
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroEmpresa").style.display = "block";
   document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
+  document.querySelector("#banner").style.display = "none";
 
 }
 function mostrarRegistroPresona() {
@@ -543,181 +712,7 @@ function mostrarRegistroPresona() {
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#formRegistroPersona").style.display = "block";
   document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
-
-}
-
-//LOGIN
-
-function mostrarLogin() {
-  ocultarPantallas()
-  document.querySelector("#RegistroYLogin").style.display = "block";
-  document.querySelector("#divLogin").style.display = "block";
-  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
-
-}
-function login() {
-  let mensaje = "";
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
-
-  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    let empresaEncontrada = encontrarEmpresaPorUsuario(nombreUsuario);
-    if (!empresaEncontrada.habilitado){
-      mensaje = "La empresa no está habilitada";
-    } else{
-      usuarioLogeado = true;
-      usuarioLogeadoArray = empresaEncontrada
-      mostrarPantallaEmpresa();
-    }
-  
-
-  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    adminEstaLogeado = true;
-    mostrarPantallaAdmin();
-
-  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario);
-    usuarioLogeado = true;
-    mostrarPantallaPersona();
-  } else {
-    mensaje = "Usuario o contraseña no válido";
-  }
-  document.querySelector("#mensajeLoginEmpresa").innerHTML = mensaje;
-}
-
-//PRECARGAR DATOS Y REGISTRAR DATOS
-
-function precargarDatos() {
-  registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
-  registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
-  registrarPersona("12836273", "Esteban", "Machado", "Esteban", "Esteban");
-  registrarPersona("12836273", "Bruno", "Diaz", "Bruno", "123");
-
-  registrarVehiculo("Moto");
-  registrarVehiculo("Camioneta");
-  registrarVehiculo("Camión");
-  
-  registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2"); //0
-  registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");//1
-  registrarEmpresa("123456789015", "Mejores", "Los Mejores", "Mejorcitos", "Mejorcitos","3");//2
-  registrarEmpresa("123456789765", "Muchos Kilometros", "Kilometros Muchos", "MuchosKm", "MuchosKm", "2");
-  registrarEmpresa("123457659014", "Rapidos", "Rapiditos", "Rapiditos", "Rapiditos", "1");
-
-  cambiarEstadoEmpresa(empresa[0]);
-  cambiarEstadoEmpresa(empresa[1]);
-  cambiarEstadoEmpresa(empresa[2]);
-
-
-  precargarSolicitud("1", 12, "caja", "caja.png", 0, 1); //0
-  cambiarEstadoSolicitud(solicitud[0])
-  cambiarEstadoSolicitud(solicitud[0])
-
-  precargarSolicitud("2", 80, "pelota", "pelota.jpeg", 1, 0); //1
-  cambiarEstadoSolicitud(solicitud[1])
-  cambiarEstadoSolicitud(solicitud[1])
-  precargarSolicitud("2", 35, "sabanas", "sabanas.jpg", 0, 0); //2
-  cambiarEstadoSolicitud(solicitud[2])
-  cambiarEstadoSolicitud(solicitud[2])
-
-  precargarSolicitud("3", 12, "reloj", "reloj.gif", 0, 2); //3
-  cambiarEstadoSolicitud(solicitud[3])
-  
-  precargarSolicitud("2", 70, "computadora", "computadora.png", 0, 0); //4
-  cambiarEstadoSolicitud(solicitud[4])
-  precargarSolicitud("3", 30, "silla", "silla.jpeg", 2, 2); //5
-  cambiarEstadoSolicitud(solicitud[5])
-
-
-  precargarSolicitud("3", 12, "reloj", "reloj.gif", 0, null); //6
-  precargarSolicitud("2", 15, "monitor", "computadora.png", 0, null); //7
-  precargarSolicitud("1", 39, "silla", "silla.jpeg", 2, null); //8
-  
-}
-
-// FUNCIONES REGISTRAR
-
-function registrarPersona(
-  pCedula,
-  pNombre,
-  pApellido,
-  pNombreUsuario,
-  pContrasenia
-) {
-  let nuevaPersona = new Persona(
-    pCedula,
-    pNombre,
-    pApellido,
-    pNombreUsuario,
-    pContrasenia
-  );
-  persona.push(nuevaPersona);
-}
-function registrarVehiculo(pVehiculo) {
-  let nuevoVehiculo = new Vehiculo(pVehiculo, IdVehiculo);
-  vehiculo.push(nuevoVehiculo);
-  IdVehiculo += 1;
-}
-function registrarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, usuarioLogeadoArray, null,                    idSolicitud);
-  solicitud.push(nuevaSolicitud);
-  idSolicitud++;
-}
-function precargarSolicitud(pVehiculo, pDistancia, pDescripcion, pFoto, pPersona, pEmpresa) {
-  let nuevaSolicitud = new Solicitud (pVehiculo, pDistancia,pDescripcion,pFoto, persona[pPersona],empresa[pEmpresa],idSolicitud);
-  solicitud.push(nuevaSolicitud);
-  idSolicitud++;
-
-}
-
-function registrarAdmin() {
-  let nuevoAdmin = new Admin("Admin", "Admin01");
-  administrador.push(nuevoAdmin);
-}
-
-function registrarEmpresa(
-  pRut,
-  pRazonSocial,
-  pNombreFantasia,
-  pNombreUsuario,
-  pContrasenia,
-  pVehiculo
-) {
-  let nuevaEmpresa = new Empresa(
-    pRut,
-    pRazonSocial,
-    pNombreFantasia,
-    pNombreUsuario,
-    pContrasenia,
-    pVehiculo
-  );
-  empresa.push(nuevaEmpresa);
-}
-function formularioPersona() {
-  document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
-
-  let mensaje = "";
-  let cedula = parseInt(document.querySelector("#txtCedula").value);
-  let nombre = document.querySelector("#txtNombre").value.trim();
-  let apellido = document.querySelector("#txtApellido").value.trim();
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioPRegistro").value.trim();
-  let contrasenia = document.querySelector("#txtContraseñaP").value;
-  let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
-
-  mensaje += validarCi(cedula);
-  mensaje += ValidarNombreApellido(nombre, apellido);
-  mensaje += validarNombreUsuario(nombreUsuario);
-  mensaje += Validarcontrasenia(contrasenia, contrasenia2);
-
-  document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
-
-  if (mensaje == "<hr><hr><hr><hr>") {
-    registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
-    document.querySelector("#divRegistroUsuarioMensajes").innerHTML =
-      "El usuario se ingresó correctamente";
-  }
+  document.querySelector("#banner").style.display = "none";
 }
 
 function mostrarPantallaAdmin() {
@@ -801,7 +796,6 @@ function selectVehiculosEnvios() {
         Seleccione un vehiculo...
       </option>
     `;
-
     for (let i = 0; i < vehiculo.length; i++) {
       let vehiculoActual = vehiculo[i];
       vehiculosParaMostrarEnHTML += `
@@ -819,7 +813,6 @@ function selectVehiculosEnvios() {
   document.querySelector("#selectSolicitudesEnvios").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
-
 function mostrarVehiculos() {
   let vehiculosParaMostrarEnHTML = "";
 
@@ -833,7 +826,6 @@ function mostrarVehiculos() {
             </thead>
             <tbody>
     `;
-
     for (let i = 0; i < vehiculo.length; i++) {
       let vehiculoActual = vehiculo[i];
 
@@ -864,7 +856,6 @@ function AgregarVehiculoAdmin() {
 
   }
   document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
-
 }
 
 
