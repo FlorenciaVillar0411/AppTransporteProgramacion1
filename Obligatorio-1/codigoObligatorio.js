@@ -150,20 +150,20 @@ function login() {
 //PRECARGAR DATOS Y REGISTRAR DATOS
 
 function precargarDatos() {
-  registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123");
-  registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo");
-  registrarPersona("12836273", "Esteban", "Machado", "Esteban", "Esteban");
-  registrarPersona("12836273", "Bruno", "Diaz", "Bruno", "123");
+  registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123Florencia");
+  registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo1");
+  registrarPersona("12836273", "Esteban", "Machado", "Esteban", "Esteban1");
+  registrarPersona("12836273", "Bruno", "Diaz", "Bruno", "123Bruno");
 
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camión");
   
-  registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen", "2"); //0
-  registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan", "1");//1
-  registrarEmpresa("123456789015", "Mejores", "Los Mejores", "Mejorcitos", "Mejorcitos","3");//2
-  registrarEmpresa("123456789765", "Muchos Kilometros", "Kilometros Muchos", "MuchosKm", "MuchosKm", "2");
-  registrarEmpresa("123457659014", "Rapidos", "Rapiditos", "Rapiditos", "Rapiditos", "1");
+  registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen1", "2"); //0
+  registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan1", "1");//1
+  registrarEmpresa("123456789015", "Mejores", "Los Mejores", "Mejorcitos", "Mejorcitos1","3");//2
+  registrarEmpresa("123456789765", "Muchos Kilometros", "Kilometros Muchos", "MuchosKm", "MuchosKm1", "2");
+  registrarEmpresa("123457659014", "Rapidos", "Rapiditos", "Rapiditos", "Rapiditos1", "1");
 
   cambiarEstadoEmpresa(empresa[0]); //Habilitamos las empresas
   cambiarEstadoEmpresa(empresa[1]);
