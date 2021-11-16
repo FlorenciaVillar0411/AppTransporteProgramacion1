@@ -2,6 +2,7 @@
 
 function Validarcontrasenia(contra1, contra2) {
   let mensaje = "<hr>";
+  let tieneNum = false;
   if (contra1 != contra2) {
     mensaje += "<br>Las contraseñas no son iguales.";
   } else {
@@ -16,8 +17,26 @@ function Validarcontrasenia(contra1, contra2) {
     if (contra1.toLowerCase() == contra1 || contra1.toUpperCase() == contra1) {
       mensaje += "<br>La contraseña debe tener mayúsculas y minúsculas.";
     }
+    if (!palabraTieneNum(contra1)){
+      mensaje += "<br>La contraseña debe tener un número.";
+
+    }
+    
   }
   return mensaje;
+}
+
+function palabraTieneNum(palabra){
+  let numEncontrado = false;
+  let i = 0;
+  while (!numEncontrado && i < palabra.length) {
+    if (!isNaN(palabra[i])) {
+      numEncontrado = true;
+    }
+    i++;
+  }
+  return numEncontrado;
+
 }
 
 function validarCi(cedula) {
