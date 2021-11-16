@@ -12,6 +12,7 @@
          <title>Transportes FES</title>
 	</head>
 	<body>
+<!--Creamos el menu en la navbar-->
         <header class="logo-nav-container">
             <div class="logo"></div>
             <div class="nav-menu" id = "listaLoginYRegistroBotones">
@@ -23,11 +24,12 @@
             </div>
             </div>
         </header>
+<!--Creamos el boton de cerrar sesión para las cuentas -->
         <div id="btnCerrarSesion">
             <input type="button" value="CERRAR SESIÓN" id="btnCerrarSesion">
         </div>
         <main role="main" class = "intro">
-            <section id ="LemaYFoto"class="intro">
+            <section id ="LemaYFoto" class="intro">
                 <article>
                     <div class="flex-center">
                         <div class="banner y-flex-center flex-center" id="banner">  
@@ -42,29 +44,38 @@
 
         <div id="RegistroYLogin" class="cuerpo">
             <br><br><br>
-            <input class="boton" type="button" value="VOLVER A INICIO" href="#login" id="btnVolverAInicio">
+<!--Boton de volver a inicio, vuelve a la pagina principal-->
+            <input class="boton" type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
             <br><br><br>
         </div>
 
-  
+
+<!--Formulario para reistro de usuario PERSONA-->
         <div id="formRegistroPersona" class="cuerpo"> 
             <br><br><br>
             <h3>REGISTRARSE - PERFIL PERSONA</h3>
             <br><br>
-            <P>Llene el formulario para registrarse</P><br>
-            <label>Ingrese C.I. sin espacios, puntos ni guiones:</label><br>
+            <P>Llene el formulario para registrarse</P>
+            <br><br>
+            <label>Ingrese C.I. sin espacios, puntos ni guiones:</label> <br><br>
             <input type="text" id="txtCedula" placeholder="Ej: 12345678"><br><br>
+
             <label>Ingrese Nombre:</label><br>
             <input type="text" id="txtNombre" placeholder="Nombre"><br><br>
+
             <label>Ingrese Apellido:</label><br>
             <input type="text" id="txtApellido" placeholder="Apellido"><br><br>
+
             <label>Ingrese Nombre de Usuario:</label><br>
             <input type="text" id="txtNombreUsuarioPRegistro" placeholder="NombreDeUsuario"><br><br>
+
             <label>Ingrese Contraseña:</label><br>
             <input type="password" id="txtContraseñaP" placeholder="Contraseña"><br><br>
+
             <label>Ingrese Contraseña nuevamente:</label><br>
             <input type="password" id="txtContraseñaP2" placeholder="Contraseña"><br><br><br>
             <div id="divRegistroUsuarioMensajes"></div>
+
             <br><br><br>
 
             <input type="button" value="Registrarse" id="btnRegistrarseP">
@@ -73,24 +84,31 @@
             <br><br><br>
         </div>
 
-
+<!--Formulario para reistro de EMPRESA-->
         <div id="formRegistroEmpresa" class="cuerpo"> 
             <br><hr><br>
             <h3>REGISTRARSE - PERFIL EMPRESA</h3>
             <br><br><br>
-            <P>Llene el formulario para registrarse:</P><br>
+            <P>Llene el formulario para registrarse:</P>
+            <br><br>
             <label>Ingrese Número RUT</label><br>
             <input type="text" id="txtRut" placeholder="Ej: 123456789123"><br><br>
+
             <label>Ingrese Razón Social:</label><br>
             <input type="text" id="txtRazon" placeholder="Razón Social"><br><br>
+
             <label>Ingrese Nombre Fantasía:</label><br>
             <input type="text" id="txtFantasia" placeholder="Nombre Fantasía"><br><br>
+
             <label>Ingrese Nombre de Usuario:</label><br>
             <input type="text" id="txtNombreUsuarioE" placeholder="NombreDeUsuario"><br><br>
+
             <label>Ingrese Contraseña:</label><br>
             <input type="password" id="txtContraseñaE" placeholder="Contraseña"><br><br>
+
             <label>Ingrese Contraseña nuevamente:</label><br>
             <input type="password" id="txtContraseñaE2" placeholder="Contraseña"><br><br>
+
             <div id = "selectRegistroEmpresa"></div>
             <br><br><br>
             <div id="divRegistroEmpresaMensajes"></div>
@@ -101,50 +119,48 @@
             <br><br><br>
         </div>
 
-
+<!--Ingreso de EMPRESA a login-->
         <div id="divLogin" class="cuerpo"> <!--EMPRESA-->
             <br><hr><br>
-    
             <h3>INGRESAR USUARIO</h3>
             <br><br><br>
             <label>Ingrese Nombre de Usuario:</label><br>
             <input type="text" id="txtNombreUsuarioELogin" placeholder="Nombre De Usuario"><br><br>
+
             <label>Ingrese Contraseña:</label><br>
             <input type="password" id="txtContraseñaIngresoE" placeholder="Contraseña"><br><br>
+
             <div id = "mensajeLoginEmpresa"></div>
             <input type="button" value="INGRESAR" id="btnIngresarE">
             <br><br><br>
             <br><br><br>
         </div>
 
-
+<!--Botones de acceso a funcionalidades de un ADMIN-->
         <div id="pantallaAdmin" class="cuerpo"> 
             <br><hr><br>
             <center>
                 <h3>PERFIL ADMINISTRADOR</h3>
                 <br><br><br>
-
-                <input type="button" value="ADMINISTRAR EMPRESAS" id="btnAdminempresas">
-                <input type="button" value="AÑADIR TIPOS DE TRANSPORTE" id="btnAniadirTransporte">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasAdmin">
+                <input type="button" value="Administrar Empresas" id="btnAdminempresas">
+                <input type="button" value="Añadir tipos de Transporte" id="btnAniadirTransporte">
+                <input type="button" value="Ver Estadisticas" id="btnVerEstadísticasAdmin">
             </center>
         </div>
 
-
-        <div id = "adminlistadoempresas" class="cuerpo"> 
-            
+        <div id = "adminlistadoempresas" class="cuerpo">
             <br><br><br>
+<!--            Se enumeran las empresas y hay un buscador para poder buscarlas por razon social o nombre fantasia-->
             <h3>LISTADO DE EMPRESAS</h3>
             <br><br><br>
             <input type="text" placeholder="BUSCAR EMPRESA..." id ="txtBuscarEmpresa">
             <br>
             <div id ="mensajeBusqueda"></div>
             <br>
-            <input type="button" value="BUSCAR" id ="btnBuscarEmpresa">  
-
+            <input type="button" value="BUSCAR" id ="btnBuscarEmpresa">
             <input type="button" value="MOSTRAR TABLA COMPLETA" id ="btNOBuscarEmpresa">
-
             <br><br>
+            <!--Tabla que se visualiza en el usuario ADMIN, en la adminitración de empresas-->
             <table border="1">
                 <thead>
 				<tr> 
@@ -165,7 +181,7 @@
         <div id ="adminlistadotransporte"class="cuerpo"> 
         
             <br><br><br>
-            <h3>LISTADO DE TIPOS DE TRANSPORTE</h3>
+            <h3>Listado de tipos de Transporte</h3>
             <br><br><br>
             <div id = "tablaVehiculosAdmin"></div>
             <br><br><br>
@@ -182,7 +198,6 @@
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <br><br>
-            
             <table border="1">
                 <thead>
                     <tr> 
@@ -382,10 +397,6 @@
                      <div class="rowdani">
                          <img src="fotos/instagram.png">
                          <label>Siguenos en Instagram</label>
-                     </div>
-                     <div class="rowdani">
-                         <img src="fotos/pinterest.png">
-                         <label>Siguenos en Pinterest</label>
                      </div>
                   </div>
                   <div class="colum3">

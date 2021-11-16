@@ -13,10 +13,9 @@ let IdVehiculo = 1;
 let busquedaActiva = false;
 let idSolicitud = 1;
 
-inicializar();
+inicializar(); //Se llama a la iniciación de las funciones basicas
 
 // funciones básicas de uso de la aplicación
-
 function inicializar() {
   precargarDatos();
   botones();
@@ -714,11 +713,9 @@ function buscarEmpresa() {
     empresaActual.buscado = false;
 
 
-    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) { //Compara razón co lo buscado y si coincide cambia el estado de búsqueda de la empresa
+    if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) { //Compara razón con lo buscado y si coincide cambia el estado de búsqueda de la empresa
       empresaActual.buscado = true;
       busquedaTuvoResultados = true;
-
-
 
     } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActualRecortada) { //si no coincide con razón busca con fantasía.
       empresaActual.buscado = true;
