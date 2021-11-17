@@ -183,8 +183,9 @@ function encontrarUsuarioEmpresa(usuario) {//devuelve todos los datos de la empr
 
 
 
-function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
+function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) { //Verifica que el admin tenga su contraseña adecuada
   let existe = false;
+  //La 
   let i = 0;
   let nombreUsuarioEncontrado = false;
   while (!nombreUsuarioEncontrado && i < administrador.length) {
