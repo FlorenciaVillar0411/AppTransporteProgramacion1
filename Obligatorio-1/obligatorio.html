@@ -1,18 +1,22 @@
 <!DOCTYPE HTML>
+<!-- Permite al navegador entender qué versión de HTML estamos utilizando -->
 
 <html>
 	<head>
+        <!-- Indica la codificación de caracteres utilizada -->
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
          <!-- Font --> <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap
         " rel="stylesheet">
-         <!-- Font Awesome -->
+         <!-- Font Awesome para los iconos que se usaron  -->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<!-- Link al archivo de estilos  de css usado -->
          <link rel="stylesheet" href="style.css" />
+<!-- Titulo de la pagina web -->
          <title>Transportes FES</title>
 	</head>
 	<body>
-<!--Creamos el menu en la navbar-->
+<!--Creamos el menu de la navbar-->
         <header class="logo-nav-container">
             <div class="logo"></div>
             <div class="nav-menu" id = "listaLoginYRegistroBotones">
@@ -28,6 +32,7 @@
         <div id="btnCerrarSesion">
             <input type="button" value="CERRAR SESIÓN" id="btnCerrarSesion">
         </div>
+<!-- Creamos la seccion central donde aparecerá el encabezado, lema e imagen de la pagina -->
         <main role="main" class = "intro">
             <section id ="LemaYFoto" class="intro">
                 <article>
@@ -42,15 +47,15 @@
             <br><br>
         </main>
 
+<!--Boton de volver a inicio, vuelve a la pagina principal-->
         <div id="RegistroYLogin" class="cuerpo">
             <br><br><br>
-<!--Boton de volver a inicio, vuelve a la pagina principal-->
             <input class="boton" type="button" value="VOLVER A INICIO" id="btnVolverAInicio">
             <br><br><br>
         </div>
 
 
-<!--Formulario para reistro de usuario PERSONA-->
+<!--Formulario para registro de usuario PERSONA, se le pide que ingrese datos personales-->
         <div id="formRegistroPersona" class="cuerpo"> 
             <br><br><br>
             <h3>REGISTRARSE - PERFIL PERSONA</h3>
@@ -75,7 +80,6 @@
             <label>Ingrese Contraseña nuevamente:</label><br>
             <input type="password" id="txtContraseñaP2" placeholder="Contraseña"><br><br><br>
             <div id="divRegistroUsuarioMensajes"></div>
-
             <br><br><br>
 
             <input type="button" value="Registrarse" id="btnRegistrarseP">
@@ -111,6 +115,7 @@
 
             <div id = "selectRegistroEmpresa"></div>
             <br><br><br>
+
             <div id="divRegistroEmpresaMensajes"></div>
             <br><br><br>
             <input type="button" value="Registrarse" id="btnRegistrarseE">
@@ -138,6 +143,7 @@
 
 <!--Botones de acceso a funcionalidades de un ADMIN-->
         <div id="pantallaAdmin" class="cuerpo"> 
+
             <br><hr><br>
             <center>
                 <h3>PERFIL ADMINISTRADOR</h3>
@@ -149,6 +155,7 @@
         </div>
 
         <div id = "adminlistadoempresas" class="cuerpo">
+
             <br><br><br>
 <!--Se enumeran las empresas y hay un buscador para poder buscarlas por razon social o nombre fantasia-->
             <h3>LISTADO DE EMPRESAS</h3>
@@ -177,9 +184,9 @@
             </table>
         </div>
 
-        <!-- Creación de nuevos vehículos en el perfil ADMIN-->
+<!-- Creación de nuevos vehículos en el perfil ADMIN-->
         <div id ="adminlistadotransporte"class="cuerpo"> 
-        
+
             <br><br><br>
             <h3>Listado de tipos de Transporte</h3>
             <br><br><br>
@@ -191,9 +198,8 @@
             <br><br><br>
         </div>
 
-        <!-- Información estadística para ADMIN: Total de kilómetros recorridos por cada Empresa-->
+<!-- Información estadística para ADMIN: Total de kilómetros recorridos por cada Empresa-->
         <div id = "adminInformacionEstadistica"class="cuerpo"> 
-      
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <br><br>
@@ -202,18 +208,16 @@
                     <tr> 
                         <th>EMPRESAS</th>
                         <th>KM</th>
-    
                     </tr>
                 </thead>
                 <tbody id="tablaAdminInformacionEstadistica"></tbody>
-				
-				
             </table>
             <br><br><br>
         </div>
 
 <!--Botones de acceso a funcionalidades de usuario PERSONA-->
         <div id="pantallaPersona" class="cuerpo"> 
+
             <br><hr><br>
             <center>
                 <h3>PERFIL PERSONA</h3>
@@ -225,8 +229,9 @@
             </center>
         </div>
 
-    <!--Formulario para crear un envío-->
+<!--Formulario para crear un envío-->
         <div id ="PersonaSolicitarEnvios" class="cuerpo"> 
+
            <br><br>
             <P>Llene el formulario para realizar un envío:</P><br>
             <br><br><br>
@@ -246,9 +251,9 @@
             <br><br><br>
         </div>
 
-        <!-- Listado con pedidos ingresados-->
+<!-- Listado con pedidos ingresados-->
         <div id ="PersonaListadoSolicitudes" class="cuerpo"> 
-            
+
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES</h3>
             <br><br>
@@ -262,17 +267,15 @@
                         <th>ESTADO</th>
                         <th>EMPRESA</th>
                     </tr>
-
                 </thead>
                 <tbody  id = "tablaSolicitudesPersona"> </tbody>
-
             </table>
             <br><br><br>
         </div>
 
-        <!--Información estadística de envíos / perfil PERSONA-->
+<!--Información estadística de envíos / perfil PERSONA-->
         <div id ="PersonaInformacionEstadistica" class="cuerpo"> 
-            
+
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <br><br>
@@ -280,22 +283,22 @@
             <br><br><br>
         </div>
 
-        <!--Botones de acceso a funcionalidades de usuario EMPRESA-->
+<!--Botones de acceso a funcionalidades de usuario EMPRESA-->
         <div id="pantallaEmpresa" class="cuerpo"> 
+
             <br><hr><br>
             <center>
                 <h3>PERFIL EMPRESA</h3>
                 <br><br><br>
-
-                <input type="button" value="SOLICITUDES PENDIENTES" id="btnSolicitudesE">
-                <input type="button" value="SOLICITUDES TOMADAS" id="btnListadoPedidosE">
-                <input type="button" value="VER ESTADÍSTICAS" id="btnVerEstadísticasEmpresa">
+                <input type="button" value="Solicitudes Pendientes" id="btnSolicitudesE">
+                <input type="button" value="Solicitudes Tomadas" id="btnListadoPedidosE">
+                <input type="button" value="Ver Estadisticas" id="btnVerEstadísticasEmpresa">
             </center>
         </div>
 
-        <!--Listado con solicitudes pendientes en perfil EMPRESA-->
+<!--Listado con solicitudes pendientes en perfil EMPRESA-->
         <div id ="EmpresaslistadoSolicitudes" class="cuerpo"> 
-            
+
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES PENDIENTES</h3>
             <br><br>
@@ -311,7 +314,6 @@
                         <th>USUARIO</th>
                         <th>ESTADO</th>
                         <th>ACCIONES</th>
-
                     </tr>
                 </thead>
                 <tbody  id = "tablaSolicitudesPendientesEmpresa"> </tbody>	
@@ -319,9 +321,9 @@
             <br><br><br>
         </div>
 
-        <!--Listado con solicitudes tomadas en perfil EMPRESA-->
+<!--Listado con solicitudes tomadas en perfil EMPRESA-->
         <div id ="EmpresaslistadoSolicitudesTomadas" class="cuerpo">
-            
+
             <br><br><br>
             <h3>LISTADO DE SOLICITUDES TOMADAS</h3>
             <br><br>
@@ -340,24 +342,23 @@
                     </tr>
                 </thead>
                 <br><br><br>
-                <tbody  id = "tablaSolicitudesTomadasEmpresa"> </tbody>
-                    
+                <tbody  id = "tablaSolicitudesTomadasEmpresa"> </tbody>   
             </table>
             <br>
             <br><br><br>
             <br><br><br> 
         </div>
 
-        <!--Información estadística perfil EMPRESA: persona con mas envíos y combo desplegable con envíos en tránsito / finalizado -->
-      <div   id ="EmpresasInformacionEstadistica" class="cuerpo"> 
-           
+<!--Información estadística perfil EMPRESA: persona con mas envíos y combo desplegable con envíos en tránsito / finalizado -->
+         <div   id ="EmpresasInformacionEstadistica" class="cuerpo"> 
+
             <br><br><br>
             <h3>INFORMACIÓN ESTADÍSTICA</h3>
             <br><br>
             <br><br><br>
             <div id ="divInformacionEstadisticaEmpresa"></div>
-            
             <br><br>
+
             <select id = "selectInfoEstadisticaEmpresa">
                 <option value="0">SELECCIONE OPCIÓN...</option>
                 <option value="1">EN TRÁNSITO</option>
@@ -373,7 +374,7 @@
     <br><br><br>
     <hr>
 
-
+<!-- Footer con links para redes sociales de la empresa, telefono, ubicación -->
     <footer id="contactos">       
         <div class="container-footer-all">         
              <div class="container-body"> 
@@ -417,16 +418,12 @@
          </div>    
      </footer>
 
-
+<!-- Links a los archivos de js linkeados al HTML -->
         <script type="text/javascript" src="claseAdmin.js"></script>
         <script type="text/javascript" src="claseEmpresa.js"></script>
         <script type="text/javascript" src="clasePersona.js"></script>
         <script type="text/javascript" src="Validaciones.js"></script>
         <script type="text/javascript" src="codigoObligatorio.js"></script>
-
-        
-
-
     </body>
 </html>
 

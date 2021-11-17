@@ -1,24 +1,23 @@
 // VALIDACIONES REGISTRO Y LOGIN
 
-function Validarcontrasenia(contra1, contra2) {
+function Validarcontrasenia(contra1, contra2) { //función para validar contraseña
   let mensaje = "<hr>";
-  let tieneNum = false;
-  if (contra1 != contra2) {
+  if (contra1 != contra2) { //Se verifica que las 2 contraseñas ingresadas sean iguales.
     mensaje += "<br>Las contraseñas no son iguales.";
-  } else {
+  } else { //si son iguales valida lo demás
     if (contra1 == "") {
-      mensaje += "<br>La contraseña está vacía.";
+      mensaje += "<br>La contraseña está vacía."; //La contraseña no puede estar vacía.
     } else if (contra1.trim() == "") {
-      mensaje += "<br>La contraseña no puede tener únicamente espacios.";
+      mensaje += "<br>La contraseña no puede tener únicamente espacios."; //No puede tener solo espacios
     }
     if (contra1.length < 6) {
-      mensaje += "<br>La contraseña debe tener un mínimo de 6 caracteres.";
+      mensaje += "<br>La contraseña debe tener un mínimo de 6 caracteres."; //Debe tener 6 o más caracteteres
     }
-    if (contra1.toLowerCase() == contra1 || contra1.toUpperCase() == contra1) {
+    if (contra1.toLowerCase() == contra1 || contra1.toUpperCase() == contra1) { //Debe haber minúsculas y mayusculas
       mensaje += "<br>La contraseña debe tener mayúsculas y minúsculas.";
     }
-    if (!palabraTieneNum(contra1)){
-      mensaje += "<br>La contraseña debe tener un número.";
+    if (!palabraTieneNum(contra1)){ //Llama a la función.
+      mensaje += "<br>La contraseña debe tener un número."; //Debe tener por lo menos un número
 
     }
     
@@ -26,10 +25,10 @@ function Validarcontrasenia(contra1, contra2) {
   return mensaje;
 }
 
-function palabraTieneNum(palabra){
+function palabraTieneNum(palabra){ //Función que verifica si una palabra contiene un número
   let numEncontrado = false;
   let i = 0;
-  while (!numEncontrado && i < palabra.length) {
+  while (!numEncontrado && i < palabra.length) { // Se recorre hasta que encuentre un número
     if (!isNaN(palabra[i])) {
       numEncontrado = true;
     }
@@ -39,18 +38,18 @@ function palabraTieneNum(palabra){
 
 }
 
-function validarCi(cedula) {
+function validarCi(cedula) { //Validar cédula.
   let mensaje = "<hr>";
-  if (isNaN(cedula)) {
+  if (isNaN(cedula)) { //Deben ser todo números
     mensaje += "<br>La cedula deben ser dígitos numéricos";
   }
-  if (cedula.length == "") {
+  if (cedula.length == "") { //No puede ser vacío
     mensaje += "<br> El campo de la cedula no puede estar vacío";
   }
   return mensaje;
 }
 
-function ValidarNombreApellido(nombre, apellido) {
+function ValidarNombreApellido(nombre, apellido) { //Verificar que el nombre y apellido no sean vacíos
   let mensaje = "<hr>";
   if (nombre == "") {
     mensaje += "<br>El nombre está vacío";
@@ -61,39 +60,39 @@ function ValidarNombreApellido(nombre, apellido) {
   return mensaje;
 }
 
-function validarNombreUsuario(usuario) {
+function validarNombreUsuario(usuario) { //Validar nombre usuario persona
   let mensaje = "<hr>";
-  if (encontrarUsuario(usuario)) {
+  if (encontrarUsuarioPersona(usuario)) { //verificar que no exista
     mensaje += "<br>El nombre de usuario ya existe";
   }
-  if (usuario == "") {
+  if (usuario == "") { //verificar que no esté vacío
     mensaje += "<br>El usuario está vacío";
   }
   return mensaje;
 }
 
-function validarRut(Rut) {
+function validarRut(Rut) { //Validar nro de Rut
   let mensaje = "<hr>";
-  if (isNaN(Rut)) {
+  if (isNaN(Rut)) { //Que sean números
     mensaje += "<br>La RUT deben ser dígitos numéricos";
   }
-  if (Rut == "") {
+  if (Rut == "") { //Que no esté vacío
     mensaje += "<br> El campo del RUT está vacío";
   }
   return mensaje;
 }
-function validarNombreUsuarioEmpresa(usuario) {
+function validarNombreUsuarioEmpresa(usuario) { //Validar usuario empresa
   let mensaje = "<hr>";
-  if (encontrarUsuarioEmpresa(usuario)) {
+  if (encontrarUsuarioEmpresa(usuario)) { //Verificar que el usuario no exista
     mensaje += "<br>El nombre de usuario ya existe";
   }
-  if (usuario == "") {
+  if (usuario == "") { //que no esté vacío
     mensaje += "<br>El usuario está vacío";
   }
 
   return mensaje;
 }
-function ValidarRazonFantasia(nombre, apellido) {
+function ValidarRazonFantasia(nombre, apellido) { // Valida que no estén vacíos
   let mensaje = "<hr>";
   if (nombre == "") {
     mensaje += "<br>La Razón Social está vacía";
@@ -104,42 +103,47 @@ function ValidarRazonFantasia(nombre, apellido) {
   return mensaje;
 }
 
-function validarSelect (tipoVehiculo){
+function validarSelect (tipoVehiculo){ //Valida que se selccione un vehículo en el select
   let mensaje = "";
-  if(tipoVehiculo == 0){
-    mensaje += "<br> Debe seleccionar un vehiculo"
+  if(tipoVehiculo == 0){ //El vehículo 0 no existe, el contador arranca de a 1
+    mensaje += "<br> Debe seleccionar un vehiculo" 
   }
   return mensaje;
 }
 
 
-function validarNombreUsuarioLogin(usuario) {
-  let mensaje = "<hr>";
-  if (!encontrarUsuario(usuario)) {
-    mensaje += "<br>El nombre de usuario no existe";
-  }
 
-  if ((usuario = "")) {
-    mensaje += "<br>El usuario está vacío";
-  }
-  return mensaje;
-}
-
-
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //UTILIDADES Y FUNCIONES ESPECÍFICAS
 ///////////////////////////////////////////////////////
 
 
-function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) {
+function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) { //Verifica que exista un usuario personay la contraseña ingresada sea la correspondiente a este
   let existe = false;
   let i = 0;
   let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < persona.length) {
+  while (!nombreUsuarioEncontrado && i < persona.length) { //Recorre mientras haya usuarios y no se encuentre el ingresado
     let usuarioGuardado = persona[i];
-    if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) {
+    if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) { //Si el usuario ingresado es el recorrido actual se marca como encontrado y se valida la comtraseña
+      nombreUsuarioEncontrado = true;
+      let contraseniaGuardada = usuarioGuardado.contrasenia;
+      if (contrasenia === contraseniaGuardada) { //Si la contraseña es la contraseñna del usuario de esa persona entonces se devuelve que existe y corresponde
+        existe = true;
+      }
+    }
+    i++;
+  }
+  return existe;
+}
+
+function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) { //Verifica que exista un usuario empresa y la contraseña ingresada sea la correspondiente a este
+  let existe = false;
+  let i = 0;
+  let nombreUsuarioEncontrado = false;
+  while (!nombreUsuarioEncontrado && i < empresa.length) { //Recorre mientras haya usuarios y no se encuentre el ingresado
+    let usuarioGuardado = persona[i];
+    let usuarioGuardado = empresa[i];
+    if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) { ////Si el usuario ingresado es el recorrido actual se marca como encontrado y se valida la comtraseña
       nombreUsuarioEncontrado = true;
       let contraseniaGuardada = usuarioGuardado.contrasenia;
       if (contrasenia === contraseniaGuardada) {
@@ -151,31 +155,12 @@ function existeUsuarioPorUsuarioYPassword(usuario, contrasenia) {
   return existe;
 }
 
-function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) {
-  let existe = false;
+function encontrarUsuarioPersona(usuario) { //devuelve todos los datos de la persona por el nombre de usuario
   let i = 0;
   let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < empresa.length) {
-    let usuarioGuardado = empresa[i];
-    if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) {
-      nombreUsuarioEncontrado = true;
-      let contraseniaGuardada = usuarioGuardado.contrasenia;
-      if (contrasenia === contraseniaGuardada) {
-        existe = true;
-      }
-    }
-    i++;
-  }
-  return existe;
-}
-
-function encontrarUsuario(usuario) {
-  // let existe = false;
-  let i = 0;
-  let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < persona.length) {
+  while (!nombreUsuarioEncontrado && i < persona.length) { //Recorre personas
     let usuarioGuardado = persona[i];
-    if (usuario === usuarioGuardado.nombreUsuario) {
+    if (usuario === usuarioGuardado.nombreUsuario) { //Si el usuario es igual al de la persona recorrida actual se devuelven todos los datos de la persona en un array
       nombreUsuarioEncontrado = true;
     }
     i++;
@@ -183,12 +168,12 @@ function encontrarUsuario(usuario) {
   return nombreUsuarioEncontrado;
 }
 
-function encontrarUsuarioEmpresa(usuario) {
+function encontrarUsuarioEmpresa(usuario) {//devuelve todos los datos de la empresa por el nombre de usuario
   let i = 0;
   let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < empresa.length) {
+  while (!nombreUsuarioEncontrado && i < empresa.length) {  //Recorre empresas
     let usuarioGuardado = empresa[i];
-    if (usuario === usuarioGuardado.nombreUsuario) {
+    if (usuario === usuarioGuardado.nombreUsuario) {//Si el usuario es igual al de la empresa recorrida actual se devuelven todos los datos de la empresa en un array
       nombreUsuarioEncontrado = true;
     }
     i++;
@@ -196,18 +181,7 @@ function encontrarUsuarioEmpresa(usuario) {
   return nombreUsuarioEncontrado;
 }
 
-function encontrarEmpresapPorUsuario(usuario) {
-  let empresaEncontrada = [];             //CAMBIAMOS NULL POR []
-  let i = 0;
-  while (!empresaEncontrada && i < empresa.length) {
-      let empresaActual = empresa[i];
-      if (usuario == empresaActual.id) {
-        empresaEncontrada = empresaActual;
-      }
-      i++;
-  }
-  return empresaEncontrada;
-}
+
 
 function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
   let existe = false;
@@ -228,7 +202,7 @@ function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) {
 }
 
 function existeVehiculo(palabra) {
-  // let existe = false;
+
   let i = 0;
   let palabraEncontrado = false;
   while (!palabraEncontrado && i < vehiculo.length) {
@@ -241,7 +215,6 @@ function existeVehiculo(palabra) {
   return palabraEncontrado;
 }
 
-///Preguntar a Bruno porque no funca esto
 function cambiarEstadoEmpresa(empresa) {
   
   let empresaEstaHabilitado = empresa.habilitado;
