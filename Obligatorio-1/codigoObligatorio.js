@@ -509,6 +509,20 @@ function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística se
 }
 
 
+function mostrarSolicitudesSegunEstado(num){ 
+  let contadorSolicitudes = 0;
+
+  for (let i = 0; i < solicitud.length; i++){
+    let solicitudActual = solicitud[i];
+    if (solicitudActual.empresa == usuarioLogeadoArray ){
+      if (solicitudActual.estado == num){
+        contadorSolicitudes +=1;
+      }
+    }
+  }
+  return contadorSolicitudes;
+}
+
 //MOSTRAR PANTALLAS DE PERSONA
 
 //Formulario envío - perfil persona
@@ -537,6 +551,26 @@ function solicitarFormularioEnvio(){ // Toma la solicitud
     mensaje = "Todos los datos son obligatorios";
   }
   document.querySelector("#mensajeSolicitudesEnvios").innerHTML = mensaje;
+}
+
+function obtenerPosicionDeCaracter(texto, caracter) { //Busca el caracter dentro del texto y devuelve su posición 
+  let resultado = "";
+    for (let i =4; i < texto.length; i++){ //Recorre el texto
+        if(texto[i].toLowerCase() === caracter){ //Cuando encuentra el caracter, devuelve su posición (variable resultado = la posición)
+            resultado= i;
+        }  
+    }
+    return resultado;
+}
+
+function cortarStringDesdeIndice(texto, posicion) { //Contra un texto desde la posición que se le indica
+  let retorno = "";
+
+  for (let i = posicion; i < texto.length; i++) { //Recorre desde la posición el texto y devuelve las letras recorridas.
+      retorno += texto[i];
+  }
+
+  return retorno;
 }
 
 //Listado de solicitudes de la persona - perfil persona

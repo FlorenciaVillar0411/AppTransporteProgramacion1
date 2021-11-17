@@ -142,7 +142,6 @@ function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) { //Verif
   let nombreUsuarioEncontrado = false;
   while (!nombreUsuarioEncontrado && i < empresa.length) { //Recorre mientras haya usuarios y no se encuentre el ingresado
     let usuarioGuardado = persona[i];
-    let usuarioGuardado = empresa[i];
     if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) { ////Si el usuario ingresado es el recorrido actual se marca como encontrado y se valida la comtraseña
       nombreUsuarioEncontrado = true;
       let contraseniaGuardada = usuarioGuardado.contrasenia;
@@ -185,12 +184,12 @@ function encontrarUsuarioEmpresa(usuario) {//devuelve todos los datos de la empr
 
 function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) { //Verifica que el admin tenga su contraseña adecuada
   let existe = false;
-  //La 
+  //La función sirve si hay más de un usuario administrador, que en este caso no hay.
   let i = 0;
   let nombreUsuarioEncontrado = false;
-  while (!nombreUsuarioEncontrado && i < administrador.length) {
+  while (!nombreUsuarioEncontrado && i < administrador.length) { //recorre admin
     let usuarioGuardado = administrador[i];
-    if (usuario === usuarioGuardado.nombre){
+    if (usuario === usuarioGuardado.nombre){ //Si usuario es el de admin corrobora que la contraseña sea la misma
       nombreUsuarioEncontrado = true;
       let contraseniaGuardada = usuarioGuardado.contrasenia;
       if (contrasenia === contraseniaGuardada) {
@@ -202,13 +201,13 @@ function existeUsuarioPorUsuarioYPasswordAdmin(usuario, contrasenia) { //Verific
   return existe;
 }
 
-function existeVehiculo(palabra) {
-
+function existeVehiculo(palabra) { //Verifica si el texto ingresado es uno de losvehiculos del array vehiculo.
+  
   let i = 0;
   let palabraEncontrado = false;
-  while (!palabraEncontrado && i < vehiculo.length) {
+  while (!palabraEncontrado && i < vehiculo.length) { //Recorre vehiculos
     let vehiculoActual = vehiculo[i];
-    if (palabra == vehiculoActual.vehiculo) {
+    if (palabra == vehiculoActual.vehiculo) { //Si lo encuentra devuelve que ya existe = true
       palabraEncontrado = true;
     }
     i++;
@@ -216,23 +215,24 @@ function existeVehiculo(palabra) {
   return palabraEncontrado;
 }
 
-function cambiarEstadoEmpresa(empresa) {
+function cambiarEstadoEmpresa(empresa) { //La función le cambia el estado a una empresa. 
   
   let empresaEstaHabilitado = empresa.habilitado;
   
-  if (empresaEstaHabilitado) {
+  if (empresaEstaHabilitado) { //Si la empresa está deshabilitada, la habilita
     empresa.habilitado = false;
   } else {
-    empresa.habilitado = true;
+    empresa.habilitado = true; //Si la empresa está habilitada, la deshabilita
   }
   
 }
-function encontrarEmpresaPorUsuario(nombreUsuario) {
+
+function encontrarEmpresaPorUsuario(nombreUsuario) { //Busca una empresa por el usuario y devuelve los datos de esta
   let empresaEncontrada = null;             
   let i = 0;
-  while (!empresaEncontrada && i < empresa.length) {
+  while (!empresaEncontrada && i < empresa.length) { //Recorre empresas
     let empresaActual = empresa[i];
-    if (nombreUsuario == empresaActual.nombreUsuario) {
+    if (nombreUsuario == empresaActual.nombreUsuario) { //Si lo encuentra devuelve el array de la empresa encontrada
       empresaEncontrada = empresaActual;
     }
     i++;
@@ -240,13 +240,12 @@ function encontrarEmpresaPorUsuario(nombreUsuario) {
   return empresaEncontrada;
 }
 
-
-function encontrarPersonaPorUsuario(usuario) {
+function encontrarPersonaPorUsuario(usuario) { //Busca una persona por el usuario y devuelve los datos de esta
   let personaEncontrada = null;
   let i = 0;
-  while (!personaEncontrada && i < persona.length) {
+  while (!personaEncontrada && i < persona.length) { //Recorre personas
       let personaActual = persona[i];
-      if (usuario == personaActual.nombreUsuario) {
+      if (usuario == personaActual.nombreUsuario) { //Si lo encuentra devuelve el array de la persona encontrada
         personaEncontrada = personaActual;
       }
       i++;
@@ -254,12 +253,12 @@ function encontrarPersonaPorUsuario(usuario) {
   return personaEncontrada;
 }
 
-function encontrarSolicitudPorId(id) {
+function encontrarSolicitudPorId(id) { //Busca una solicitud por el ID
   let solicitudEncontrada = null;
   let i = 0;
-  while (!solicitudEncontrada && i < solicitud.length) {
+  while (!solicitudEncontrada && i < solicitud.length) { //Recorre solicitudes
       let solicitudActual = solicitud[i];
-      if (id == solicitudActual.id) {
+      if (id == solicitudActual.id) { //Si la encuentra devueleve los datos de la solicitud
         solicitudEncontrada = solicitudActual;
       }
       i++;
@@ -267,9 +266,9 @@ function encontrarSolicitudPorId(id) {
   return solicitudEncontrada;
 }
 
-function cambiarEstadoSolicitud(solicitud) {
+function cambiarEstadoSolicitud(solicitud) { //Cambia estado solicitud
 
-  if (solicitud.estado == "1") {
+  if (solicitud.estado == "1") { //Si la solicitud está en pendiente (1 )se cambia a "en tránsito" (2), y "en tránsito" cambia a "finalizada" (3)
     solicitud.estado = "2";
   } else{
     solicitud.estado = "3";
@@ -278,36 +277,6 @@ function cambiarEstadoSolicitud(solicitud) {
 }
 
 
-function mostrarSolicitudesSegunEstado(num){
-  let contadorSolicitudes = 0;
 
-  for (let i = 0; i < solicitud.length; i++){
-    let solicitudActual = solicitud[i];
-    if (solicitudActual.empresa == usuarioLogeadoArray ){
-      if (solicitudActual.estado == num){
-        contadorSolicitudes +=1;
-      }
-    }
-  }
-  return contadorSolicitudes;
-}
 
-function obtenerPosicionDeCaracter(texto, caracter) {
-  let resultado = "";
-    for (let i =4; i < texto.length; i++){
-        if(texto[i].toLowerCase() === caracter){
-            resultado= i;
-        }  
-    }
-    return resultado;
-}
 
-function cortarStringDesdeIndice(texto, indice) {
-  let retorno = "";
-
-  for (let i = indice; i < texto.length; i++) {
-      retorno += texto[i];
-  }
-
-  return retorno;
-}
