@@ -19,16 +19,16 @@ inicializar(); //Se llama a la iniciación de las funciones basicas
 function inicializar() {
   precargarDatos();
   botones();
-  selectVehiculos();
-  selectVehiculosEnvios();
+  selectVehiculos("selectRegistroEmpresa");
+  selectVehiculos("selectSolicitudesEnvios");
   registrarAdmin();
   mostrarVehiculos();
   ocultarPantallas();
-  document.querySelector("#txtNombreUsuarioELogin").value = "Admin";
-  document.querySelector("#txtContraseñaIngresoE").value = "Admin01";
+  document.querySelector("#txtNombreUsuarioELogin").value = "";
+  document.querySelector("#txtContraseñaIngresoE").value = "";
 }
 
-function ocultarPantallas() {
+function ocultarPantallas() { //Oculta pantallas
   document.querySelector("#RegistroYLogin").style.display = "none";
   document.querySelector("#formRegistroPersona").style.display = "none";
   document.querySelector("#formRegistroEmpresa").style.display = "none";
@@ -59,7 +59,7 @@ function ocultarPantallas() {
   }
 }
 
-function botones() {
+function botones() { //Llama a funciones al presionar botones
   // REGISTRARSE
   document.querySelector("#btnRegistrarseP").addEventListener("click", formularioPersona);
   document.querySelector("#btnRegistrarseE").addEventListener("click", formularioEmpresa);
@@ -104,43 +104,44 @@ function cerrarSesion() { //Cierra el usuario logueado dejando la pantalla de in
   
   document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
   ocultarPantallas();
+  document.querySelector("#txtNombreUsuarioELogin").value = ""; //
+  document.querySelector("#txtContraseñaIngresoE").value = "";
 
 }
 //LOGIN
 
-function mostrarLogin() {
+function mostrarLogin() { //Muestra la pantalla de login
   ocultarPantallas()
   document.querySelector("#RegistroYLogin").style.display = "block";
   document.querySelector("#divLogin").style.display = "block";
   document.querySelector("#listaLoginYRegistroBotones").style.display = "block";
   document.querySelector("#banner").style.display = "none";
+  document.querySelector("#mensajeLoginEmpresa").innerHTML = "";
+
 }
 
-function login() {
+function login() { //Para iniciar sesion
   let mensaje = "";
-  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim();
+  let nombreUsuario = document.querySelector("#txtNombreUsuarioELogin").value.trim(); //toma los datos del usuario
   let contrasenia = document.querySelector("#txtContraseñaIngresoE").value;
 
-  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    let empresaEncontrada = encontrarEmpresaPorUsuario(nombreUsuario);
-    if (!empresaEncontrada.habilitado){
+  if (existeUsuarioPorUsuarioYPasswordEmpresa(nombreUsuario, contrasenia)) { //Se fija si el usario es una empressa y si su contraseña es correcta
+    let empresaEncontrada = encontrarEmpresaPorUsuario(nombreUsuario); ///Busca la empresa y la guarda en una variable
+    if (!empresaEncontrada.habilitado){ //Valida  que la  empresa esté validada por el adminnistrador
       mensaje = "La empresa no está habilitada";
     } else{
-      usuarioLogeado = true;
-      usuarioLogeadoArray = empresaEncontrada
-      mostrarPantallaEmpresa();
+      usuarioLogeado = true; //Si los datos están bien y la empresa está habilitada. La variable glogal usuariologueado se pone en tru para detrminar que hay algiuien logueado
+      usuarioLogeadoArray = empresaEncontrada //El usuario logeado (variable global) se carga con los datos de la empresa logueada
+      mostrarPantallaEmpresa(); //Se muestra la interfaz de la empresa
     }
-  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
+  } else if (existeUsuarioPorUsuarioYPasswordAdmin(nombreUsuario, contrasenia)) { //Si no es empresa, determina si es administrador
     adminEstaLogeado = true;
-    mostrarPantallaAdmin();
+    mostrarPantallaAdmin();//Si los datos del admin son correctos, se cambia a true la variable global: adminestaLogeado y se muestra la interfaz del administrador
 
-  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) {
-    mensaje = "El usuario es válido";
-    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario);
+  } else if (existeUsuarioPorUsuarioYPassword(nombreUsuario, contrasenia)) { //Se fija si los datos son de una persona.
+    usuarioLogeadoArray = encontrarPersonaPorUsuario(nombreUsuario); //Busca persona ingresada para pasarle los datos a variable
     usuarioLogeado = true;
-    mostrarPantallaPersona();
+    mostrarPantallaPersona(); //Muestra las pantallas de la persona
   } else {
     mensaje = "Usuario o contraseña no válido";
   }
@@ -150,15 +151,17 @@ function login() {
 //PRECARGAR DATOS Y REGISTRAR DATOS
 
 function precargarDatos() {
+  //Precarga datos personas
   registrarPersona("51301233", "Florencia", "Villar", "flopi_villar", "123Florencia");
   registrarPersona("12345678", "Sabrina", "Taramasco", "Chachi", "HolaMundo1");
   registrarPersona("12836273", "Esteban", "Machado", "Esteban", "Esteban1");
   registrarPersona("12836273", "Bruno", "Diaz", "Bruno", "123Bruno");
-
+//registro de vehiculos
   registrarVehiculo("Moto");
   registrarVehiculo("Camioneta");
   registrarVehiculo("Camión");
   
+  //registro de empresas
   registrarEmpresa("123456789012", "Vehiculos", "Vehiculos Geniales", "VehiGen", "VehiGen1", "2"); //0
   registrarEmpresa("123456789014", "Fantasticos", "Vehiculos Fantasticos", "VehiFan", "VehiFan1", "1");//1
   registrarEmpresa("123456789015", "Mejores", "Los Mejores", "Mejorcitos", "Mejorcitos1","3");//2
@@ -169,6 +172,7 @@ function precargarDatos() {
   cambiarEstadoEmpresa(empresa[1]);
   cambiarEstadoEmpresa(empresa[2]);
 
+//precarga solicitudes
   precargarSolicitud("1", 12, "caja", "caja.png", 0, 1); //0
   cambiarEstadoSolicitud(solicitud[0]); //Cada vez que se llama la función la solicitud cambia al estado siguiente.
   cambiarEstadoSolicitud(solicitud[0]);
@@ -222,11 +226,12 @@ function registrarAdmin() { //Hay uno solo
   let nuevoAdmin = new Admin("Admin", "Admin01");
   administrador.push(nuevoAdmin);
 }
-
+//registra empresa con los datos que se le pasan 
 function registrarEmpresa(pRut,pRazonSocial,pNombreFantasia,pNombreUsuario,pContrasenia,pVehiculo) {
   let nuevaEmpresa = new Empresa(pRut,pRazonSocial,pNombreFantasia,pNombreUsuario,pContrasenia,pVehiculo);
   empresa.push(nuevaEmpresa);
 }
+
 // MOSTARR PANTALLAS REGISTRO 
 
 function mostrarRegistroEmpresa() {
@@ -258,18 +263,18 @@ function mostrarRegistroPresona() {
   document.querySelector("#txtContraseñaP2").value="";
 }
 
-function mostrarPantallaAdmin() {
+function mostrarPantallaAdmin() { //Muestra pantalla admin
   ocultarPantallas();
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaAdmin").style.display = "block";
 
 }
-function mostrarPantallaPersona() {
+function mostrarPantallaPersona() { //Muestra pantalla persona
   ocultarPantallas();
   document.querySelector("#pantallaPersona").style.display = "block";
   document.querySelector("#btnCerrarSesion").style.display = "block";
 }
-function mostrarPantallaEmpresa() {
+function mostrarPantallaEmpresa() { //muestra pantalla empresa
   ocultarPantallas();
   document.querySelector("#btnCerrarSesion").style.display = "block";
   document.querySelector("#pantallaEmpresa").style.display = "block";
@@ -282,14 +287,14 @@ function formularioPersona() {
   document.querySelector("#banner").style.display = "none";
 
   let mensaje = "";
-  let cedula = parseInt(document.querySelector("#txtCedula").value); //se validan datos.
+  let cedula = parseInt(document.querySelector("#txtCedula").value); //se toman datos del html.
   let nombre = document.querySelector("#txtNombre").value.trim();
   let apellido = document.querySelector("#txtApellido").value.trim();
   let nombreUsuario = document.querySelector("#txtNombreUsuarioPRegistro").value.trim();
   let contrasenia = document.querySelector("#txtContraseñaP").value;
   let contrasenia2 = document.querySelector("#txtContraseñaP2").value;
 
-  mensaje += validarCi(cedula);
+  mensaje += validarCi(cedula); //Se vsalidan los atos - funciones en validaciones
   mensaje += ValidarNombreApellido(nombre, apellido);
   mensaje += validarNombreUsuario(nombreUsuario);
   mensaje += Validarcontrasenia(contrasenia, contrasenia2);
@@ -297,7 +302,7 @@ function formularioPersona() {
   document.querySelector("#divRegistroUsuarioMensajes").innerHTML = mensaje;
 
   if (mensaje == "<hr><hr><hr><hr>") { //Los mensajes tienen lineas dentro.
-    registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia);
+    registrarPersona(cedula, nombre, apellido, nombreUsuario, contrasenia); //Si los datos son correctos se registra la persona
     document.querySelector("#divRegistroUsuarioMensajes").innerHTML =
       "El usuario se ingresó correctamente";
   }
@@ -305,7 +310,7 @@ function formularioPersona() {
 //Para regustrar un usuario EMPRESA
 function formularioEmpresa() {
   let mensaje = "";
-  let Rut = document.querySelector("#txtRut").value;
+  let Rut = document.querySelector("#txtRut").value; //SE buscan los datos en el html
   let RazonSocial = document.querySelector("#txtRazon").value.trim();
   let Fantasia = document.querySelector("#txtFantasia").value.trim();
   let nombreUsuario = document.querySelector("#txtNombreUsuarioE").value.trim();
@@ -321,7 +326,7 @@ function formularioEmpresa() {
 
   document.querySelector("#divRegistroEmpresaMensajes").innerHTML = mensaje;
 
-  if (mensaje == "<hr><hr><hr><hr>") {
+  if (mensaje == "<hr><hr><hr><hr>") { //si no hay errores en el formulario se registra la empresa
     registrarEmpresa(Rut, RazonSocial, Fantasia, nombreUsuario, contrasenia, tipoVehiculo); //Se registra la empresa si los datos son correctos
     document.querySelector("#divRegistroEmpresaMensajes").innerHTML =
       "El empresa se ingresó correctamente";
@@ -339,6 +344,8 @@ function pantallaEmpresaSolicitudes() {
   document.querySelector("#EmpresaslistadoSolicitudes").style.display = "block";
     actualizarListadoEmpresa ();
 }
+
+//Solicitudes pendientes con el vehículo de la empresa
 function actualizarListadoEmpresa() {
   let tbodyHTML = ``;
 
@@ -364,9 +371,9 @@ function actualizarListadoEmpresa() {
       <td>${vehiculoSolicitudActualParamostrar}</td>
       <td>${personaSolicitudActual}</td>
       <td>${estadoSolicitudActualParaMostrar}</td>
-      <td><input solicitudactual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR"></td>
+      <td><input solicitudactual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitud" type="button" value="TOMAR"></td> 
       </tr>`;
-    }
+    }//El botón tiene el ID de la solicitud que es específico del botón y una clase que tienen todos los botones de la lista
   }
 
   document.querySelector("#tablaSolicitudesPendientesEmpresa").innerHTML = tbodyHTML; //Se muestra la tabla.
@@ -381,12 +388,12 @@ function btncambiarEstadoSolicitud() {
   let solicitudDeBotonClickeado = encontrarSolicitudPorId(nombreSolicitudDeBotonClickeado); // A partir del Id (que es el atributo del botón) se encuentra la solicitud.
   solicitudDeBotonClickeado.empresa = usuarioLogeadoArray; // Se le asigna una empresa a la solicitud encontrada
   cambiarEstadoSolicitud(solicitudDeBotonClickeado); //Se le cambia el estado al siguiente a la solicitud encontrada.
-  actualizarListadoEmpresa();
+  actualizarListadoEmpresa(); //Se actualizan tablas de la mepresa
   actualizarTablaPedidosTomadosEmpresa();
 }
 
 
-//La pantalla de los pedidos asignados a la empresa
+//Muestra la pantalla de los pedidos asignados a la empresa
 function pantallaEmpresaPedidosTomados() {
   ocultarPantallas()
   document.querySelector("#pantallaEmpresa").style.display = "block";
@@ -401,16 +408,16 @@ function actualizarTablaPedidosTomadosEmpresa(){
 
     let solicitudActual = solicitud[i];  
     let descripcionSolicitudActual = solicitudActual.descripcion;
-    let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
+    let fotoSolicitudActual = solicitudActual.obtenerImagen() ; //Muestra la imágen de la solicitud
     let distanciaSolicitudActual = solicitudActual.distancia;
-    let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud();
-    let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado();
+    let vehiculoSolicitudActualParamostrar = solicitudActual.obtenerVehiculoSolicitud(); //Obtiene un vehiculo de la solicitud a partir de la id
+    let estadoSolicitudActualParaMostrar = solicitudActual.obtenerEstado(); //Obtiene estado solicitud a partir de un id
     let empresaSolicitudActual = solicitudActual.empresa;
     let idSolicitudActual = solicitudActual.id;
-    let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona();
+    let personaSolicitudActual = solicitudActual.obtenerNombreYApellidoPersona(); //Obtiene el nombre y apellido de la persona asociada a la solicitud
 
-    let textoParaAcciones = "FINALIZADA";
-    if (solicitudActual.estado  == 2) {
+    let textoParaAcciones = "FINALIZADA"; 
+    if (solicitudActual.estado  == 2) { //Si la solicitud a mostrar ya está finalizada se mostrará un texto pero sino se mostrará un botón para poder finalizarla
       textoParaAcciones = `<input solicitudactual ="${idSolicitudActual}" class="btnCambiarEstadoSolicitudTomada" type="button" value="FINALIZAR">`;
     }
 
@@ -446,8 +453,8 @@ function actualizarEmpresaEstadistica() { //Primera parte info estadística
   let estadisticas = ``;
 
   let personaConMasEnvios = obtenerPersonaConMasEnvios(); //La función devuelve un array con la persona con más envíos en la primera posición y la cantidad de envíos en la segunda
-  let nombrePersonaMasEnvios = personaConMasEnvios[0];
-  let cantidadPersonaMasEnvios = personaConMasEnvios[1];
+  let nombrePersonaMasEnvios = personaConMasEnvios[0]; //Obtenemos el primer array de la función
+  let cantidadPersonaMasEnvios = personaConMasEnvios[1]; //Obtenemos  el segundo array de la función
 
   if (cantidadPersonaMasEnvios>0){  //Si hay personas con envíos en la empresa se muestran sus nombre.
     estadisticas = "La persona que tiene más envíos es: "+ nombrePersonaMasEnvios  + ".<br>";
@@ -461,8 +468,8 @@ function actualizarEmpresaEstadistica() { //Primera parte info estadística
 }
 
 function obtenerPersonaConMasEnvios() {
-  let personaConMasEnvios = [];
-  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY;
+  let personaConMasEnvios = []; //Variable para cargar los datos de la persona con más envíos
+  let mayorCantidadDeEnviosEncontrados = Number.NEGATIVE_INFINITY; 
 
 
   for (let i = 0; i < persona.length; i++) { //Se recorren las personas 
@@ -479,9 +486,9 @@ function obtenerPersonaConMasEnvios() {
       }
     if (cantidadEnviosPersona > mayorCantidadDeEnviosEncontrados) { // Si el contador es el mayor, el nombre y apellido de la persona serán los datos del array
       mayorCantidadDeEnviosEncontrados = cantidadEnviosPersona;
-      personaConMasEnvios = [personaActual.obtenerNombreYApellido()];
+      personaConMasEnvios = [personaActual.obtenerNombreYApellido()]; //Se devuelve el nombre y el apellido de la persona
     } else if (cantidadEnviosPersona == mayorCantidadDeEnviosEncontrados){ //Si los datos son iguales a otro contador se pushea otro usuario al array.
-      personaConMasEnvios.push(personaActual.obtenerNombreYApellido());
+      personaConMasEnvios.push(personaActual.obtenerNombreYApellido()); //Se devuelve el nombre y apellido de LAS PERSONASS en el array
     }
      
   }
@@ -493,7 +500,7 @@ function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística se
   let selectInfoEstadistica = document.querySelector("#selectInfoEstadisticaEmpresa").value;
   let mensaje = ""
 
-    switch (selectInfoEstadistica){
+    switch (selectInfoEstadistica){ //se muestran según lo selccionado del desplegable
       case "0":
         mensaje = "Seleccione un tipo de estado del desplegable";
       break;
@@ -509,18 +516,18 @@ function selectEmpresaEstadisticas(){ //Segunda parte de la info estadística se
 }
 
 
-function mostrarSolicitudesSegunEstado(num){ 
+function mostrarSolicitudesSegunEstado(num){  //Se buscan las solicitudes del estado que se le pasa. 
   let contadorSolicitudes = 0;
 
-  for (let i = 0; i < solicitud.length; i++){
+  for (let i = 0; i < solicitud.length; i++){ //Recorren solicitudes
     let solicitudActual = solicitud[i];
-    if (solicitudActual.empresa == usuarioLogeadoArray ){
+    if (solicitudActual.empresa == usuarioLogeadoArray ){ //Si la solucitud es de la empresa logueada y tiene el estado que se le pasó a la función, el contador se le suma 1
       if (solicitudActual.estado == num){
         contadorSolicitudes +=1;
       }
     }
   }
-  return contadorSolicitudes;
+  return contadorSolicitudes; //Se devuelve la cantidad de solicitudes en el estado pasado de la empresa logueada
 }
 
 //MOSTRAR PANTALLAS DE PERSONA
@@ -566,7 +573,7 @@ function obtenerPosicionDeCaracter(texto, caracter) { //Busca el caracter dentro
 function cortarStringDesdeIndice(texto, posicion) { //Contra un texto desde la posición que se le indica
   let retorno = "";
 
-  for (let i = posicion; i < texto.length; i++) { //Recorre desde la posición el texto y devuelve las letras recorridas.
+  for (let i = posicion; i < texto.length; i++) { //Recorre el texto desde la posición pasada y devuelve las letras recorridas.
       retorno += texto[i];
   }
 
@@ -588,11 +595,11 @@ function actualizarListadoPersona() {
   for (let i = 0; i < solicitud.length; i++) { //Se recorren las solicitudes y se crean variable con los atributos
     let solicitudActual = solicitud[i];
     let descripcionSolicitudActual = solicitudActual.descripcion;
-    let fotoSolicitudActual = solicitudActual.obtenerImagen() ;
+    let fotoSolicitudActual = solicitudActual.obtenerImagen() ; //Muestra la imagen
     let distanciaSolicitudActual = solicitudActual.distancia;
-    let vehiculoSolicitudActual = solicitudActual.obtenerVehiculoSolicitud();
-    let estadoSolicitudActual = solicitudActual.obtenerEstado();
-    let empresaSolicitudActual = solicitudActual.obtenerNombreEmpresa(); 
+    let vehiculoSolicitudActual = solicitudActual.obtenerVehiculoSolicitud(); //Obtiene vehiculo por id
+    let estadoSolicitudActual = solicitudActual.obtenerEstado(); //Obtiene estado por id
+    let empresaSolicitudActual = solicitudActual.obtenerNombreEmpresa();  //obtiene el nombre de usuario de la empresa
     let personaSolicitudActual = solicitudActual.persona;
 
    if (personaSolicitudActual== usuarioLogeadoArray){ //Solo muestra solicitudes de la persona logueada
@@ -618,18 +625,18 @@ function pantallaPersonaEstadisticas() {
   actualizarPersonaEstadistica();
 }
 
-function actualizarPersonaEstadistica() {
+function actualizarPersonaEstadistica() { //Muestra la tabla de estadísticas de la empresa
   let estadisticas = ``;
 
-  let solicitudesEstado = obtenerEnviosEnEstado1y2y3Persona(); //devuelve solicitudes en estado 1, 2 y en estado 3 de la persona logueada
+  let solicitudesEstado = obtenerEnviosEnEstado1y2y3Persona(); //devuelve canridad de solicitudes en estado 1, 2 y 3 de la persona logueada (en posiciones 0,1,2)
   let solicitudesTomadas = solicitudesEstado[1] + solicitudesEstado[2]
   let solicitudesTotales = solicitudesEstado[0] + solicitudesEstado[1] + solicitudesEstado[2];
 
   let porcentajeEnTomados = Math.round(solicitudesTomadas *100 /solicitudesTotales); //Se redondea el porcentaje
 
 
-  if (solicitudesEstado) {
-    estadisticas += "Cantidad de envíos pedientes: " + solicitudesEstado[0] + ".<br>";
+  if (solicitudesEstado) { //Si hay solicitudes muestra las cantidades de cada tipo y el porcentaje de envíos tomados.
+    estadisticas += "Cantidad de envíos pedientes: " + solicitudesEstado[0] + ".<br>"; 
     estadisticas += "Cantidad de envíos en tránsito: " + solicitudesEstado[1] + ".<br>";
     estadisticas += "Cantidad de envíos finalizados: " + solicitudesEstado[2] + ".<br> <br>";
     estadisticas += "Porcentaje de envíos tomados: " + porcentajeEnTomados + "%.<br>";
@@ -638,7 +645,7 @@ function actualizarPersonaEstadistica() {
   document.querySelector("#mensajeInformaciónEstadistica").innerHTML = estadisticas;
 }
 
-function obtenerEnviosEnEstado1y2y3Persona() {
+function obtenerEnviosEnEstado1y2y3Persona() { //Devuelve la cantidad de tipos de estado de envíos hechos por el usuario
   let enviosEstado1 = 0
   let enviosEstado2 = 0;
   let enviosEstado3 = 0;
@@ -649,23 +656,23 @@ function obtenerEnviosEnEstado1y2y3Persona() {
       let personaSolicitudActual = solicitudActual.persona;
       //Se suman a los contadores las solicitudes que pertenecen al usuario logueado.
       if (estadoSolicitudActual == 2 && personaSolicitudActual == usuarioLogeadoArray) {
-          enviosEstado2 += 1;
+          enviosEstado2 += 1; //Suma pendientes
       } else if (estadoSolicitudActual == 3 && personaSolicitudActual == usuarioLogeadoArray){
-        enviosEstado3 += 1;
+        enviosEstado3 += 1; //Suma en tránsito
       } else if (estadoSolicitudActual == 1 && personaSolicitudActual == usuarioLogeadoArray){
-        enviosEstado1 += 1;
+        enviosEstado1 += 1; //Suma finalizados
       }
   }
-  return [enviosEstado1, enviosEstado2, enviosEstado3];
+  return [enviosEstado1, enviosEstado2, enviosEstado3]; //Devuelve las 3 variables en un array
 }
 
 //PANTALLAS ADMIN
 
-function pantallaAdminHabilitarEmpresas() {
+function pantallaAdminHabilitarEmpresas() { //Muestra la pantalla con el listado para habilitar empresas
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadoempresas").style.display = "block";
-  eliminarBusqueda();
+  eliminarBusqueda(); //Elimina datos buscados anteriormente en la tabla
   document.querySelector("#mensajeBusqueda").innerHTML = "";
   actualizarTablaEmpresas();
 }
@@ -679,16 +686,17 @@ function actualizarTablaEmpresas() { //Listado empresas
     let razonEmpresaActual = empresaActual.razonSocial;
     let fantasiaEmpresaActual = empresaActual.nombreFantasia
     let usuarioEmpresaActual = empresaActual.nombreUsuario;
-    let vehiculoEmpresaActual = empresaActual.obtenerVehiculo();
-    let habilitadoEmpresaActual = empresaActual.obtenerHabilitado();
-    let empresaBuscada = empresaActual.buscado;
+    let vehiculoEmpresaActual = empresaActual.obtenerVehiculo(); //Obtiene vehículo según ID
+    let habilitadoEmpresaActual = empresaActual.obtenerHabilitado(); //Obtiene estado según booleando
+    let empresaBuscada = empresaActual.buscado; //Determina si la empresa está seiendo buscada en el buscador
 
-    let textoParaBotonDeAcciones = "Habilitar"; // cambia el texto del botón según el estado
+    let textoParaBotonDeAcciones = "Habilitar"; // cambia el texto del botón según el estado de la empresa
     if (empresaActual.habilitado) {
       textoParaBotonDeAcciones = "Deshabilitar";
     }
-    if (busquedaActiva) {   //En el caso de que se esté buscando algo en el buscador la tabla se actualizará con solo las empresas que estén siendo buscadas. Esto es un atributo que se cambia en la función buscarEmpresa
-      if (empresaBuscada) {
+    if (busquedaActiva) {   //En el caso de que se esté buscando algo en el buscador la tabla se actualizará con solo las empresas que estén siendo buscadas. 
+      //Esto es un atributo que se cambia en la función buscarEmpresa
+      if (empresaBuscada) { //Muestra solo las empresas que tengan el atributo "buscado" en true.
          tbodyHTML += `<tr></tr>
                     <td>${rutEmpresaActual}</td>
                     <td>${razonEmpresaActual}</td>
@@ -696,10 +704,11 @@ function actualizarTablaEmpresas() { //Listado empresas
                     <td>${usuarioEmpresaActual}</td>
                     <td>${vehiculoEmpresaActual}</td>
                     <td>${habilitadoEmpresaActual}</td>
-                    <td><input usuarioEmpresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td>
+                    <td><input usuarioempresa="${usuarioEmpresaActual}" class="btnCambiarEstadoEmpresa" type="button" value="${textoParaBotonDeAcciones}"></td> 
     </tr>`; 
-      } 
-    } else { //Si no hay búsquedas se muestran todas las empresas
+      } //El id del botón es el nombre de usuario de la epresa bajo el atributo "usuarioempresa" todos los botones de la tabla comparten una clase
+        //Si no hay búsquedas se muestran todas las empresas
+    } else { //Si no hay busqueda activa se muestran todas las empresas
        tbodyHTML += `<tr></tr>
       <td>${rutEmpresaActual}</td>
       <td>${razonEmpresaActual}</td>
@@ -721,7 +730,7 @@ function actualizarTablaEmpresas() { //Listado empresas
 }
 
 function btnCambiarEstadoEmpresa() {  
-  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioempresa"); 
+  let nombreUsuarioDeBotonClickeado = this.getAttribute("usuarioempresa"); //busca el atributo de usuarioempresa para determinar el id del botón actual
   let empresaDeBotonClickeado = encontrarEmpresaPorUsuario(nombreUsuarioDeBotonClickeado); //se encuentra la empresa clickeada
   cambiarEstadoEmpresa(empresaDeBotonClickeado); //Se cambia el estado
   actualizarTablaEmpresas();
@@ -730,11 +739,11 @@ function btnCambiarEstadoEmpresa() {
 //Buscador de empresas
 function buscarEmpresa() {
   document.querySelector("#mensajeBusqueda").innerHTML = "";
-  let mensaje = ""
+  let mensaje = "";
   let textoParaBuscar = document.querySelector("#txtBuscarEmpresa").value;
   document.querySelector("#txtBuscarEmpresa").value= "";
   busquedaActiva = true; //Activa la búsqueda cambiando la variable global a true
-  let busquedaTuvoResultados = false;
+  let busquedaTuvoResultados = false; //variable para detrminar si hay resultados de búsqueda
 
 
   for (let i = 0; i < empresa.length; i++) { //Recorre las empresas
@@ -744,20 +753,22 @@ function buscarEmpresa() {
     let fantasiaEmpresaActual = empresaActual.nombreFantasia;
     let razonEmpresaActualRecortada = encontrarBusqueda(razonEmpresaActual, textoParaBuscar).toLowerCase().trim();  //Acorta la razón social y el nombre de fantasía a la misma cantidad de letras que lo que se ingresó en el input a buscar.
     let fantasiaEmpresaActualRecortada = encontrarBusqueda(fantasiaEmpresaActual, textoParaBuscar).toLowerCase().trim();
-    empresaActual.buscado = false;
-
+    empresaActual.buscado = false; //Se inicia en estado false - solo se necesita este atributo al mostrar la tabla con búsqueda activa
+    //Aquí se recorren las empresas y se marcan todas como false - luego se cambia si coincide la búsqueda
+    //Para encontrar subcadena se acorta la razón social y la fantasía a la cantidad de letras de lo que se haya ingresado en la búsqueda
 
     if (textoParaBuscar.toLowerCase().trim() == razonEmpresaActualRecortada ) { //Compara razón con lo buscado y si coincide cambia el estado de búsqueda de la empresa
-      empresaActual.buscado = true;
-      busquedaTuvoResultados = true;
+      empresaActual.buscado = true; //Se le cambia el atributo "buscado en la clase" para luego mostrarla en la tabla
+      busquedaTuvoResultados = true; //Si hay resultados se cambia la variable
 
     } else if ( textoParaBuscar.toLowerCase().trim() == fantasiaEmpresaActualRecortada) { //si no coincide con razón busca con fantasía.
       empresaActual.buscado = true;
-      busquedaTuvoResultados = true;
+      busquedaTuvoResultados = true; //Si hay resultados se cambia la variable
     } 
   }
   if (!busquedaTuvoResultados){  
-    mensaje = "No hay resultados que coincidan con la búsqueda";
+    mensaje = "No hay resultados que coincidan con la búsqueda"; 
+    //Si la varibale "busquedaTuvoResultados" no fue cambiada es que no hay empresas que coincidan con la búsqueda, muestra mensaje
   }
   actualizarTablaEmpresas();
   document.querySelector("#mensajeBusqueda").innerHTML = mensaje;
@@ -765,8 +776,8 @@ function buscarEmpresa() {
 
 function encontrarBusqueda(texto, busqueda){ //La palabra a coincidir se reduce a misma cantidad de letras que tiene la búsqueda.
   let resultado="";
-    for (let i =0; i < busqueda.length;i++){
-      resultado += texto[i];
+    for (let i =0; i < busqueda.length;i++){ //Recorre texto hasta la cantidad de letras de la búsqueda
+      resultado += texto[i]; //suma los caracteres recorridos (cantidad de caracteres de la búsqueda)
     }
   return resultado;
 }
@@ -774,11 +785,11 @@ function encontrarBusqueda(texto, busqueda){ //La palabra a coincidir se reduce 
 function eliminarBusqueda(){ //Se elimina la búsqueda para que la tabla vuelva a mostrar todo.
   busquedaActiva = false;
   actualizarTablaEmpresas();
-  document.querySelector("#mensajeBusqueda").innerHTML = ""
+  document.querySelector("#mensajeBusqueda").innerHTML = "";
 
 }
 
-function pantallaAdminAniadirTransporte() { // Se muestra la mantalla de vehículos
+function pantallaAdminAniadirTransporte() { // Se muestra la pantalla de vehículos
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminlistadotransporte").style.display = "block";
@@ -786,8 +797,8 @@ function pantallaAdminAniadirTransporte() { // Se muestra la mantalla de vehícu
   document.querySelector("#ingresarVehiculo").value = "";
 }
 
-function AgregarVehiculoAdmin() {
-  let vehiculo = document.querySelector("#ingresarVehiculo").value.trim();
+function AgregarVehiculoAdmin() { //Función para agregar un vehiculo
+  let vehiculo = document.querySelector("#ingresarVehiculo").value.trim(); //se toma el dato del vehiculo a ingresar
   document.querySelector("#ingresarVehiculo").value = "";
   if (existeVehiculo(vehiculo)) { //Se corrobora si ya existe el vehículo.
     AltaVehiculo = "El vehiculo ingresado ya existe."
@@ -795,17 +806,17 @@ function AgregarVehiculoAdmin() {
     AltaVehiculo = "El vehiculo ha sido ingresado."
     registrarVehiculo(vehiculo); //Se registra el vehículo.
     mostrarVehiculos(); //Se actualiza la tabla que muestra los vehículos.
-    selectVehiculos(); //Se actualiza el select de registro de empresas.
-    selectVehiculosEnvios(); // Se actualiza el select de registro de solicitudes.
+    selectVehiculos("selectRegistroEmpresa"); //Se actualiza el select de registro de empresas.
+    selectVehiculos("selectSolicitudesEnvios"); // Se actualiza el select de registro de solicitudes.
 
   }
   document.querySelector("#mensajeAltaVehiculo").innerHTML = AltaVehiculo;
 }
 
-function mostrarVehiculos() { //Muestra los vehículos existentes
+function mostrarVehiculos() { //Muestra los vehículos existentes en la tabla de administrador
   let vehiculosParaMostrarEnHTML = "";
 
-  if (vehiculo.length > 0) {
+  if (vehiculo.length > 0) { //Pone head a la tabla de vehiculos
     vehiculosParaMostrarEnHTML = `
         <table border="1">
             <thead>
@@ -815,10 +826,11 @@ function mostrarVehiculos() { //Muestra los vehículos existentes
             </thead>
             <tbody>
     `;
-    for (let i = 0; i < vehiculo.length; i++) {
+    for (let i = 0; i < vehiculo.length; i++) { //Recorre el array asociativo vehiculo
       let vehiculoActual = vehiculo[i];
+      //Muestra todos los vehiculos en la columna
 
-      vehiculosParaMostrarEnHTML += `
+      vehiculosParaMostrarEnHTML += ` 
       <tr>
        <td>${vehiculoActual.vehiculo}</td>
       </tr>
@@ -828,11 +840,11 @@ function mostrarVehiculos() { //Muestra los vehículos existentes
             </tbody>
         </table>
     `;
-  }
+  } //cierra tabla
   document.querySelector("#tablaVehiculosAdmin").innerHTML = vehiculosParaMostrarEnHTML;
 }
 
-function pantallaAdminEstadistica() { 
+function pantallaAdminEstadistica() { //muestra pantalla de info estadística al presionar botón
   ocultarPantallas()
   document.querySelector("#pantallaAdmin").style.display = "block";
   document.querySelector("#adminInformacionEstadistica").style.display = "block";
@@ -847,11 +859,12 @@ function actualizarAdminEstadistica(){
   let empresasPorKilometros = arrayKilometrosYEmpresas[0]; //Separamos los arrays
   let kilometrosPorEmpresas = arrayKilometrosYEmpresas[1];
 
-  for (let i = 0; i < empresasPorKilometros.length; i++) {
+  for (let i = 0; i < empresasPorKilometros.length; i++) { 
+    //Recorre los arrays, sabemos que tienen el mismo largo y que las posiciones corresponen a ambos
     let empresaActual = empresasPorKilometros[i];
     let kilometroActual = kilometrosPorEmpresas[i]; 
    
-    //Se muestra en tabla los datos
+    //Se muestra en tabla los datos de ambos arrays
     tbodyHTML += `<tr></tr>
     <td>${empresaActual}</td>
     <td>${kilometroActual}</td>
@@ -861,81 +874,56 @@ function actualizarAdminEstadistica(){
 }
 
 function kilometrosPorEmpresa(){ //Función para debolver empresas y sus km.
-  
-  let nombreEmpresas = [];
+  //Se definen 2 variables como arrays, uno para nombres de las empresas otro para los km recorridos
+  let nombreEmpresas = []; 
   let kilometrosRecorridos = [];
 
   for (let i = 0; i < empresa.length; i++) { //Recorre las empresas cargadas.
-    let kilometrosDeCadaEmpresa = 0;
+    let kilometrosDeCadaEmpresa = 0; //se crea variable para suma los km de la empresa recorrida
     let empresaActual = empresa[i];
       for (let a = 0; a < solicitud.length; a++){ //Recorre las solicitudes
         let solicitudActual = solicitud[a];
-        if (solicitudActual.empresa == empresaActual && solicitudActual.estado == "3"){ //Si la solicitud está finalizada y es de la empresa que se está recorriendo se suma a un contador los km recorridos por esa empresa
+        if (solicitudActual.empresa == empresaActual && solicitudActual.estado == "3"){ 
+          //Si la solicitud está finalizada y es de la empresa que se está recorriendo se suma a un contador los km recorridos por esa empresa
           kilometrosDeCadaEmpresa += solicitudActual.distancia; 
         }
       }
-      nombreEmpresas.push(empresaActual.nombreUsuario); //En el primer array se pushea el nombre de usuario de la empresa y en el segundo sus km.
+      nombreEmpresas.push(empresaActual.nombreUsuario); 
+      //En el primer array se pushea el nombre de usuario de la empresa y en el segundo sus km.
       kilometrosRecorridos.push(kilometrosDeCadaEmpresa);
   }
-  return [nombreEmpresas, kilometrosRecorridos];
+  return [nombreEmpresas, kilometrosRecorridos]; //Devuelve ambos arrays que corresponden el uno con el otro
 }
 
 
 // FUNCIONES DE SELECT VEHÍCULOS A VEHICULOS para formulario empresa y solicitud
 
-function selectVehiculos() {
-  let vehiculosParaMostrarEnHTML = "";
+function selectVehiculos(idHTML) { 
+  //muestra el select con los vehiculos precargados y registrados por el admin en el formulario de registro empresa
 
-  if (vehiculo.length > 0) {
-    vehiculosParaMostrarEnHTML = `
-    <select id="txtselectVehiculos">
-      <option value ="0">
-        Seleccione un vehiculo...
-      </option>
-    `;
-    for (let i = 0; i < vehiculo.length; i++) {
-      let vehiculoActual = vehiculo[i];
-      vehiculosParaMostrarEnHTML += `
-            <option value = "${vehiculoActual.idVehiculo}">
-            ${vehiculoActual.vehiculo}
-            </option>
-    `;
-    }
-    vehiculosParaMostrarEnHTML += `
-              </select>
-      `;
-  } else {
-    vehiculosParaMostrarEnHTML = "No existen vehiculos";
-  }
-  document.querySelector("#selectRegistroEmpresa").innerHTML = vehiculosParaMostrarEnHTML;
-}
-
-function selectVehiculosEnvios() {
-  let vehiculosParaMostrarEnHTML = "";
-
-  if (vehiculo.length > 0) {
-    vehiculosParaMostrarEnHTML = `
+  let vehiculosParaMostrarEnHTML = `
     <select id="txtselectVehiculosEnvios">
       <option value ="0">
         Seleccione un vehiculo...
       </option>
     `;
-    for (let i = 0; i < vehiculo.length; i++) {
-      let vehiculoActual = vehiculo[i];
-      vehiculosParaMostrarEnHTML += `
-            <option value = "${vehiculoActual.idVehiculo}">
-            ${vehiculoActual.vehiculo}
-            </option>
-    `;
-    }
+  for (let i = 0; i < vehiculo.length; i++) { //Recorre vehiculos
+    let vehiculoActual = vehiculo[i];
+          //Muestra el nombre del vehiculo en el desplegable y le da el value de su ID para usar cuando se selecciona
     vehiculosParaMostrarEnHTML += `
+           <option value = "${vehiculoActual.idVehiculo}">
+           ${vehiculoActual.vehiculo}
+           </option>
+    `;
+  }
+  //cierra etiqueta html
+  vehiculosParaMostrarEnHTML += `
               </select>
       `;
-  } else {
-    vehiculosParaMostrarEnHTML = "No existen vehiculos";
-  }
-  document.querySelector("#selectSolicitudesEnvios").innerHTML = vehiculosParaMostrarEnHTML;
+  document.querySelector(`#${idHTML}`).innerHTML = vehiculosParaMostrarEnHTML;
 }
+
+
 
 
 
