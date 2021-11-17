@@ -141,7 +141,7 @@ function existeUsuarioPorUsuarioYPasswordEmpresa(usuario, contrasenia) { //Verif
   let i = 0;
   let nombreUsuarioEncontrado = false;
   while (!nombreUsuarioEncontrado && i < empresa.length) { //Recorre mientras haya usuarios y no se encuentre el ingresado
-    let usuarioGuardado = persona[i];
+    let usuarioGuardado = empresa[i];
     if (usuario.toLowerCase() === usuarioGuardado.nombreUsuario.toLowerCase()) { ////Si el usuario ingresado es el recorrido actual se marca como encontrado y se valida la comtraseña
       nombreUsuarioEncontrado = true;
       let contraseniaGuardada = usuarioGuardado.contrasenia;
