@@ -9,7 +9,7 @@ Se trata de un sistema de envíos en los que interactúan usuarios, empresas de 
   -Las empresas de transporte pueden tomar envíos y visializar estadísticas
   -Los administradores habilitan empresas y visualizan distinta información de la APP WEB.
   
-Se encuentra dentro del repo un archivo con la premisa del ejercicio.
+Se encuentra dentro del repo un archivo con las funcionalidades del proyecto.
   
   
  Autores:
